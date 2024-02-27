@@ -10,3 +10,10 @@
   width: 100%;
 }
 /* 990 tak responsive karna hai */
+
+.css-flntgr-MuiGrid-root  {
+  margin-left: 15px !important;
+}
+/* .css-1y36f47-MuiGrid-root  {
+  margin-left: 15px !important;
+} */

@@ -1,3 +1,5 @@
+export const baseURL = ''
+
 export const navConfig = [
     { title: 'Home', path: '/' },
     { title: 'Analyzer', path: '/analyzer' },
@@ -20,16 +22,16 @@ export const tableHeadings = [
 
 
 export const data = [
-    { id: 1, name: 'Amin', vendor: 'Jhon Doe',isActive:'Active',createdOn : '26/02/2024',updatedOn : '26/02/2024', createdBy : '26/02/2024',updatedBy : '26/02/2024'},
-    { id: 2, name: 'Ajay', vendor: 'Jhon Doe',isActive:'Active',createdOn : '26/02/2024',updatedOn : '26/02/2024', createdBy : '26/02/2024',updatedBy : '26/02/2024'},
-    { id: 3, name: 'Jhon', vendor: 'Jhon Doe',isActive:'Active',createdOn : '26/02/2024',updatedOn : '26/02/2024', createdBy : '26/02/2024',updatedBy : '26/02/2024'},
-    { id: 4, name: 'Admin', vendor: 'Jhon Doe',isActive:'Active',createdOn : '26/02/2024',updatedOn : '26/02/2024', createdBy : '26/02/2024',updatedBy : '26/02/2024'},
-    { id: 5, name: 'Robert', vendor: 'Jhon Doe',isActive:'Active',createdOn : '26/02/2024',updatedOn : '26/02/2024', createdBy : '26/02/2024',updatedBy : '26/02/2024'},
-    { id: 6, name: 'Amin', vendor: 'Jhon Doe',isActive:'Active',createdOn : '26/02/2024',updatedOn : '26/02/2024', createdBy : '26/02/2024',updatedBy : '26/02/2024'},
-    { id: 7, name: 'Amin', vendor: 'Jhon Doe',isActive:'Active',createdOn : '26/02/2024',updatedOn : '26/02/2024', createdBy : '26/02/2024',updatedBy : '26/02/2024'},
-    { id: 8, name: 'Amin', vendor: 'Jhon Doe',isActive:'Active',createdOn : '26/02/2024',updatedOn : '26/02/2024', createdBy : '26/02/2024',updatedBy : '26/02/2024'},
-    { id: 9, name: 'Amin', vendor: 'Jhon Doe',isActive:'Active',createdOn : '26/02/2024',updatedOn : '26/02/2024', createdBy : '26/02/2024',updatedBy : '26/02/2024'},
-    { id: 10, name: 'Amin', vendor: 'Jhon Doe',isActive:'Active',createdOn : '26/02/2024',updatedOn : '26/02/2024', createdBy : '26/02/2024',updatedBy : '26/02/2024'},
+    { id: 1, name: 'Amin', vendor: 'Jhon Doe',isActive:true,createdOn : '2024-01-26',updatedOn : '2024-02-26', createdBy : '2024-02-26',updatedBy : '2024-02-26'},
+    { id: 2, name: 'Ajay', vendor: 'Jhon Doe',isActive:false,createdOn : '2024-01-26',updatedOn : '2024-02-26', createdBy : '2024-02-26',updatedBy : '2024-02-26'},
+    { id: 3, name: 'Jhon', vendor: 'Jhon Doe',isActive:false,createdOn : '2024-01-26',updatedOn : '2024-02-26', createdBy : '2024-02-26',updatedBy : '2024-02-26'},
+    { id: 4, name: 'Admin', vendor: 'Jhon Doe',isActive:true,createdOn : '2024-01-26',updatedOn : '2024-02-26', createdBy : '2024-02-26',updatedBy : '2024-02-26'},
+    { id: 5, name: 'Robert', vendor: 'Jhon Doe',isActive:true,createdOn : '2024-01-26',updatedOn : '2024-02-26', createdBy : '2024-02-26',updatedBy : '2024-02-26'},
+    { id: 6, name: 'Amin', vendor: 'Jhon Doe',isActive:true,createdOn : '2024-01-26',updatedOn : '2024-02-26', createdBy : '2024-02-26',updatedBy : '2024-02-26'},
+    { id: 7, name: 'Amin', vendor: 'Jhon Doe',isActive:true,createdOn : '2024-01-26',updatedOn : '2024-02-26', createdBy : '2024-02-26',updatedBy : '2024-02-26'},
+    { id: 8, name: 'Amin', vendor: 'Jhon Doe',isActive:false,createdOn : '2024-01-26',updatedOn : '2024-02-26', createdBy : '2024-02-26',updatedBy : '2024-02-26'},
+    { id: 9, name: 'Amin', vendor: 'Jhon Doe',isActive:false,createdOn : '2024-01-26',updatedOn : '2024-02-26', createdBy : '2024-02-26',updatedBy : '2024-02-26'},
+    { id: 10, name: 'Amin', vendor: 'Jhon Doe',isActive:true,createdOn : '2024-01-26',updatedOn : '2024-02-26', createdBy : '2024-02-26',updatedBy : '2024-02-26'},
   
 
 ];

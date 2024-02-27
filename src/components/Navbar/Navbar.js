@@ -10,7 +10,7 @@ const Navbar = () => {
     const [openMenu,setOpenMenu] = useState(false)
     return (
         <MainContainer>
-            <div style={{ backgroundColor: 'black',marginBottom:'20px' }}>
+            <div style={{ backgroundColor: 'black' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px',position:'relative' }}>
                     <Typography className='logo'> Tremendous LIS</Typography>
                     <Stack  className='nav-menu' direction='row'>

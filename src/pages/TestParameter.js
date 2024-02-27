@@ -1,8 +1,11 @@
 import React from 'react'
+import TableData from '../components/TableComponent/TableData'
 
 const TestParameter = () => {
   return (
-    <div>TestParameter</div>
+    <>
+     <TableData/>
+    </>
   )
 }
 

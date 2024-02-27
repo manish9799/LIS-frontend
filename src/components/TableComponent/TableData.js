@@ -3,6 +3,10 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { data, tableHeadings } from '../../configData';
+import AddIcon from '@mui/icons-material/Add';
+import AddEditPopup from './AddEditPopup';
+import '../Style.css'
+
 
 
 const TableData = () => {
@@ -12,6 +16,8 @@ const TableData = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [openModal,setOpenModal] = useState(false);
+    const [editValue,setEditValue] = useState({})
 
     useEffect(()=>{
         setTableData(data)
@@ -53,28 +59,49 @@ const TableData = () => {
         setTableData(newData)
     })
 
+    const editData =(data)=>{
+        setEditValue(data)
+        setOpenModal(true)
+    }
+
+    const Open =()=>{
+        setEditValue({})
+        setOpenModal(false)
+    }
+
+
     return (
         <>
-        <Paper sx={{ borderRadius: '20px',margin:'30px' }}>
-            <Stack direction={'row'} sx={{ display: 'flex', alignItems: 'center' }}>
-                <Typography variant="h5" style={{ padding: '16px', minWidth: '300px' }}>
-                    My Table
+        <AddEditPopup setOpenModal={setOpenModal} openModal={openModal} editDataValue={[editValue,setEditValue]}   />
+        <Paper sx={{ borderRadius: '20px',margin:'30px',minHeight:'70vh' }}>
+            <Stack direction={'row'} sx={{ display: 'flex', alignItems: 'center',justifyContent:'space-around' }}>
+                <Typography className='table-heading'>
+                Analyzer Parameter
                 </Typography>
                 <TextField
+                placeholder='Search here...'
                     label="Search"
                     variant="outlined"
                     value={searchTerm}
                     onChange={handleSearch}
-                    style={{ margin: '16px',width:'50%' }}
+                    style={{ margin: '16px',width:'40%' }}
                 />
-                <Button sx={{width:'200px',p:1,fontSize:'16px',boxSizing:'border-box'}} variant='contained'>Add Data</Button>
+                <Button 
+              component="label" 
+              sx={{width:"200px",border:'2px solid',fontSize:'18px',p:1}} 
+              variant="outlined" 
+              endIcon={<AddIcon />}
+              onClick={()=>setOpenModal(true)}
+            >
+              Add item
+            </Button>
             </Stack>
             <TableContainer>
-                <Table size="small">
+                <Table size="small" >
                     <TableHead>
                         <TableRow>
                             {tableHeadings?.map((item, i) => (
-                                <TableCell>
+                                <TableCell sx={{fontWeight:'600',fontSize:'14px',backgroundColor:'lightgray'}}>
                                     <TableSortLabel
                                         active={orderBy === `${item.id}`}
                                         direction={orderBy === `${item.id}` ? order : 'asc'}
@@ -84,7 +111,7 @@ const TableData = () => {
                                     </TableSortLabel>
                                 </TableCell>
                             ))}
-                            <TableCell>Actions</TableCell>
+                            <TableCell sx={{fontWeight:'600',fontSize:'14px',backgroundColor:'lightgray'}}>Actions</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -93,13 +120,13 @@ const TableData = () => {
                                 <TableCell sx={{paddingY:'0px'}}>{row.id}</TableCell>
                                 <TableCell sx={{paddingY:'0px'}}>{row.name}</TableCell>
                                 <TableCell sx={{paddingY:'0px'}}>{row.vendor}</TableCell>
-                                <TableCell sx={{paddingY:'0px'}}>{row.isActive}</TableCell>
+                                <TableCell sx={{paddingY:'0px',fontWeight:600,color: row.isActive?'green':'red'}}>{row.isActive ? 'Active':'In Active'}</TableCell>
                                 <TableCell sx={{paddingY:'0px'}}>{row.createdOn}</TableCell>
                                 <TableCell sx={{paddingY:'0px'}}>{row.updatedOn}</TableCell>
                                 <TableCell sx={{paddingY:'0px'}}>{row.createdBy}</TableCell>
                                 <TableCell sx={{paddingY:'0px'}}>{row.updatedBy}</TableCell>
                                 <TableCell>
-                                    <IconButton aria-label="edit">
+                                    <IconButton aria-label="edit" onClick={()=>editData(row)}>
                                         <EditIcon />
                                     </IconButton>
                                     <IconButton onClick={()=>deleteData(row.id)} aria-label="delete">
