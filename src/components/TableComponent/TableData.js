@@ -2,14 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TableSortLabel, TextField, Typography, TablePagination, IconButton, Stack, Button } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { data, tableHeadings } from '../../configData';
 import AddIcon from '@mui/icons-material/Add';
 import AddEditPopup from './AddEditPopup';
+import { DeleteData } from '../../fetchServices';
 import '../Style.css'
 
-
-
-const TableData = () => {
+const TableData = ({data,tableHeadings,url,fetchData}) => {
     const [tableData,setTableData] = useState([])
     const [orderBy, setOrderBy] = useState(null);
     const [order, setOrder] = useState('asc');
@@ -50,13 +48,11 @@ const TableData = () => {
         setPage(0);
     };
 
-    const AddData =((data)=>{
-        // const newData = tableData?.filter((item,i)=> item?.id !== id)
-        // setTableData(newData)
-    })
     const deleteData =((id)=>{
-        const newData = tableData?.filter((item,i)=> item?.id !== id)
-        setTableData(newData)
+        DeleteData(url,id)
+        setTimeout(() => {
+            fetchData()
+        }, 1000);
     })
 
     const editData =(data)=>{
@@ -69,10 +65,9 @@ const TableData = () => {
         setOpenModal(false)
     }
 
-
     return (
         <>
-        <AddEditPopup setOpenModal={setOpenModal} openModal={openModal} editDataValue={[editValue,setEditValue]}   />
+        <AddEditPopup setOpenModal={setOpenModal} openModal={openModal} editDataValue={[editValue,setEditValue]} url={url} fetchData={fetchData}   />
         <Paper sx={{ borderRadius: '20px',margin:'30px',minHeight:'70vh' }}>
             <Stack direction={'row'} sx={{ display: 'flex', alignItems: 'center',justifyContent:'space-around' }}>
                 <Typography className='table-heading'>
@@ -111,28 +106,36 @@ const TableData = () => {
                                     </TableSortLabel>
                                 </TableCell>
                             ))}
-                            <TableCell sx={{fontWeight:'600',fontSize:'14px',backgroundColor:'lightgray'}}>Actions</TableCell>
+                            {/* <TableCell sx={{fontWeight:'600',fontSize:'14px',backgroundColor:'lightgray'}}>Actions</TableCell> */}
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
                             <TableRow key={row.id}>
-                                <TableCell sx={{paddingY:'0px'}}>{row.id}</TableCell>
-                                <TableCell sx={{paddingY:'0px'}}>{row.name}</TableCell>
+                                {tableHeadings?.map((item,i)=>(
+                                    <>
+                                    { item.id == 'actions' ? 
+                                        <TableCell>
+                                            <IconButton aria-label="edit" onClick={()=>editData(row)}>
+                                                <EditIcon />
+                                            </IconButton>
+                                            <IconButton onClick={()=>deleteData(row.id)} aria-label="delete">
+                                                <DeleteIcon sx={{color:'red'}} />
+                                            </IconButton>
+                                        </TableCell> : 
+                                        item.id == 'isActive' ? 
+                                        <TableCell sx={{paddingY:'0px',fontWeight:600,color: row.isActive?'green':'red'}}>{row.isActive ? 'Active':'In Active'}</TableCell> :
+                                        <TableCell sx={{paddingY:'0px'}}>{row[item.id]}</TableCell>
+                                }
+                                    </>
+                                ))}
+                                {/* <TableCell sx={{paddingY:'0px'}}>{row.name}</TableCell>
                                 <TableCell sx={{paddingY:'0px'}}>{row.vendor}</TableCell>
                                 <TableCell sx={{paddingY:'0px',fontWeight:600,color: row.isActive?'green':'red'}}>{row.isActive ? 'Active':'In Active'}</TableCell>
                                 <TableCell sx={{paddingY:'0px'}}>{row.createdOn}</TableCell>
                                 <TableCell sx={{paddingY:'0px'}}>{row.updatedOn}</TableCell>
                                 <TableCell sx={{paddingY:'0px'}}>{row.createdBy}</TableCell>
-                                <TableCell sx={{paddingY:'0px'}}>{row.updatedBy}</TableCell>
-                                <TableCell>
-                                    <IconButton aria-label="edit" onClick={()=>editData(row)}>
-                                        <EditIcon />
-                                    </IconButton>
-                                    <IconButton onClick={()=>deleteData(row.id)} aria-label="delete">
-                                        <DeleteIcon sx={{color:'red'}} />
-                                    </IconButton>
-                                </TableCell>
+                                <TableCell sx={{paddingY:'0px'}}>{row.updatedBy}</TableCell> */}
                             </TableRow>
                         ))}
                     </TableBody>
