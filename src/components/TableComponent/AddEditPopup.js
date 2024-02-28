@@ -6,8 +6,9 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import '../../App.css'
 import SelectFieldComponent from '../SelectFieldComponent';
+import { UpdateData, postData } from '../../fetchServices';
 
-const AddEditPopup = ({ openModal, setOpenModal, editDataValue }) => {
+const AddEditPopup = ({ openModal, setOpenModal, editDataValue,url,fetchData }) => {
 
     const [editValue, setEditValue] = editDataValue;
 
@@ -31,11 +32,10 @@ const AddEditPopup = ({ openModal, setOpenModal, editDataValue }) => {
     } = useForm({
         resolver: yupResolver(schema),
     });
-    console.log("errors", errors);
+    // console.log("errors", errors);
 
     useEffect(() => {
         if (editValue?.id) {
-            console.log("jjj", editValue);
             setValue('name', editValue?.name)
             setValue('vendor', editValue?.vendor)
             setValue('isActive', editValue?.isActive)
@@ -56,7 +56,24 @@ const AddEditPopup = ({ openModal, setOpenModal, editDataValue }) => {
     const onSubmit = (e) => {
         e.preventDefault()
         let data = watch()
-        console.log("data", data);
+        let addData = data;
+        addData.createdBy = 0;
+        addData.updatedBy = 0;
+        addData.id = 0;
+        if(editValue?.id){
+            data.id = editValue.id
+            UpdateData(url,editValue.id,data)
+            Close()
+            setTimeout(() => {
+                fetchData()
+            }, 1000);
+        }else{
+            postData(url,addData)
+            Close()
+            setTimeout(() => {
+                fetchData()
+            }, 1000);
+        }
     }
 
 
@@ -136,7 +153,7 @@ const AddEditPopup = ({ openModal, setOpenModal, editDataValue }) => {
                                     <Grid item xs={12}
                                         md={9}>
                                         <Stack direction={'row'} gap={3} sx={{ width: '50%' }}>
-                                            <Button fullWidth variant="contained" type='submit'>Add</Button>
+                                            <Button fullWidth variant="contained" type='submit'> {editValue.id ? 'Update':'Add'}</Button>
                                             <Button fullWidth variant="contained" color='error' onClick={Close} > Cancel</Button>
                                         </Stack>
                                     </Grid>
@@ -145,7 +162,6 @@ const AddEditPopup = ({ openModal, setOpenModal, editDataValue }) => {
                         </form>
                     </Card>
                 </Box>
-
             </Modal>
         </>
 
