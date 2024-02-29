@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import TableData from '../components/TableComponent/TableData'
 import { cptsTableHeadings, data } from '../configData'
 import { GetData } from '../fetchServices'
@@ -17,16 +17,18 @@ const CPT = () => {
     }
   };
 
-  // useEffect(() => {
-  //   GetData('Cpts')
-  // }, [])
+  useEffect(() => {
+    fetchData()
+  }, [])
 
   return (
     <>
      <TableData 
        url={URL}
        data={data}
+       headingName={'CPT'}
        tableHeadings={cptsTableHeadings}
+       fetchData={fetchData}
      />
     </>
   )

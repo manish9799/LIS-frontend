@@ -21,19 +21,16 @@ const AnalyzerParameter = () => {
     fetchData();
   }, []);
 
-  // useEffect(() => {
-  //   GetData('AnalyzerParameter')
-  // }, [])
-
   return (
     <>
       <TableData
         url={URL}
         data={data}
+        headingName={'Analyzer Parameter'}
         tableHeadings={analyzerParameterTableHeadings}
+        fetchData={fetchData}
       />
     </>
-    
   )
 }
 
