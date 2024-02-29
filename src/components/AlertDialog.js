@@ -1,16 +1,24 @@
-import { Alert, Snackbar } from '@mui/material';
+import { Alert, IconButton, Snackbar } from '@mui/material';
 import React, { useState } from 'react';
+import CloseIcon from '@mui/icons-material/Close';
 
-const AlertDialog = ({type, message, openAlert}) => {
-    const [open, setOpen] = openAlert;
-    const handleClose = () => {
-        setOpen(false);
-      };
+const AlertDialog = ({ type, message, openAlert }) => {
+  const [open, setOpen] = openAlert;
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
-    <Snackbar open={open} anchorOrigin={{ vertical:'top', horizontal:'right' }} autoHideDuration={6000} onClose={handleClose} sx={{padding:'30px',}}  bodyStyle={{ height: 'auto', lineHeight: '28px', padding: 24, whiteSpace: 'pre-line' }}
+    <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'right' }} open={open} autoHideDuration={6000} onClose={handleClose}>
+    <Alert
+      onClose={handleClose}
+      severity={type}
+      variant="filled"
+      sx={{ width: '100%' }}
     >
-      <Alert severity={type}>{message}</Alert>
-    </Snackbar>
+      {message}
+    </Alert>
+  </Snackbar>
   );
 };
 

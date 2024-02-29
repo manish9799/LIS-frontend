@@ -25,12 +25,13 @@ const Analyzer = () => {
   // }, [])
   return (
     <>
-    <AlertDialog />
+    {/* <AlertDialog /> */}
       <TableData
         url={URL}
-        fetchData={fetchData}
         data={data}
+        headingName={'Analyzers'}
         tableHeadings={analyzerTableHeadings}
+        fetchData={fetchData}
       />
     </>
   )

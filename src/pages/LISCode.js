@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import TableData from '../components/TableComponent/TableData'
 import { data, liscodesTableHeadings } from '../configData'
 import { GetData } from '../fetchServices'
@@ -17,16 +17,18 @@ const LISCode = () => {
     }
   };
   
-  // useEffect(() => {
-  //   GetData('LisCodes')
-  // }, [])
+  useEffect(() => {
+    fetchData()
+  }, [])
 
   return (
     <>
      <TableData
         url={URL}
         data={data}
+        headingName={'LIS Codes'}
         tableHeadings={liscodesTableHeadings}
+        fetchData={fetchData}
       />
     </>
   )

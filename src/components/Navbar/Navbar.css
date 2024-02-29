@@ -12,10 +12,10 @@
 }
 .nav-menu{
     display: block !important;
-    width: 80%;
+    width: 40%;
 }
 .hamburger-btn{
-    display: none !important;
+    display: block !important;
 }
 .hamburger-menu{
     display: none !important; 

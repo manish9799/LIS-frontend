@@ -7,6 +7,7 @@ import LISCode from './pages/LISCode';
 import TestParameter from './pages/TestParameter';
 import Navbar from './components/Navbar/Navbar';
 import './App.css';
+import NavDrawer from './components/Navbar/NavDrawer';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       // basename={config.basename}
       >
         <Navbar />
+        {/* <NavDrawer/> */}
         <Routes>
           <Route path='/' exact Component={Home} />
           <Route path='/analyzer' exact Component={Analyzer} />
