@@ -10,7 +10,7 @@ import { UpdateData, postData } from '../../fetchServices';
 import { schemaData } from '../../schemaData';
 import AlertDialog from '../AlertDialog';
 
-const AddEditPopup = ({ modalValue, editDataValue,url,fetchData }) => {
+const AddEditPopup = ({ modalValue, editDataValue,url,fetchData,LisCodesList,analyzersList }) => {
 
     const [editValue, setEditValue] = editDataValue;
     const [openModal, setOpenModal] = modalValue;
@@ -22,6 +22,10 @@ const AddEditPopup = ({ modalValue, editDataValue,url,fetchData }) => {
         message:'Data updated successfully'
     })
     const currentDateTime = new Date().toISOString();
+    const [dropDownList,setDropDownList] = useState({
+        'analyzerId' : [],
+        'liscodeId' : []
+    })
 
     const {
         register,
@@ -36,7 +40,7 @@ const AddEditPopup = ({ modalValue, editDataValue,url,fetchData }) => {
     // console.log("errors", errors);
 
     const upperCase =(data)=>{
-        if(data.length){
+        if(data?.length){
             return data.slice(0,1).toUpperCase() + data.slice(1)
         }
     }
@@ -44,6 +48,25 @@ const AddEditPopup = ({ modalValue, editDataValue,url,fetchData }) => {
     useEffect(()=>{
         setDataKeys(Object.keys(schemaData[url]))
     },[url])
+
+    useEffect(()=>{
+        if(analyzersList?.length){
+            let data = []
+            analyzersList.map((item,i)=>{
+                data.push({label: item?.name, value: item.id})
+            })  
+            setDropDownList({...dropDownList,['analyzerId']:data})
+        }
+        if(LisCodesList?.length){
+            let data = []
+            LisCodesList.map((item,i)=>{
+                data.push({label: item?.name, value: item.id})
+            })  
+            setDropDownList({...dropDownList,['liscodeId']:data})
+        }
+
+
+    },[LisCodesList,analyzersList])
 
     useEffect(() => {
         if (editValue?.id) {
@@ -68,8 +91,11 @@ const AddEditPopup = ({ modalValue, editDataValue,url,fetchData }) => {
         e.preventDefault()
         let data = watch()
         let addData = data;
-        addData.createdBy = currentDateTime;
-        addData.updatedBy = currentDateTime;
+        addData.createdBy = 1;
+        addData.updatedBy = 1;
+        addData.createdOn = currentDateTime;
+        addData.updatedOn = currentDateTime;
+        addData.isActive = true
         addData.id = 0;
         if(editValue?.id){
             data.id = editValue.id
@@ -106,11 +132,11 @@ const AddEditPopup = ({ modalValue, editDataValue,url,fetchData }) => {
                             <Grid container spacing={2} sx={{mx:3}}  >
                                 {dataKeys?.map((item,i)=>(
                                     <Grid item xs={10.5} sm={5.5} md={3.7} lg={3.7}>
-                                        {item == 'type' ? 
+                                        {item == "analyzerId" || item == "liscodeId"? 
                                         <SelectFieldComponent
                                             name={item}
-                                            label={upperCase(item)}
-                                            menuOptions={[{ label: 'Num', value: 'num' }, { label: 'Char', value: 'char' }]}
+                                            label={ item == "analyzerId" ? 'Analyzers' : item == "liscodeId" ? 'Liscodes' : 'Type' }
+                                            menuOptions={dropDownList[item]}
                                             register={register}
                                             watch={watch}
                                         /> 

@@ -55,6 +55,14 @@
     color: aqua;
 }
 
+.css-1c35hjw-MuiPaper-root-MuiAccordion-root.Mui-expanded {
+    margin: 0px !important;
+}
+
+.css-9pexns-MuiButtonBase-root-MuiAccordionSummary-root.Mui-expanded {
+    min-height: 45px !important;
+}
+
 @media (max-width : 550px) {
     .logo{
         font-size: 12px !important;

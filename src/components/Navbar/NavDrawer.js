@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { Box,Accordion, AccordionDetails, AccordionSummary, Divider, Drawer, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
+import { Box, Accordion, AccordionDetails, AccordionSummary, Divider, Drawer, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { navConfig } from '../../configData';
 import { Link } from 'react-router-dom';
+import './Navbar.css'
 
 const NavDrawer = ({ open, setOpen }) => {
   const [expanded, setExpanded] = useState({});
@@ -26,7 +27,7 @@ const NavDrawer = ({ open, setOpen }) => {
         onClose={() => setOpen(false)}
       >
         <Box
-          sx={{ width: 250, margin: 0, padding: 0 }}
+          sx={{ width: 250, margin: 0, padding: 0, height: '100%' }}
           role="presentation"
           onKeyDown={() => setOpen(false)}
         >
@@ -39,18 +40,19 @@ const NavDrawer = ({ open, setOpen }) => {
                     onChange={handleAccordionChange(index)}
                   >
                     <AccordionSummary
+                      sx={{ maxHeight: '30px', margin: '0px !important', }}
                       expandIcon={<ExpandMoreIcon />}
                       aria-controls={`panel${index}-content`}
                       id={`panel${index}-header`}
                     >
                       <ListItemText primary={item.title} />
                     </AccordionSummary>
-                    <AccordionDetails>
+                    <AccordionDetails sx={{ padding: '8px', backgroundColor: '#cecece' }}>
                       <List disablePadding>
                         {item.children.map((childItem, childIndex) => (
-                          <ListItem key={childItem.title} disablePadding>
+                          <ListItem key={childItem.title} sx={{ maxHeight: '35px' }} disablePadding>
                             <ListItemButton onClick={handleItemClick}>
-                              <Link to={`${childItem.path}`} style={{ textDecoration: 'none', color: 'green' }}>
+                              <Link to={`${childItem.path}`} style={{ textDecoration: 'none', color: 'black', }}>
                                 <ListItemText primary={childItem.title} />
                               </Link>
                             </ListItemButton>
@@ -62,7 +64,10 @@ const NavDrawer = ({ open, setOpen }) => {
                 ) : (
                   <ListItem disablePadding>
                     <ListItemButton onClick={handleItemClick}>
+                     
+                      <Link to={`${item.path}`} style={{ textDecoration: 'none', color: 'black', }}>
                       <ListItemText primary={item.title} />
+                      </Link>
                     </ListItemButton>
                   </ListItem>
                 )}

@@ -8,7 +8,7 @@ import { DeleteData } from '../../fetchServices';
 import '../Style.css'
 import AlertDialog from '../AlertDialog';
 
-const TableData = ({ data, headingName, tableHeadings, url, fetchData }) => {
+const TableData = ({ data, headingName, tableHeadings, url, fetchData,LisCodesList,analyzersList }) => {
     const [tableData, setTableData] = useState([])
     const [orderBy, setOrderBy] = useState(null);
     const [order, setOrder] = useState('asc');
@@ -76,6 +76,8 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData }) => {
                 url={url}
                 fetchData={fetchData}
                 tableHeadings={tableHeadings}
+                analyzersList={analyzersList}
+                LisCodesList={LisCodesList}
             />
             <Paper sx={{ borderRadius: '20px', marginX: '30px',mt:2, minHeight: '70vh' }}>
                 <Stack direction={'row'} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}>
