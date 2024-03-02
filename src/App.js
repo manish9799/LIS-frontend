@@ -8,6 +8,21 @@ import TestParameter from './pages/TestParameter';
 import Navbar from './components/Navbar/Navbar';
 import './App.css';
 import NavDrawer from './components/Navbar/NavDrawer';
+import GenLookups from './pages/GenLookups';
+import InvoiceDetails from './pages/InvoiceDetails';
+import InvoiceMasters from './pages/InvoiceMasters';
+import Modules from './pages/Modules';
+import RoleModules from './pages/RoleModules';
+import Roles from './pages/Roles';
+import OrderDetails from './pages/OrderDetails';
+import OrderMasters from './pages/OrderMasters';
+import PathologyPendingQueues from './pages/PathologyPendingQueues';
+import PathologyResultMasters from './pages/PathologyResultMasters';
+import Testcategories from './pages/Testcategories';
+import TestSamples from './pages/TestSamples';
+import TestUnits from './pages/TestUnits';
+import Users from './pages/Users';
+import PathologyResultDetails from './pages/PathologyResultDetails';
 
 function App() {
   return (
@@ -22,8 +37,23 @@ function App() {
           <Route path='/analyzer' exact Component={Analyzer} />
           <Route path='/analyzerParameter' Component={AnalyzerParameter} />
           <Route path='/CPT' Component={CPT} />
-          <Route path='/LSICode' Component={LISCode} />
-          <Route path='/TestParameter' Component={TestParameter} />
+          <Route path='/LISCode' Component={LISCode} />
+          <Route path='/GenLookups' Component={GenLookups} />
+          <Route path='/InvoiceDetails' Component={InvoiceDetails} />
+          <Route path='/InvoiceMasters' Component={InvoiceMasters} />
+          <Route path='/Modules' Component={Modules} />
+          <Route path='/RoleModules' Component={RoleModules} />
+          <Route path='/Roles' Component={Roles} />
+          <Route path='/OrderDetails' Component={OrderDetails} />
+          <Route path='/OrderMasters' Component={OrderMasters} />
+          <Route path='/PathologyPendingQueues' Component={PathologyPendingQueues} />
+          <Route path='/PathologyResultDetails' Component={PathologyResultDetails} />
+          <Route path='/PathologyResultMasters' Component={PathologyResultMasters} />
+          <Route path='/TestCategories' Component={Testcategories} />
+          <Route path='/TestParameters' Component={TestParameter} />
+          <Route path='/TestSamples' Component={TestSamples} />
+          <Route path='/TestUnits' Component={TestUnits} />
+          <Route path='/Users' Component={Users} />
           {/* <Route path='/*'  Component={NotFoundPage}/> */}
         </Routes>
       </BrowserRouter>

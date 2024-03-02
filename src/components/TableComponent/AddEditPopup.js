@@ -21,6 +21,7 @@ const AddEditPopup = ({ modalValue, editDataValue,url,fetchData }) => {
         type: 'info',
         message:'Data updated successfully'
     })
+    const currentDateTime = new Date().toISOString();
 
     const {
         register,
@@ -67,8 +68,8 @@ const AddEditPopup = ({ modalValue, editDataValue,url,fetchData }) => {
         e.preventDefault()
         let data = watch()
         let addData = data;
-        // addData.createdBy = 0;
-        // addData.updatedBy = 0;
+        addData.createdBy = currentDateTime;
+        addData.updatedBy = currentDateTime;
         addData.id = 0;
         if(editValue?.id){
             data.id = editValue.id
@@ -99,17 +100,17 @@ const AddEditPopup = ({ modalValue, editDataValue,url,fetchData }) => {
                 sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
             >
                 <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-                    <Card sx={{ backgroundColor: '#ffff', pb: '10px', width: '80%', borderRadius: '20px' }}>
+                    <Card sx={{ backgroundColor: '#ffff', pb: '10px', maxWidth:'80%', borderRadius: '20px' }}>
                         <Typography sx={{ fontSize: '24px', textAlign: 'center', padding: '10px', fontWeight: '600' }}> {editValue.id ? 'Edit Data' : 'Add Data'}</Typography>
                         <form onSubmit={onSubmit} >
                             <Grid container spacing={2} sx={{mx:3}}  >
                                 {dataKeys?.map((item,i)=>(
                                     <Grid item xs={10.5} sm={5.5} md={3.7} lg={3.7}>
-                                        {item == 'isActive' ? 
+                                        {item == 'type' ? 
                                         <SelectFieldComponent
                                             name={item}
                                             label={upperCase(item)}
-                                            menuOptions={[{ label: 'True', value: true }, { label: 'False', value: false }]}
+                                            menuOptions={[{ label: 'Num', value: 'num' }, { label: 'Char', value: 'char' }]}
                                             register={register}
                                             watch={watch}
                                         /> 
