@@ -1,65 +1,77 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import Button from '@mui/material/Button';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+import React, { useState } from 'react'
+import { Box,Accordion, AccordionDetails, AccordionSummary, Divider, Drawer, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { navConfig } from '../../configData';
+import { Link } from 'react-router-dom';
 
-const NavDrawer =({open,setOpen})=> {
+const NavDrawer = ({ open, setOpen }) => {
+  const [expanded, setExpanded] = useState({});
 
-  const list = () => (
-    <Box
-      sx={{ width:  250 }}
-      role="presentation"
-      onClick={()=>setOpen(false)}
-      onKeyDown={()=>setOpen(false)}
-    >
-      <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </Box>
-  );
+  const handleAccordionChange = (index) => (event, isExpanded) => {
+    setExpanded((prevExpanded) => ({
+      ...prevExpanded,
+      [index]: isExpanded ? true : false,
+    }));
+  };
+
+  const handleItemClick = () => {
+    setOpen(false);
+  };
 
   return (
     <div>
-        <React.Fragment >
-          {/* <Button onClick={()=>setOpen(true)}>dd</Button> */}
-          <Drawer
-            anchor={'left'}
-            open={open} 
-            onClose={()=>setOpen(false)}
-          >
-            {list('left')}
-          </Drawer>
-        </React.Fragment>
+      <Drawer
+        anchor="left"
+        open={open}
+        onClose={() => setOpen(false)}
+      >
+        <Box
+          sx={{ width: 250, margin: 0, padding: 0 }}
+          role="presentation"
+          onKeyDown={() => setOpen(false)}
+        >
+          <List disablePadding>
+            {navConfig.map((item, index) => (
+              <React.Fragment key={item.title}>
+                {item.children && item.children.length > 0 ? (
+                  <Accordion
+                    expanded={expanded[index]}
+                    onChange={handleAccordionChange(index)}
+                  >
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls={`panel${index}-content`}
+                      id={`panel${index}-header`}
+                    >
+                      <ListItemText primary={item.title} />
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <List disablePadding>
+                        {item.children.map((childItem, childIndex) => (
+                          <ListItem key={childItem.title} disablePadding>
+                            <ListItemButton onClick={handleItemClick}>
+                              <Link to={`${childItem.path}`} style={{ textDecoration: 'none', color: 'green' }}>
+                                <ListItemText primary={childItem.title} />
+                              </Link>
+                            </ListItemButton>
+                          </ListItem>
+                        ))}
+                      </List>
+                    </AccordionDetails>
+                  </Accordion>
+                ) : (
+                  <ListItem disablePadding>
+                    <ListItemButton onClick={handleItemClick}>
+                      <ListItemText primary={item.title} />
+                    </ListItemButton>
+                  </ListItem>
+                )}
+              </React.Fragment>
+            ))}
+          </List>
+          <Divider />
+        </Box>
+      </Drawer>
     </div>
   );
 }
