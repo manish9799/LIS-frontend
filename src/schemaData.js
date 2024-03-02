@@ -10,11 +10,11 @@ export const schemaData = {
         // createdBy: yup.string().required('required'),
         // updatedBy: yup.string().required('required'),
     },
-    'AnalyzerParameter' : {
+    'AnalyzerParameters' : {
         analyzerId: yup.number().required('required'),
         liscodeId: yup.number().required('required'),
         lascodeId: yup.number().required('required'),
-        isActive: yup.boolean().required('required'),
+        // isActive: yup.boolean().required('required'),
         desc: yup.string().required('required'),
         // createdOn: yup.string().required('required'),
         // updatedOn: yup.string().required('required'),
