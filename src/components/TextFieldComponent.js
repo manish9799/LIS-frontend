@@ -4,7 +4,6 @@ import React from 'react'
 const TextFieldComponent = (props) => {
     const { className, name,label,checkValidation,register,watch, ...rest } = props
 
-    // console.log('pppp',checkValidation);
     return (
         <TextField
             {...rest}

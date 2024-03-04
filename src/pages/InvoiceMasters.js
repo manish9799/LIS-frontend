@@ -1,37 +1,33 @@
 import React, { useEffect, useState } from 'react'
 import TableData from '../components/TableComponent/TableData'
 import { data, analyzerTableHeadings } from '../configData';
-import { GetData } from '../fetchServices';
-import AlertDialog from '../components/AlertDialog';
+import { useDispatch, useSelector } from 'react-redux';
+import { getInvoiceMasters } from '../redux/actions/invoiceOrderActions';
 
 const InvoiceMasters = () => {
   const URL = 'InvoiceMasters';
   const [data,setData] = useState([]);
+  const dispatch = useDispatch()
+  const invoiceMastersList =  useSelector((state) => state.invoiceOrderReducer.invoiceMastersList);
 
-  const fetchData = async () => {
-    try {
-      const result = await GetData(URL);
-      setData(result);
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
-  useEffect(() => {
-    fetchData();
-  }, []);
+  useEffect(()=>{
+    dispatch(getInvoiceMasters(URL));
+  },[])
   
-  // useEffect(() => {
-  //   GetData('InvoiceMasters')
-  // }, [])
+  useEffect(()=>{
+    if(invoiceMastersList && invoiceMastersList?.length){
+      setData(invoiceMastersList)
+    }
+  },[invoiceMastersList])
+
   return (
     <>
-    {/* <AlertDialog /> */}
       <TableData
         url={URL}
         data={data}
+        rerender = {getInvoiceMasters}
         headingName={'InvoiceMasters'}
         tableHeadings={analyzerTableHeadings}
-        fetchData={fetchData}
       />
     </>
   )

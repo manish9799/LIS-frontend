@@ -1,8 +1,4 @@
-export const SUCCESS_ALERT = 'SUCCESS_ALERT'; 
-export const INFO_ALERT = 'INFO_ALERT'; 
-export const ERROR_ALERT = 'ERROR_ALERT';
-export const PROGRESS_DONE = 'PROGRESS_DONE';
-export const PROGRESS_START = 'PROGRESS_START';
+import { ERROR_ALERT, INFO_ALERT, PROGRESS_DONE, PROGRESS_START, SUCCESS_ALERT } from "../ActionTypes";
 
 const initialState = {
   message: '',

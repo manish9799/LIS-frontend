@@ -1,34 +1,33 @@
 import React, { useEffect, useState } from 'react'
 import TableData from '../components/TableComponent/TableData'
 import { cptsTableHeadings, data } from '../configData'
-import { GetData } from '../fetchServices'
+import { getCpt } from '../redux/actions/servicesActions'
+import { useDispatch, useSelector } from 'react-redux'
 
 const CPT = () => {
-
+  const dispatch = useDispatch();
   const URL = 'Cpts';
   const [data,setData] = useState([]);
+  const cptList =  useSelector((state) => state.servicesReducer.cptList);
 
-  const fetchData = async () => {
-    try {
-      const result = await GetData(URL);
-      setData(result);
-    } catch (error) {
-      console.error('Error:', error);
+  useEffect(()=>{
+    dispatch(getCpt(URL));
+  },[])
+  
+  useEffect(()=>{
+    if(cptList && cptList?.length){
+      setData(cptList)
     }
-  };
-
-  useEffect(() => {
-    fetchData()
-  }, [])
+  },[cptList])
 
   return (
     <>
      <TableData 
        url={URL}
        data={data}
+       rerender = {getCpt}
        headingName={'CPT'}
        tableHeadings={cptsTableHeadings}
-       fetchData={fetchData}
      />
     </>
   )

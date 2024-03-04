@@ -4,11 +4,13 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import AddEditPopup from './AddEditPopup';
-import { DeleteData } from '../../fetchServices';
 import '../Style.css'
-import AlertDialog from '../AlertDialog';
+import { useDispatch } from 'react-redux';
+import { deleteAnalyzers } from '../../redux/actions/servicesActions';
+import ConfirmDialog from '../ConfirmDialog';
 
-const TableData = ({ data, headingName, tableHeadings, url, fetchData,LisCodesList,analyzersList }) => {
+const TableData = ({ data, headingName, tableHeadings, url, fetchData,LisCodesList,analyzersList,rerender }) => {
+    const dispatch = useDispatch()
     const [tableData, setTableData] = useState([])
     const [orderBy, setOrderBy] = useState(null);
     const [order, setOrder] = useState('asc');
@@ -18,6 +20,9 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData,LisCodesLi
     const [openModal, setOpenModal] = useState(false);
     const [editValue, setEditValue] = useState({})
     const [open,setOpen] = useState(false);
+  const [deleteDialog, setDeleteDialog] = useState(false);
+  const [deleteId,setDeleteId] = useState(0)
+
 
     useEffect(() => {
         setTableData(data)
@@ -33,7 +38,7 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData,LisCodesLi
         setSearchTerm(event.target.value);
     };
 
-    const filteredData = tableData?.filter((row) =>
+    const filteredData = tableData && tableData?.filter((row) =>
         row?.name?.toLowerCase().includes(searchTerm?.toLowerCase())
         || row?.analyzerId?.toString().includes(searchTerm)
         || row?.cptid?.toString().includes(searchTerm)
@@ -52,12 +57,15 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData,LisCodesLi
         setPage(0);
     };
 
-    const deleteData = ((id) => {
-        DeleteData(url, id)
-        setTimeout(() => {
-            fetchData()
-        }, 1000);
-    })
+    const confirmDelete = (id) => {
+        setDeleteId(id)
+        setDeleteDialog(true)
+    }
+
+    const deleteData = () => {
+        dispatch(deleteAnalyzers(url,deleteId,rerender))
+        setDeleteDialog(false)
+    }
 
     const editData = (data) => {
         setEditValue(data)
@@ -66,11 +74,9 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData,LisCodesLi
 
     return (
         <>  
-             <AlertDialog 
-                openAlert={[open,setOpen]} 
-                type={'error'} 
-                message={'Data deleted succesfully'}  />
+           <ConfirmDialog remove={deleteData} openDialog={[deleteDialog, setDeleteDialog]} />
             <AddEditPopup
+                rerender={rerender}
                 modalValue = {[openModal, setOpenModal]}
                 editDataValue={[editValue, setEditValue]}
                 url={url}
@@ -108,7 +114,7 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData,LisCodesLi
                         <TableHead>
                             <TableRow>
                                 {tableHeadings?.map((item, i) => (
-                                    <TableCell key={item.id} sx={{ paddingY: '10px', fontWeight: '600', fontSize: '13px', backgroundColor: 'lightgray',minWidth: item.id !== 'id' ? '130px' :'50px' }}>
+                                    <TableCell key={item.id} sx={{  fontWeight: '600', fontSize: '13px', backgroundColor: 'lightgray',minWidth: item.id !== 'id' ? '130px' :'50px' }}>
                                         <TableSortLabel
                                             active={orderBy === `${item.id}`}
                                             direction={orderBy === `${item.id}` ? order : 'asc'}
@@ -128,16 +134,16 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData,LisCodesLi
                                         <TableRow key={row.id}>
                                             {tableHeadings?.map((item, i) => (
                                                 <>
-                                                    {item.id == 'actions' ?
+                                                    {item.id === 'actions' ?
                                                         <TableCell key={i}>
                                                             <IconButton aria-label="edit" onClick={() => editData(row)}>
                                                                 <EditIcon />
                                                             </IconButton>
-                                                            <IconButton onClick={() => deleteData(row.id)} aria-label="delete">
+                                                            <IconButton onClick={() => confirmDelete(row.id)} aria-label="delete">
                                                                 <DeleteIcon sx={{ color: 'red' }} />
                                                             </IconButton>
                                                         </TableCell> :
-                                                        item.id == 'isActive' ?
+                                                        item.id === 'isActive' ?
                                                             <TableCell key={i} sx={{ paddingY: '0px', fontWeight: 600, color: row.isActive ? 'green' : 'red' }}>{row.isActive ? 'Active' : 'In Active'}</TableCell> :
                                                             <TableCell key={i} sx={{ paddingY: '0px' }}>{row[item.id]}</TableCell>
                                                     }

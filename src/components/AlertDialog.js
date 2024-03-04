@@ -3,13 +3,13 @@ import React, { useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 
 const AlertDialog = ({ type, message, openAlert }) => {
-  const [open, setOpen] = openAlert;
+  const [showAlert, setShowAlert] = openAlert;
   const handleClose = () => {
-    setOpen(false);
+    setShowAlert(false);
   };
 
   return (
-    <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'right' }} open={open} autoHideDuration={6000} onClose={handleClose}>
+    <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'right' }} open={showAlert} autoHideDuration={6000} onClose={handleClose}>
     <Alert
       onClose={handleClose}
       severity={type}

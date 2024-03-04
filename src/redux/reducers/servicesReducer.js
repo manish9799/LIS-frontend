@@ -1,0 +1,58 @@
+import { DATA_LOADER, FETCH_FAIL, GET_ANALYZERS, GET_ANALYZERS_PARAMETER, GET_CPT, GET_LISCODE } from "../ActionTypes";
+
+const initialState = {
+    loading: false,
+    analyzerLists:[],
+    analyzerParameterList:[],
+    cptList:[],
+    lisCodesList:[],
+};
+
+const servicesReducer = (state = initialState, action) => {
+    switch (action.type) {
+      case DATA_LOADER: {
+        return {
+          ...state,
+          loading: action.payload,
+        };
+      }
+      case GET_ANALYZERS: {
+        return {
+          ...state,
+          loading: false,
+          analyzerLists: action.payload,
+        };
+      }
+      case GET_ANALYZERS_PARAMETER: {
+        return {
+          ...state,
+          loading: false,
+          analyzerParameterList: action.payload,
+        };
+      }
+      case GET_CPT: {
+        return {
+          ...state,
+          loading: false,
+          cptList: action.payload,
+        };
+      }
+      case GET_LISCODE: {
+        return {
+          ...state,
+          loading: false,
+          lisCodesList: action.payload,
+        };
+      }
+      case FETCH_FAIL:
+        return {
+          ...state,
+          loading: false,
+        };
+      default: {
+        return state;
+      }
+    }
+};
+
+export default servicesReducer;
