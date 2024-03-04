@@ -75,7 +75,7 @@ export const navConfig = [
 // ]
 
 export const analyzerTableHeadings = [
-  { id: 'id', label: 'Id' },
+  { id: 'id', label: 'Sr.No' },
   { id: 'name', label: 'Name' },
   { id: 'vendor', label: 'Vendor' },
   { id: 'isActive', label: 'IsActive' },
@@ -87,9 +87,9 @@ export const analyzerTableHeadings = [
 ];
 
 export const analyzerParameterTableHeadings = [
-  { id: 'id', label: 'Id' },
-  { id: 'analyzerId', label: 'Analyzer Id' },
-  { id: 'liscodeId', label: 'Liscode Id' },
+  { id: 'id', label: 'Sr.No' },
+  { id: 'analyzerName', label: 'Analyzer Name' },
+  { id: 'liscodeName', label: 'Liscode Name' },
   { id: 'lascodeId', label: 'Lascode Id' },
   { id: 'desc', label: 'Description' },
   { id: 'isActive', label: 'IsActive' },
@@ -101,9 +101,9 @@ export const analyzerParameterTableHeadings = [
 ];
 
 export const cptsTableHeadings = [
-  { id: 'id', label: 'Id' },
+  { id: 'id', label: 'Sr.No' },
   { id: 'name', label: 'Name' },
-  { id: 'Description', label: 'Description' },
+  { id: 'description', label: 'Description' },
   { id: 'isActive', label: 'IsActive' },
   { id: 'createdOn', label: 'CreatedOn' },
   { id: 'updatedOn', label: 'UpdatedOn' },
@@ -113,7 +113,7 @@ export const cptsTableHeadings = [
 ];
 
 export const liscodesTableHeadings = [
-  { id: 'id', label: 'Id' },
+  { id: 'id', label: 'Sr.No' },
   { id: 'name', label: 'Name' },
   { id: 'type', label: 'Type' },
   { id: 'desc', label: 'Description' },
@@ -126,9 +126,9 @@ export const liscodesTableHeadings = [
 ];
 
 export const testParameterTableHeadings = [
-  { id: 'id', label: 'Id' },
-  { id: 'cptid', label: 'CPT ID' },
-  { id: 'liscodeId', label: 'Liscode Id' },
+  { id: 'id', label: 'Sr.No' },
+  { id: 'cptName', label: 'CPT Name' },
+  { id: 'liscodeName', label: 'Liscode Name' },
   { id: 'unit', label: 'Unit' },
   { id: 'range', label: 'Range' },
   { id: 'desc', label: 'Description' },

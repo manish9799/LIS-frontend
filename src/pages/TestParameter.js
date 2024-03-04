@@ -3,6 +3,7 @@ import TableData from '../components/TableComponent/TableData'
 import { data, testParameterTableHeadings } from '../configData'
 import { useDispatch, useSelector } from 'react-redux'
 import { getTestParameter } from '../redux/actions/testsActions'
+import { getCpt, getLisCodes } from '../redux/actions/servicesActions'
 
 const TestParameter = () => {
 
@@ -10,9 +11,12 @@ const TestParameter = () => {
   const [data,setData] = useState([]);
   const dispatch = useDispatch()
   const testParameterList =  useSelector((state) => state.testsReducer.testParameterList);
+  const {cptList,lisCodesList,} =  useSelector((state) => state.servicesReducer);
 
   useEffect(()=>{
     dispatch(getTestParameter(URL));
+    dispatch(getCpt('Cpts'));
+    dispatch(getLisCodes('LisCodes'));
   },[])
   
   useEffect(()=>{
@@ -29,6 +33,8 @@ const TestParameter = () => {
         rerender = {getTestParameter}
         headingName={'Test Parameter'}
         tableHeadings={testParameterTableHeadings}
+        cptList={cptList}
+        LisCodesList={lisCodesList}
       />
     </>
   )
