@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 import { deleteAnalyzers } from '../../redux/actions/servicesActions';
 import ConfirmDialog from '../ConfirmDialog';
 
-const TableData = ({ data, headingName, tableHeadings, url, fetchData,LisCodesList,analyzersList,rerender }) => {
+const TableData = ({ data, headingName, tableHeadings, url, fetchData,LisCodesList,analyzersList,cptList,rerender }) => {
     const dispatch = useDispatch()
     const [tableData, setTableData] = useState([])
     const [orderBy, setOrderBy] = useState(null);
@@ -40,8 +40,8 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData,LisCodesLi
 
     const filteredData = tableData && tableData?.filter((row) =>
         row?.name?.toLowerCase().includes(searchTerm?.toLowerCase())
-        || row?.analyzerId?.toString().includes(searchTerm)
-        || row?.cptid?.toString().includes(searchTerm)
+        || row?.analyzerName?.toString().includes(searchTerm)
+        || row?.cptName?.toString().includes(searchTerm)
     );
 
     const sortedData = orderBy
@@ -82,8 +82,10 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData,LisCodesLi
                 url={url}
                 fetchData={fetchData}
                 tableHeadings={tableHeadings}
+                cptList={cptList}
                 analyzersList={analyzersList}
                 LisCodesList={LisCodesList}
+
             />
             <Paper sx={{ borderRadius: '20px', marginX: '30px',mt:2, minHeight: '70vh' }}>
                 <Stack direction={'row'} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}>
@@ -114,7 +116,7 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData,LisCodesLi
                         <TableHead>
                             <TableRow>
                                 {tableHeadings?.map((item, i) => (
-                                    <TableCell key={item.id} sx={{  fontWeight: '600', fontSize: '13px', backgroundColor: 'lightgray',minWidth: item.id !== 'id' ? '130px' :'50px' }}>
+                                    <TableCell key={item.id} sx={{  fontWeight: '600', fontSize: '13px', backgroundColor: 'lightgray',minWidth: item.id !== 'id' ? '150px' :'50px' }}>
                                         <TableSortLabel
                                             active={orderBy === `${item.id}`}
                                             direction={orderBy === `${item.id}` ? order : 'asc'}
@@ -130,7 +132,7 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData,LisCodesLi
                         <TableBody>
                             {sortedData?.length ?
                                 <>
-                                    {sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
+                                    {sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row,rowIndex) => (
                                         <TableRow key={row.id}>
                                             {tableHeadings?.map((item, i) => (
                                                 <>
@@ -144,8 +146,10 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData,LisCodesLi
                                                             </IconButton>
                                                         </TableCell> :
                                                         item.id === 'isActive' ?
-                                                            <TableCell key={i} sx={{ paddingY: '0px', fontWeight: 600, color: row.isActive ? 'green' : 'red' }}>{row.isActive ? 'Active' : 'In Active'}</TableCell> :
-                                                            <TableCell key={i} sx={{ paddingY: '0px' }}>{row[item.id]}</TableCell>
+                                                            <TableCell key={i} sx={{ paddingY: '5px', fontWeight: 600, color: row.isActive ? 'green' : 'red' }}>{row.isActive ? 'Active' : 'In Active'}</TableCell> :
+                                                            item.id === 'id' ?
+                                                            <TableCell key={i} sx={{ paddingY: '5px' }}>{(page * rowsPerPage) + rowIndex + 1}</TableCell>:
+                                                            <TableCell key={i} sx={{ paddingY: '5px' }}>{row[item.id] || '-'}</TableCell>
                                                     }
                                                 </>
                                             ))}

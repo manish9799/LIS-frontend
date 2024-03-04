@@ -10,7 +10,7 @@ import { schemaData } from '../../schemaData';
 import { useDispatch } from 'react-redux';
 import { addDataAction, updateDataAction } from '../../redux/actions/servicesActions';
 
-const AddEditPopup = ({ modalValue, editDataValue,url,fetchData,LisCodesList,analyzersList,rerender }) => {
+const AddEditPopup = ({ modalValue, editDataValue,url,fetchData,LisCodesList,analyzersList,cptList,rerender }) => {
 
     const dispatch = useDispatch()
     const [editValue, setEditValue] = editDataValue;
@@ -20,6 +20,7 @@ const AddEditPopup = ({ modalValue, editDataValue,url,fetchData,LisCodesList,ana
     const currentDateTime = new Date().toISOString();
     const [analyzerMenuOptions,setAnalyzerMenuOptions] = useState([]);
     const [liscodeMenuOptions,setLiscodeMenuOptions] = useState([]);
+    const [cptMenuOptions,setCptMenuOptions] = useState([]);
     const [typeMenuOptions,setTypeMenuOptions] = useState([
         {label:'CHAR',value:'Char'},
         {label:'NUM',value:'Num'},
@@ -62,20 +63,26 @@ const AddEditPopup = ({ modalValue, editDataValue,url,fetchData,LisCodesList,ana
             })  
             setLiscodeMenuOptions(data)
         }
-    },[analyzersList,LisCodesList])
-
- 
+        if(cptList?.length){
+            let data = []
+            cptList.map((item,i)=>{
+                data.push({label: item?.name, value: item.id})
+            })  
+            setCptMenuOptions(data)
+        }
+    },[analyzersList,LisCodesList,cptList])
 
     useEffect(() => {
         if (editValue?.id) {
             Object.keys(editValue).forEach(key => {
-                // Use setValue to set the value dynamically
-                setValue(key, editValue[key]);
+                // console.log("pp",key);
+                // if(key == '')
+                    setValue(key, editValue[key]); 
             });
         }
     }, [editValue]);
 
-    // console.log("getValue",watch());
+    console.log("getValue",watch());
 
     const Close =()=>{
         setEditValue({})
@@ -93,6 +100,11 @@ const AddEditPopup = ({ modalValue, editDataValue,url,fetchData,LisCodesList,ana
         addData.updatedOn = currentDateTime;
         addData.isActive = true
         addData.id = 0;
+        
+        if(url === 'Cpts'){
+            addData.unitId = 0;
+            addData.categoryId = 0;
+        }
         if(editValue?.id){
             data.id = editValue.id
             dispatch(updateDataAction(url,editValue.id,data,rerender))
@@ -117,12 +129,13 @@ const AddEditPopup = ({ modalValue, editDataValue,url,fetchData,LisCodesList,ana
                             <Grid container spacing={2} sx={{mx:3}}  >
                                 {dataKeys?.map((item,i)=>(
                                     <Grid item xs={10.5} sm={5.5} md={3.7} lg={3.7}>
-                                        {item === "analyzerId" || item === "liscodeId" || item === "type"? 
+                                        {item === "analyzerId" || item === "liscodeId" || item === "cptid"|| item === "type"? 
                                         <SelectFieldComponent
                                             name={item}
-                                            label={ item === "analyzerId" ? 'Analyzers' : item === "liscodeId" ? 'Liscodes' : 'Type' }
+                                            label={ item === "analyzerId" ? 'Analyzers' : item === "liscodeId" ? 'Liscodes' : item === "cptid" ? 'CptId': 'Type' }
                                             menuOptions={item === "analyzerId" ? analyzerMenuOptions :
-                                                         item === "Analyzers" ? liscodeMenuOptions :
+                                                         item === "liscodeId" ? liscodeMenuOptions :
+                                                         item === "cptid" ? cptMenuOptions :
                                                          typeMenuOptions
                                                         }
                                             register={register}
