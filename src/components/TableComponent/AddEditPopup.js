@@ -1,4 +1,4 @@
-import { Button, Card, CardHeader, Grid, Stack, TextField, Typography, Box, Modal } from '@mui/material'
+import { Button, Card, Grid, Stack, TextField, Typography, Box, Modal } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import TextFieldComponent from '../TextFieldComponent'
 import * as yup from 'yup';
@@ -6,26 +6,24 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import '../../App.css'
 import SelectFieldComponent from '../SelectFieldComponent';
-import { UpdateData, postData } from '../../fetchServices';
 import { schemaData } from '../../schemaData';
-import AlertDialog from '../AlertDialog';
+import { useDispatch } from 'react-redux';
+import { addDataAction, updateDataAction } from '../../redux/actions/servicesActions';
 
-const AddEditPopup = ({ modalValue, editDataValue,url,fetchData,LisCodesList,analyzersList }) => {
+const AddEditPopup = ({ modalValue, editDataValue,url,fetchData,LisCodesList,analyzersList,rerender }) => {
 
+    const dispatch = useDispatch()
     const [editValue, setEditValue] = editDataValue;
     const [openModal, setOpenModal] = modalValue;
     const [dataKeys,setDataKeys] = useState([])
     const schema = yup.object().shape(schemaData[url]);
-    const [open,setOpen] = useState(false);
-    const [alertType,setAlertType] = useState({
-        type: 'info',
-        message:'Data updated successfully'
-    })
     const currentDateTime = new Date().toISOString();
-    const [dropDownList,setDropDownList] = useState({
-        'analyzerId' : [],
-        'liscodeId' : []
-    })
+    const [analyzerMenuOptions,setAnalyzerMenuOptions] = useState([]);
+    const [liscodeMenuOptions,setLiscodeMenuOptions] = useState([]);
+    const [typeMenuOptions,setTypeMenuOptions] = useState([
+        {label:'CHAR',value:'Char'},
+        {label:'NUM',value:'Num'},
+    ])
 
     const {
         register,
@@ -52,34 +50,32 @@ const AddEditPopup = ({ modalValue, editDataValue,url,fetchData,LisCodesList,ana
     useEffect(()=>{
         if(analyzersList?.length){
             let data = []
-            analyzersList.map((item,i)=>{
+            analyzersList && analyzersList?.map((item,i)=>{
                 data.push({label: item?.name, value: item.id})
             })  
-            setDropDownList({...dropDownList,['analyzerId']:data})
+            setAnalyzerMenuOptions(data)
         }
         if(LisCodesList?.length){
             let data = []
             LisCodesList.map((item,i)=>{
                 data.push({label: item?.name, value: item.id})
             })  
-            setDropDownList({...dropDownList,['liscodeId']:data})
+            setLiscodeMenuOptions(data)
         }
+    },[analyzersList,LisCodesList])
 
-
-    },[LisCodesList,analyzersList])
+ 
 
     useEffect(() => {
         if (editValue?.id) {
-            // console.log('pp',(Object.keys(schemaData[url])));
-            setValue('name', editValue?.name)
-            setValue('vendor', editValue?.vendor)
-            setValue('isActive', editValue?.isActive)
-            // setValue('createdOn', editValue?.createdOn)
-            // setValue('updatedOn', editValue?.updatedOn)
-            // setValue('createdBy', editValue?.createdBy)
-            // setValue('updatedBy', editValue?.updatedBy)
+            Object.keys(editValue).forEach(key => {
+                // Use setValue to set the value dynamically
+                setValue(key, editValue[key]);
+            });
         }
-    }, [editValue])
+    }, [editValue]);
+
+    // console.log("getValue",watch());
 
     const Close =()=>{
         setEditValue({})
@@ -99,27 +95,16 @@ const AddEditPopup = ({ modalValue, editDataValue,url,fetchData,LisCodesList,ana
         addData.id = 0;
         if(editValue?.id){
             data.id = editValue.id
-            UpdateData(url,editValue.id,data)
+            dispatch(updateDataAction(url,editValue.id,data,rerender))
             Close()
-            setTimeout(() => {
-                fetchData()
-                setOpen(true)
-                setAlertType({type:'info',message:'Data updated successfully'})
-            }, 1000);
         }else{
-            postData(url,addData)
+            dispatch(addDataAction(url,addData,rerender))
             Close()
-            setTimeout(() => {
-                fetchData()
-                setOpen(true)
-                setAlertType({type:'success',message:'Post data successfully'})
-            }, 1000);
         }
     }
 
     return (
         <> 
-        <AlertDialog openAlert={[open,setOpen]} type={alertType.type} message={alertType.message}  />
             <Modal
                 open={openModal}
                 onClose={Close}
@@ -132,15 +117,18 @@ const AddEditPopup = ({ modalValue, editDataValue,url,fetchData,LisCodesList,ana
                             <Grid container spacing={2} sx={{mx:3}}  >
                                 {dataKeys?.map((item,i)=>(
                                     <Grid item xs={10.5} sm={5.5} md={3.7} lg={3.7}>
-                                        {item == "analyzerId" || item == "liscodeId"? 
+                                        {item === "analyzerId" || item === "liscodeId" || item === "type"? 
                                         <SelectFieldComponent
                                             name={item}
-                                            label={ item == "analyzerId" ? 'Analyzers' : item == "liscodeId" ? 'Liscodes' : 'Type' }
-                                            menuOptions={dropDownList[item]}
+                                            label={ item === "analyzerId" ? 'Analyzers' : item === "liscodeId" ? 'Liscodes' : 'Type' }
+                                            menuOptions={item === "analyzerId" ? analyzerMenuOptions :
+                                                         item === "Analyzers" ? liscodeMenuOptions :
+                                                         typeMenuOptions
+                                                        }
                                             register={register}
                                             watch={watch}
                                         /> 
-                                        : item == 'desc' || item ==  'description' ? 
+                                        : item === 'desc' || item ===  'description' ? 
                                         <TextFieldComponent
                                         multiline
                                         rows={3}

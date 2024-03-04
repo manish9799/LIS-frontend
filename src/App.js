@@ -23,14 +23,31 @@ import TestSamples from './pages/TestSamples';
 import TestUnits from './pages/TestUnits';
 import Users from './pages/Users';
 import PathologyResultDetails from './pages/PathologyResultDetails';
+import AlertDialog from './components/AlertDialog';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 
 function App() {
+  const dispatch = useDispatch();
+  const [showAlert, setShowAlert] = useState(false);
+  const alert = useSelector((state) => state.alertReducer);
+  const {type, message, progress} = alert;
+
+  useEffect(() => {
+    if(type) setShowAlert(true);
+    setTimeout(() => {
+      dispatch({
+        type :'SET_INITIALSTATE'
+      })
+    }, 5000);
+  }, [alert]);
+
   return (
     <div className="App">
-      <BrowserRouter
-      // basename={config.basename}
+      <BrowserRouter // basename={config.basename} 
       >
         <Navbar />
+        {type && <AlertDialog type={type} message={message} openAlert={[showAlert, setShowAlert]} />}
         {/* <NavDrawer/> */}
         <Routes>
           <Route path='/' exact Component={Home} />

@@ -8,24 +8,23 @@ export const GetData = async (url) => {
           'Content-Type': 'application/json',
         },
       });
-      let result = response.data
+      let result = response
       return result;
-    //   setData(response.data);
     } catch (error) {
-      console.error('Error:', error);
+      return error;
     }
   };
 
-export const postData = async (url,postData) => {
+export const PostData = async (url,postData) => {
     try {
       const postResponse = await axios.post(`${baseURL}${url}`, postData, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
-      console.log('POST Response:', postResponse.data);
+      return postResponse;
     } catch (error) {
-      console.error('Error:', error);
+      return error;
     }
   };
 
@@ -36,20 +35,20 @@ export const UpdateData = async (url,id,data) => {
           'Content-Type': 'application/json',
         },
       });
-      console.log('POST Response:', updateResponse.data);
+      return updateResponse;
     } catch (error) {
       console.error('Error:', error);
     }
   };
 
-export const DeleteData = async (url,id) => {
+export const DeleteData = async (url) => {
     try {
-      const updateResponse = await axios.delete(`${baseURL}${url}/${id}`,{
+      const response = await axios.delete(`${baseURL}${url}`,{
         headers: {
           'Content-Type': 'application/json',
         },
       });
-      console.log('POST Response:', updateResponse.data);
+      return response;
     } catch (error) {
       console.error('Error:', error);
     }

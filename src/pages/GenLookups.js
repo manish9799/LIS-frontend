@@ -1,37 +1,33 @@
 import React, { useEffect, useState } from 'react'
 import TableData from '../components/TableComponent/TableData'
 import { data, analyzerTableHeadings } from '../configData';
-import { GetData } from '../fetchServices';
-import AlertDialog from '../components/AlertDialog';
+import { getGenLookups } from '../redux/actions/othersActions';
+import { useDispatch, useSelector } from 'react-redux';
 
 const GenLookups = () => {
   const URL = 'GenLookups';
   const [data,setData] = useState([]);
+  const dispatch = useDispatch()
+  const genLookupsList =  useSelector((state) => state.othersReducer.genLookupsList);
 
-  const fetchData = async () => {
-    try {
-      const result = await GetData(URL);
-      setData(result);
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
-  useEffect(() => {
-    fetchData();
-  }, []);
+  useEffect(()=>{
+    dispatch(getGenLookups(URL));
+  },[])
   
-  // useEffect(() => {
-  //   GetData('GenLookupss')
-  // }, [])
+  useEffect(()=>{
+    if(genLookupsList && genLookupsList?.length){
+      setData(genLookupsList)
+    }
+  },[genLookupsList])
+
   return (
     <>
-    {/* <AlertDialog /> */}
       <TableData
         url={URL}
         data={data}
+        rerender = {getGenLookups}
         headingName={'GenLookups'}
         tableHeadings={analyzerTableHeadings}
-        fetchData={fetchData}
       />
     </>
   )

@@ -1,37 +1,32 @@
 import React, { useEffect, useState } from 'react'
 import TableData from '../components/TableComponent/TableData'
 import { data, analyzerTableHeadings } from '../configData';
-import { GetData } from '../fetchServices';
-import AlertDialog from '../components/AlertDialog';
+import { useDispatch, useSelector } from 'react-redux';
+import { getTestCategories } from '../redux/actions/testsActions';
 
 const Testcategories = () => {
   const URL = 'TestCategories';
   const [data,setData] = useState([]);
+  const dispatch = useDispatch()
+  const testCategoriesList =  useSelector((state) => state.servicesReducer.testCategoriesList);
 
-  const fetchData = async () => {
-    try {
-      const result = await GetData(URL);
-      setData(result);
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
-  useEffect(() => {
-    fetchData();
-  }, []);
+  useEffect(()=>{
+    dispatch(getTestCategories(URL));
+  },[])
   
-  // useEffect(() => {
-  //   GetData('Analyzers')
-  // }, [])
+  useEffect(()=>{
+    if(testCategoriesList && testCategoriesList?.length){
+      setData(testCategoriesList)
+    }
+  },[testCategoriesList])
   return (
     <>
-    {/* <AlertDialog /> */}
       <TableData
         url={URL}
         data={data}
+        rerender = {getTestCategories}
         headingName={'Testcategories'}
         tableHeadings={analyzerTableHeadings}
-        fetchData={fetchData}
       />
     </>
   )

@@ -1,59 +1,37 @@
 import React, { useEffect, useState } from 'react'
 import { analyzerParameterTableHeadings, data } from '../configData'
 import TableData from '../components/TableComponent/TableData'
-import { GetData } from '../fetchServices'
+import { getAnalyzers, getAnalyzersParameter, getLisCodes } from '../redux/actions/servicesActions'
+import { useDispatch, useSelector } from 'react-redux'
 
 const AnalyzerParameter = () => {
-
+  const dispatch = useDispatch();
   const URL = 'AnalyzerParameters';
   const [data,setData] = useState([]);
-  const [analyzers,setAnalyzers] = useState([])
-  const [LisCodes,setLisCodes] = useState([])
+  const {analyzerLists,analyzerParameterList,lisCodesList,} =  useSelector((state) => state.servicesReducer);
 
-  const fetchData = async () => {
-    try {
-      const result = await GetData(URL);
-      setData(result);
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
-  const analyzersData = async () => {
-    try {
-      const result = await GetData('Analyzers');
-      setAnalyzers(result);
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
-  const LisCodesData = async () => {
-    try {
-      const result = await GetData('LisCodes');
-      setLisCodes(result);
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
-  useEffect(() => {
-    fetchData();
-    analyzersData()
-    LisCodesData()
-  }, []);
+  useEffect(()=>{
+    dispatch(getAnalyzersParameter(URL));
+    dispatch(getAnalyzers('Analyzers'));
+    dispatch(getLisCodes('LisCodes'));
+  },[])
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  useEffect(()=>{
+    if(analyzerParameterList && analyzerParameterList?.length){
+      setData(analyzerParameterList)
+    }
+  },[analyzerParameterList])
 
   return (
     <>
       <TableData
         url={URL}
         data={data}
+        rerender = {getAnalyzersParameter}
         headingName={'Analyzer Parameters'}
         tableHeadings={analyzerParameterTableHeadings}
-        fetchData={fetchData}
-        analyzersList={analyzers}
-        LisCodesList={LisCodes}
+        analyzersList={analyzerLists}
+        LisCodesList={lisCodesList}
       />
     </>
   )

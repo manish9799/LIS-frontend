@@ -1,37 +1,33 @@
 import React, { useEffect, useState } from 'react'
 import TableData from '../components/TableComponent/TableData'
 import { data, analyzerTableHeadings } from '../configData';
-import { GetData } from '../fetchServices';
-import AlertDialog from '../components/AlertDialog';
+import { useDispatch, useSelector } from 'react-redux';
+import { getOrderDetails } from '../redux/actions/invoiceOrderActions';
 
 const OrderDetails = () => {
   const URL = 'OrderDetails';
   const [data,setData] = useState([]);
+  const dispatch = useDispatch()
+  const orderDetailsList =  useSelector((state) => state.invoiceOrderReducer.orderDetailsList);
 
-  const fetchData = async () => {
-    try {
-      const result = await GetData(URL);
-      setData(result);
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
-  useEffect(() => {
-    fetchData();
-  }, []);
+  useEffect(()=>{
+    dispatch(getOrderDetails(URL));
+  },[])
   
-  // useEffect(() => {
-  //   GetData('Analyzers')
-  // }, [])
+  useEffect(()=>{
+    if(orderDetailsList && orderDetailsList?.length){
+      setData(orderDetailsList)
+    }
+  },[orderDetailsList])
+  
   return (
     <>
-    {/* <AlertDialog /> */}
       <TableData
         url={URL}
         data={data}
+        rerender = {getOrderDetails}
         headingName={'OrderDetails'}
         tableHeadings={analyzerTableHeadings}
-        fetchData={fetchData}
       />
     </>
   )

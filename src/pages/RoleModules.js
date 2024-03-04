@@ -1,37 +1,33 @@
 import React, { useEffect, useState } from 'react'
 import TableData from '../components/TableComponent/TableData'
 import { data, analyzerTableHeadings } from '../configData';
-import { GetData } from '../fetchServices';
-import AlertDialog from '../components/AlertDialog';
+import { useDispatch, useSelector } from 'react-redux';
+import { getRoleModules } from '../redux/actions/othersActions';
 
 const RoleModules = () => {
   const URL = 'RoleModules';
   const [data,setData] = useState([]);
+  const dispatch = useDispatch()
+  const roleModuleList =  useSelector((state) => state.othersReducer.roleModuleList);
 
-  const fetchData = async () => {
-    try {
-      const result = await GetData(URL);
-      setData(result);
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
-  useEffect(() => {
-    fetchData();
-  }, []);
+  useEffect(()=>{
+    dispatch(getRoleModules(URL));
+  },[])
   
-  // useEffect(() => {
-  //   GetData('Analyzers')
-  // }, [])
+  useEffect(()=>{
+    if(roleModuleList && roleModuleList?.length){
+      setData(roleModuleList)
+    }
+  },[roleModuleList])
+
   return (
     <>
-    {/* <AlertDialog /> */}
       <TableData
         url={URL}
         data={data}
+        rerender = {getRoleModules}
         headingName={'RoleModules'}
         tableHeadings={analyzerTableHeadings}
-        fetchData={fetchData}
       />
     </>
   )
