@@ -11,6 +11,10 @@
 }
 /* 990 tak responsive karna hai */
 
+::-webkit-scrollbar{
+  display: none;
+}
+
 .css-flntgr-MuiGrid-root  {
   margin-left: 15px !important;
 }

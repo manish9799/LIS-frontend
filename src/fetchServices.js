@@ -8,8 +8,7 @@ export const GetData = async (url) => {
           'Content-Type': 'application/json',
         },
       });
-      let result = response
-      return result;
+      return response;
     } catch (error) {
       return error;
     }
@@ -37,7 +36,7 @@ export const UpdateData = async (url,id,data) => {
       });
       return updateResponse;
     } catch (error) {
-      console.error('Error:', error);
+      return error;
     }
   };
 

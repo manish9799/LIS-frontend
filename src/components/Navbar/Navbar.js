@@ -60,7 +60,7 @@ const Navbar = () => {
                                                 >
                                                     {item?.children?.map((subItem, j) => (
                                                         <MenuItem key={j} onClick={handleClose}>
-                                                            <Link to={`${subItem.path}`} style={{ textDecoration: 'none', color: 'green' }} >
+                                                            <Link to={`${subItem.path}`} style={{ textDecoration: 'none', color: 'green',width:'100%' }} >
                                                                 <Typography sx={{ listStyle: 'none' }} >
                                                                     {subItem.title}
                                                                 </Typography>
