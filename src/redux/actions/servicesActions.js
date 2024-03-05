@@ -112,12 +112,17 @@ export const addDataAction= (url,data,rerender) => async (dispatch) => {
 export const updateDataAction= (url,id,data,rerender) => async (dispatch) => {
     try {
       const response = await UpdateData(url,id,data);
-      if(response.status === 204){
+      if(response?.status === 204){
         dispatch({
           type: INFO_ALERT,
           payload: 'Data Updated successfully.',
         });
         dispatch(rerender(url))
+      }else if(response.response.status === 409){
+        dispatch({
+          type: ERROR_ALERT,
+          payload: response.response.data,
+        });
       }
     } catch (error) {
       console.log("err",error);

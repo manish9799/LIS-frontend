@@ -1,4 +1,4 @@
-import { Button, Card, Grid, Stack, TextField, Typography, Box, Modal } from '@mui/material'
+import { Button, Card, Grid, Stack, TextField, Typography, Box, Modal, Autocomplete } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import TextFieldComponent from '../TextFieldComponent'
 import * as yup from 'yup';
@@ -8,7 +8,7 @@ import '../../App.css'
 import SelectFieldComponent from '../SelectFieldComponent';
 import { schemaData } from '../../schemaData';
 import { useDispatch } from 'react-redux';
-import { addDataAction, updateDataAction } from '../../redux/actions/servicesActions';
+import { addDataAction, getAnalyzers, getCpt, getLisCodes, updateDataAction } from '../../redux/actions/servicesActions';
 
 const AddEditPopup = ({ modalValue, editDataValue,url,fetchData,LisCodesList,analyzersList,cptList,rerender }) => {
 
@@ -43,7 +43,7 @@ const AddEditPopup = ({ modalValue, editDataValue,url,fetchData,LisCodesList,ana
             return data.slice(0,1).toUpperCase() + data.slice(1)
         }
     }
-
+    
     useEffect(()=>{
         setDataKeys(Object.keys(schemaData[url]))
     },[url])
@@ -75,14 +75,27 @@ const AddEditPopup = ({ modalValue, editDataValue,url,fetchData,LisCodesList,ana
     useEffect(() => {
         if (editValue?.id) {
             Object.keys(editValue).forEach(key => {
-                // console.log("pp",key);
-                // if(key == '')
+                const name = editValue[key];
+                if(key == 'cptName'){
+                    const defaultValue = cptMenuOptions.find(option => option.label === name);
+                    if (defaultValue) setValue('cptid', defaultValue);
+                }
+                if(key == 'liscodeName'){
+                    const defaultValue = liscodeMenuOptions.find(option => option.label === name);
+                    if (defaultValue)  setValue('liscodeId', defaultValue);
+                }
+                if(key == 'analyzerName'){
+                    const defaultValue = analyzerMenuOptions.find(option => option.label === name);
+                    if (defaultValue) setValue('analyzerId', defaultValue);
+                }
+                else{
                     setValue(key, editValue[key]); 
+                }
             });
         }
     }, [editValue]);
 
-    console.log("getValue",watch());
+    // console.log("getValue",watch());
 
     const Close =()=>{
         setEditValue({})
@@ -107,6 +120,24 @@ const AddEditPopup = ({ modalValue, editDataValue,url,fetchData,LisCodesList,ana
         }
         if(editValue?.id){
             data.id = editValue.id
+            if(data.liscodeId){
+                delete data.liscodeName;
+                if(data.liscodeId?.label){
+                    data.liscodeId = data.liscodeId.value
+                }
+            }
+            if(data.cptid){
+                delete data.cptName;
+                if(data.cptid?.label){
+                    data.cptid = data.cptid.value
+                }
+            }
+            if(data.analyzerId){
+                delete data.analyzerName;
+                if(data.analyzerId?.label){
+                    data.analyzerId = data.analyzerId.value
+                }
+            }
             dispatch(updateDataAction(url,editValue.id,data,rerender))
             Close()
         }else{
@@ -128,7 +159,7 @@ const AddEditPopup = ({ modalValue, editDataValue,url,fetchData,LisCodesList,ana
                         <form onSubmit={onSubmit} >
                             <Grid container spacing={2} sx={{mx:3}}  >
                                 {dataKeys?.map((item,i)=>(
-                                    <Grid item xs={10.5} sm={5.5} md={3.7} lg={3.7}>
+                                    <Grid key={item+i} item xs={10.5} sm={5.5} md={3.7} lg={3.7}>
                                         {item === "analyzerId" || item === "liscodeId" || item === "cptid"|| item === "type"? 
                                         <SelectFieldComponent
                                             name={item}
@@ -140,9 +171,12 @@ const AddEditPopup = ({ modalValue, editDataValue,url,fetchData,LisCodesList,ana
                                                         }
                                             register={register}
                                             watch={watch}
+                                            setValue={setValue}
                                         /> 
+                                    
                                         : item === 'desc' || item ===  'description' ? 
                                         <TextFieldComponent
+                                        // fullWidth
                                         multiline
                                         rows={3}
                                             name={item}
