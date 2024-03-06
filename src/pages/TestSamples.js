@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import TableData from '../components/TableComponent/TableData'
-import { data, analyzerTableHeadings } from '../configData';
+import { testSampleTableHeadings } from '../configData';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTestSamples } from '../redux/actions/testsActions';
 
@@ -27,7 +27,7 @@ const TestSamples = () => {
         data={data}
         rerender = {getTestSamples}
         headingName={'TestSamples'}
-        tableHeadings={analyzerTableHeadings}
+        tableHeadings={testSampleTableHeadings}
       />
     </>
   )

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import TableData from '../components/TableComponent/TableData'
-import { data, analyzerTableHeadings } from '../configData';
+import { testUnitTableHeadings } from '../configData';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTestUnits } from '../redux/actions/testsActions';
 
@@ -8,17 +8,17 @@ const TestUnits = () => {
   const URL = 'TestUnits';
   const [data,setData] = useState([]);
   const dispatch = useDispatch()
-  const testSamplesList =  useSelector((state) => state.testsReducer.testSamplesList);
+  const testUnitsList =  useSelector((state) => state.testsReducer.testUnitsList);
 
   useEffect(()=>{
     dispatch(getTestUnits(URL));
   },[])
   
   useEffect(()=>{
-    if(testSamplesList && testSamplesList?.length){
-      setData(testSamplesList)
+    if(testUnitsList && testUnitsList?.length){
+      setData(testUnitsList)
     }
-  },[testSamplesList])
+  },[testUnitsList])
 
   return (
     <>
@@ -27,7 +27,7 @@ const TestUnits = () => {
         data={data}
         rerender = {getTestUnits}
         headingName={'TestUnits'}
-        tableHeadings={analyzerTableHeadings}
+        tableHeadings={testUnitTableHeadings}
       />
     </>
   )

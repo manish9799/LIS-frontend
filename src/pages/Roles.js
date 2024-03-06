@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import TableData from '../components/TableComponent/TableData'
-import { data, analyzerTableHeadings } from '../configData';
+import { rolesTableHeadings } from '../configData';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRoles } from '../redux/actions/othersActions';
 
@@ -27,7 +27,7 @@ const Roles = () => {
         data={data}
         rerender = {getRoles}
         headingName={'Analyzers'}
-        tableHeadings={analyzerTableHeadings}
+        tableHeadings={rolesTableHeadings}
       />
     </>
   )

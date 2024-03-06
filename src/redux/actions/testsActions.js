@@ -4,7 +4,7 @@ import { ERROR_ALERT, GET_TEST_CATEGORIES, GET_TEST_PARAMETERS, GET_TEST_SAMPLES
 export const getTestCategories = (url) => async (dispatch) => {
     try {
       const response = await GetData(url);
-      if(response.status === 200 ){
+            if(response.status === 200 ){
         dispatch({
           type: GET_TEST_CATEGORIES,
           payload: response.data,

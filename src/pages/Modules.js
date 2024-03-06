@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import TableData from '../components/TableComponent/TableData'
-import { data, analyzerTableHeadings } from '../configData';
+import { modulesTableHeadings } from '../configData';
 import { useDispatch, useSelector } from 'react-redux';
 import { getModules } from '../redux/actions/othersActions';
 
@@ -27,7 +27,7 @@ const Modules = () => {
         data={data}
         rerender = {getModules}
         headingName={'Modules'}
-        tableHeadings={analyzerTableHeadings}
+        tableHeadings={modulesTableHeadings}
       />
     </>
   )

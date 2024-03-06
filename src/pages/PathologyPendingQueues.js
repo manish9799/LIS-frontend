@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import TableData from '../components/TableComponent/TableData'
-import { pathologyPendingQueues } from '../configData';
+import { pathologyPendingQueuesTableHeadings } from '../configData';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPathologyPendingQueues } from '../redux/actions/pathologyActions';
 
@@ -27,7 +27,7 @@ const PathologyPendingQueues = () => {
         data={data}
         rerender = {getPathologyPendingQueues}
         headingName={'PathologyPendingQueues'}
-        tableHeadings={pathologyPendingQueues}
+        tableHeadings={pathologyPendingQueuesTableHeadings}
         readable={true}
       />
     </>

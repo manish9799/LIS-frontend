@@ -47,9 +47,14 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
 
     const filteredData = tableData && tableData?.filter((row) =>
         row?.name?.toLowerCase().includes(searchTerm?.toLowerCase())
-        || row?.analyzerName?.toString().includes(searchTerm)
-        || row?.cptName?.toString().includes(searchTerm)
-        || row?.liscodeName?.toString().includes(searchTerm)
+        || row?.id?.toString().includes(searchTerm)
+        // || row?.analyzerName?.toString().includes(searchTerm)
+        // || row?.cptName?.toString().includes(searchTerm)
+        // || row?.liscodeName?.toString().includes(searchTerm)
+        // || row?.categoryName?.toString().includes(searchTerm)
+        // || row?.sampleName?.toString().includes(searchTerm)
+        // || row?.unit?.toString().includes(searchTerm)
+        // || row?.orderId?.toString().includes(searchTerm)
     );
 
     const sortedData = orderBy
@@ -102,9 +107,9 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                 analyzersList={analyzersList}
                 LisCodesList={LisCodesList}
             />
-            <Paper sx={{ borderRadius: '20px', marginX: '30px', mt: 2, minHeight: '70vh' }}>
-                <Stack direction={'row'} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}>
-                    <Typography className='table-heading'>
+            <Paper sx={{ borderRadius: '20px', marginX: '30px', mt: 2, height: '80vh',overflow:'scroll' }}>
+                <Stack direction={'row'} className='table-header'>
+                    <Typography className='table-headingName'>
                         {headingName}
                     </Typography>
                     <TextField
@@ -188,7 +193,7 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                         <TableHead>
                             <TableRow>
                                 {tableHeadings?.map((item, i) => (
-                                    <TableCell key={item.id} sx={{ fontWeight: '600', fontSize: '13px', backgroundColor: 'lightgray', minWidth: item.id !== 'id' ? '150px' : '50px' }}>
+                                    <TableCell key={item.id} sx={{ fontWeight: '600', fontSize: '13px', backgroundColor: 'lightgray', maxWidth: item.id !== 'id' ? '150px' : '50px' }}>
                                         <TableSortLabel
                                             active={orderBy === `${item.id}`}
                                             direction={orderBy === `${item.id}` ? order : 'asc'}
@@ -232,7 +237,7 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                                                     ) : item.id === 'isActive' ? (
                                                         <TableCell key={i} sx={{ paddingY: '5px', fontWeight: 600, color: row.isActive ? 'green' : 'red' }}>{row.isActive ? 'Active' : 'In Active'}</TableCell>
                                                     ) : item.id === 'id' ? (
-                                                        <TableCell key={i} sx={{ paddingY: '5px' }}>{(page * rowsPerPage) + rowIndex + 1}</TableCell>
+                                                        <TableCell key={i} sx={{ paddingY: '10px' }}>{(page * rowsPerPage) + rowIndex + 1}</TableCell>
                                                     ) : (
                                                         <TableCell key={i} sx={{ paddingY: '5px' }}>{row[item.id] || '-'}</TableCell>
                                                     )}

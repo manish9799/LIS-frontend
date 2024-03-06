@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import TableData from '../components/TableComponent/TableData'
-import { data, analyzerTableHeadings } from '../configData';
+import { invoiceDetailsTableHeadings } from '../configData';
 import { getInvoiceDetails } from '../redux/actions/invoiceOrderActions';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -26,7 +26,7 @@ const InvoiceDetails = () => {
         data={data}
         rerender = {getInvoiceDetails}
         headingName={'InvoiceDetails'}
-        tableHeadings={analyzerTableHeadings}
+        tableHeadings={invoiceDetailsTableHeadings}
       />
     </>
   )
