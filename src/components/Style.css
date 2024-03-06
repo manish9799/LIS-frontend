@@ -1,8 +1,23 @@
-.table-heading{
+.table-headingName{
     min-width: 220px;
     color: white;
     padding: 16px;
     font-weight: 500;
     border-radius: 20px;
     background-color: #3d5afe;
+}
+
+.table-header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (max-width : 650px) {
+    .table-headingName{
+        min-width: 150px;
+        font-size: 0.8rem !important;
+        word-wrap: break-word;
+    }
+    
 }

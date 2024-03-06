@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import TableData from '../components/TableComponent/TableData'
-import { data, analyzerTableHeadings } from '../configData';
+import { testCategoriesTableHeadings } from '../configData';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTestCategories } from '../redux/actions/testsActions';
 
@@ -8,7 +8,7 @@ const Testcategories = () => {
   const URL = 'TestCategories';
   const [data,setData] = useState([]);
   const dispatch = useDispatch()
-  const testCategoriesList =  useSelector((state) => state.servicesReducer.testCategoriesList);
+  const testCategoriesList =  useSelector((state) => state.testsReducer.testCategoriesList);
 
   useEffect(()=>{
     dispatch(getTestCategories(URL));
@@ -19,6 +19,7 @@ const Testcategories = () => {
       setData(testCategoriesList)
     }
   },[testCategoriesList])
+
   return (
     <>
       <TableData
@@ -26,7 +27,7 @@ const Testcategories = () => {
         data={data}
         rerender = {getTestCategories}
         headingName={'Testcategories'}
-        tableHeadings={analyzerTableHeadings}
+        tableHeadings={testCategoriesTableHeadings}
       />
     </>
   )

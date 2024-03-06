@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import TableData from '../components/TableComponent/TableData'
-import { data, analyzerTableHeadings } from '../configData';
+import { genLookupsTableHeadings } from '../configData';
 import { getGenLookups } from '../redux/actions/othersActions';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -27,7 +27,7 @@ const GenLookups = () => {
         data={data}
         rerender = {getGenLookups}
         headingName={'GenLookups'}
-        tableHeadings={analyzerTableHeadings}
+        tableHeadings={genLookupsTableHeadings}
       />
     </>
   )

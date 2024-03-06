@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import TableData from '../components/TableComponent/TableData'
-import { pathologyResultDetails } from '../configData';
+import { pathologyResultDetailsTableHeadings } from '../configData';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPathologyResultDetails } from '../redux/actions/pathologyActions';
 
@@ -27,7 +27,7 @@ const PathologyResultDetails = () => {
         data={data}
         rerender = {getPathologyResultDetails}
         headingName={'PathologyResultDetails'}
-        tableHeadings={pathologyResultDetails}
+        tableHeadings={pathologyResultDetailsTableHeadings}
         readable={true}
       />
     </>

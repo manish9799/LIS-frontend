@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import TableData from '../components/TableComponent/TableData'
-import { data, analyzerTableHeadings } from '../configData';
+import { usersTableHeadings } from '../configData';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUsers } from '../redux/actions/othersActions';
 
@@ -27,7 +27,7 @@ const Users = () => {
         data={data}
         rerender = {getUsers}
         headingName={'Users'}
-        tableHeadings={analyzerTableHeadings}
+        tableHeadings={usersTableHeadings}
       />
     </>
   )

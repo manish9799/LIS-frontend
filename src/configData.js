@@ -128,6 +128,18 @@ export const liscodesTableHeadings = [
   { id: 'actions', label: 'Actions' },
 ];
 
+export const testCategoriesTableHeadings = [
+  { id: 'id', label: 'Sr.No' },
+  { id: 'categoryName', label: 'Category Name' },
+  { id: 'desc', label: 'Description' },
+  { id: 'isActive', label: 'IsActive' },
+  // { id: 'createdOn', label: 'CreatedOn' },
+  // { id: 'updatedOn', label: 'UpdatedOn' },
+  // { id: 'createdBy', label: 'CreatedBy' },
+  // { id: 'updatedBy', label: 'UpdatedBy' },
+  { id: 'actions', label: 'Actions' },
+];
+
 export const testParameterTableHeadings = [
   { id: 'id', label: 'Sr.No' },
   { id: 'cptName', label: 'CPT Name' },
@@ -142,7 +154,33 @@ export const testParameterTableHeadings = [
   // { id: 'updatedBy', label: 'UpdatedBy' },
   { id: 'actions', label: 'Actions' },
 ];
-export const pathologyPendingQueues = [
+
+export const testSampleTableHeadings = [
+  { id: 'id', label: 'Sr.No' },
+  { id: 'sampleName', label: 'Sample Name' },
+  { id: 'cptid', label: 'CPT Name' },
+  { id: 'desc', label: 'Description' },
+  { id: 'isActive', label: 'IsActive' },
+  // { id: 'createdOn', label: 'CreatedOn' },
+  // { id: 'updatedOn', label: 'UpdatedOn' },
+  // { id: 'createdBy', label: 'CreatedBy' },
+  // { id: 'updatedBy', label: 'UpdatedBy' },
+  { id: 'actions', label: 'Actions' },
+];
+
+export const testUnitTableHeadings = [
+  { id: 'id', label: 'Sr.No' },
+  { id: 'unit', label: 'Unit' },
+  { id: 'desc', label: 'Description' },
+  { id: 'isActive', label: 'IsActive' },
+  // { id: 'createdOn', label: 'CreatedOn' },
+  // { id: 'updatedOn', label: 'UpdatedOn' },
+  // { id: 'createdBy', label: 'CreatedBy' },
+  // { id: 'updatedBy', label: 'UpdatedBy' },
+  { id: 'actions', label: 'Actions' },
+];
+
+export const pathologyPendingQueuesTableHeadings  = [
   { id: 'id', label: 'Sr.No' },
   { id: 'cptName', label: 'CPT Name' },
   { id: 'orderdetailId', label: 'Order Deatil ID' },
@@ -156,7 +194,7 @@ export const pathologyPendingQueues = [
   { id: 'actions', label: 'Actions' },
 ];
 
-export const pathologyResultDetails = [
+export const pathologyResultDetailsTableHeadings  = [
   { id: 'id', label: 'Sr.No' },
   { id: 'liscodeName', label: 'LSI Name' },
   { id: 'orderDetailId', label: 'Order Deatil ID' },
@@ -171,13 +209,141 @@ export const pathologyResultDetails = [
   { id: 'actions', label: 'Actions' },
 ];
 
-export const pathologyResultMasters = [
+export const pathologyResultMastersTableHeadings  = [
   { id: 'id', label: 'Sr.No' },
   { id: 'cptName', label: 'CPT Name' },
   { id: 'orderdetailId', label: 'Order Deatil ID' },
   { id: 'patientId', label: 'Patient Id' },
   { id: 'labId', label: 'Lab Id' },
   { id: 'status', label: 'Status' },
+  { id: 'desc', label: 'Description' },
+  { id: 'isActive', label: 'IsActive' },
+  // { id: 'createdOn', label: 'CreatedOn' },
+  // { id: 'updatedOn', label: 'UpdatedOn' },
+  // { id: 'createdBy', label: 'CreatedBy' },
+  // { id: 'updatedBy', label: 'UpdatedBy' },
+  { id: 'actions', label: 'Actions' },
+];
+
+export const invoiceDetailsTableHeadings  = [
+  { id: 'id', label: 'Sr.No' },
+  { id: 'invoiceId', label: 'Invoice Id' },
+  { id: 'orderId', label: 'Order Id' },
+  { id: 'cptid', label: 'CPT Id' },
+  { id: 'unitCost', label: 'Unit Cost' },
+  { id: 'quantity', label: 'Quantity' },
+  { id: 'itemTotal', label: 'Item Total' },
+  { id: 'desc', label: 'Description' },
+  { id: 'isActive', label: 'IsActive' },
+  // { id: 'createdOn', label: 'CreatedOn' },
+  // { id: 'updatedOn', label: 'UpdatedOn' },
+  // { id: 'createdBy', label: 'CreatedBy' },
+  // { id: 'updatedBy', label: 'UpdatedBy' },
+  { id: 'actions', label: 'Actions' },
+];
+
+export const invoiceMastersTableHeadings  = [
+  { id: 'id', label: 'Sr.No' },
+  { id: 'orderId', label: 'Order Id' },
+  { id: 'patientId', label: 'Patient Id' },
+  { id: 'invoiceTotal', label: 'Invoice Total' },
+  { id: 'desc', label: 'Description' },
+  { id: 'isActive', label: 'IsActive' },
+  // { id: 'createdOn', label: 'CreatedOn' },
+  // { id: 'updatedOn', label: 'UpdatedOn' },
+  // { id: 'createdBy', label: 'CreatedBy' },
+  // { id: 'updatedBy', label: 'UpdatedBy' },
+  { id: 'actions', label: 'Actions' },
+];
+
+export const orderDetailsTableHeadings  = [
+  { id: 'id', label: 'Sr.No' },
+  { id: 'orderId', label: 'Order Id' },
+  { id: 'cptid', label: 'CPT Id' },
+  { id: 'cptprice', label: 'CPT Price' },
+  { id: 'quantity', label: 'Quantity' },
+  { id: 'desc', label: 'Description' },
+  { id: 'isActive', label: 'IsActive' },
+  // { id: 'createdOn', label: 'CreatedOn' },
+  // { id: 'updatedOn', label: 'UpdatedOn' },
+  // { id: 'createdBy', label: 'CreatedBy' },
+  // { id: 'updatedBy', label: 'UpdatedBy' },
+  { id: 'actions', label: 'Actions' },
+];
+
+export const orderMastersTableHeadings  = [
+  { id: 'id', label: 'Sr.No' },
+  { id: 'userId', label: 'User Id' },
+  { id: 'physician', label: 'Physician' },
+  { id: 'mrn', label: 'MRN' },
+  { id: 'desc', label: 'Description' },
+  { id: 'isActive', label: 'IsActive' },
+  // { id: 'createdOn', label: 'CreatedOn' },
+  // { id: 'updatedOn', label: 'UpdatedOn' },
+  // { id: 'createdBy', label: 'CreatedBy' },
+  // { id: 'updatedBy', label: 'UpdatedBy' },
+  { id: 'actions', label: 'Actions' },
+];
+
+export const genLookupsTableHeadings  = [
+  { id: 'id', label: 'Sr.No' },
+  { id: 'keyName', label: 'Key Name' },
+  { id: 'value', label: 'Value' },
+  { id: 'type', label: 'Type' },
+  { id: 'isActive', label: 'IsActive' },
+  // { id: 'createdOn', label: 'CreatedOn' },
+  // { id: 'updatedOn', label: 'UpdatedOn' },
+  // { id: 'createdBy', label: 'CreatedBy' },
+  // { id: 'updatedBy', label: 'UpdatedBy' },
+  { id: 'actions', label: 'Actions' },
+];
+
+export const modulesTableHeadings  = [
+  { id: 'id', label: 'Sr.No' },
+  { id: 'name', label: 'Name' },
+  { id: 'type', label: 'Type' },
+  { id: 'desc', label: 'Description' },
+  { id: 'isActive', label: 'IsActive' },
+  // { id: 'createdOn', label: 'CreatedOn' },
+  // { id: 'updatedOn', label: 'UpdatedOn' },
+  // { id: 'createdBy', label: 'CreatedBy' },
+  // { id: 'updatedBy', label: 'UpdatedBy' },
+  { id: 'actions', label: 'Actions' },
+];
+
+export const roleModulesTableHeadings  = [
+  { id: 'id', label: 'Sr.No' },
+  { id: 'roleId', label: 'Role Id' },
+  { id: 'moduleId', label: 'Module Id' },
+  { id: 'desc', label: 'Description' },
+  { id: 'isActive', label: 'IsActive' },
+  // { id: 'createdOn', label: 'CreatedOn' },
+  // { id: 'updatedOn', label: 'UpdatedOn' },
+  // { id: 'createdBy', label: 'CreatedBy' },
+  // { id: 'updatedBy', label: 'UpdatedBy' },
+  { id: 'actions', label: 'Actions' },
+];
+
+export const rolesTableHeadings  = [
+  { id: 'id', label: 'Sr.No' },
+  { id: 'name', label: 'Name' },
+  { id: 'type', label: 'Type' },
+  { id: 'desc', label: 'Description' },
+  { id: 'isActive', label: 'IsActive' },
+  // { id: 'createdOn', label: 'CreatedOn' },
+  // { id: 'updatedOn', label: 'UpdatedOn' },
+  // { id: 'createdBy', label: 'CreatedBy' },
+  // { id: 'updatedBy', label: 'UpdatedBy' },
+  { id: 'actions', label: 'Actions' },
+];
+
+export const usersTableHeadings  = [
+  { id: 'id', label: 'Sr.No' },
+  { id: 'name', label: 'Name' },
+  { id: 'mobile', label: 'Mobile' },
+  { id: 'email', label: 'Email' },
+  { id: 'username', label: 'Username' },
+  { id: 'password', label: 'Password' },
   { id: 'desc', label: 'Description' },
   { id: 'isActive', label: 'IsActive' },
   // { id: 'createdOn', label: 'CreatedOn' },
