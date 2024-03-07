@@ -51,11 +51,11 @@ const NavDrawer = ({ open, setOpen }) => {
                       <List disablePadding>
                         {item.children.map((childItem, childIndex) => (
                           <ListItem key={childItem.title} sx={{ maxHeight: '35px' }} disablePadding>
+                              <Link to={`${childItem.path}`} style={{ textDecoration: 'none', color: 'black',width:'100%' }}>
                             <ListItemButton onClick={handleItemClick}>
-                              <Link to={`${childItem.path}`} style={{ textDecoration: 'none', color: 'black', }}>
                                 <ListItemText primary={childItem.title} />
-                              </Link>
                             </ListItemButton>
+                              </Link>
                           </ListItem>
                         ))}
                       </List>

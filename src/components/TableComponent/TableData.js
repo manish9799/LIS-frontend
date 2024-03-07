@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TableSortLabel, TextField, Typography, TablePagination, IconButton, Stack, Button } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TableSortLabel, TextField, Typography, TablePagination, IconButton, Stack, Button, useMediaQuery } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
@@ -10,10 +10,11 @@ import { useDispatch } from 'react-redux';
 import { deleteAnalyzers } from '../../redux/actions/servicesActions';
 import ConfirmDialog from '../ConfirmDialog';
 import DetailViewPopup from './DetailViewPopup';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 import CircularProgress from '@mui/material/CircularProgress';
 
 
-const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesList, analyzersList, cptList, rerender,readable }) => {
+const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesList, analyzersList, cptList, rerender, readable }) => {
     const dispatch = useDispatch()
     const [tableData, setTableData] = useState([])
     const [orderBy, setOrderBy] = useState(null);
@@ -27,6 +28,7 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
     const [openDetailsModal, setOpenDetailsModal] = useState(false);
     const [deleteId, setDeleteId] = useState(0)
     const [loading, setLoading] = useState(true)
+    const isScreenSmall = useMediaQuery('(max-width:945px)');
 
     useEffect(() => {
         setTableData(data)
@@ -107,108 +109,70 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                 analyzersList={analyzersList}
                 LisCodesList={LisCodesList}
             />
-            <Paper sx={{ borderRadius: '20px', marginX: '30px', mt: 2, height: '80vh',overflow:'scroll' }}>
+            <Paper sx={{ borderRadius: '20px', marginX: '30px', mt: 1, height: '80vh', overflow: 'auto' }}>
                 <Stack direction={'row'} className='table-header'>
-                    <Typography className='table-headingName'>
+                    <Typography variant="h6" className='table-headingName'>
                         {headingName}
                     </Typography>
-                    <TextField
-                        placeholder='Search here...'
-                        type='text-area'
-                        label="Search"
-                        variant="outlined"
-                        value={searchTerm}
-                        onChange={handleSearch}
-                        style={{ margin: '16px', width: '40%' }}
-                    />
-                    {!readable &&
-                        <Button
-                            component="label"
-                            sx={{ width: "200px", border: '2px solid', borderRadius: '20px', fontSize: '18px', p: 1 }}
+                    <Stack direction={'row'} sx={{ width: isScreenSmall ? '100%' : '50%' }} className='table-header-func'>
+                        <TextField
+                            placeholder='Search here...'
+                            type='text'
+                            label="Search"
                             variant="outlined"
-                            endIcon={<AddIcon />}
-                            onClick={() => setOpenModal(true)}
-                        >
-                            Add item
-                        </Button>
-                    }
+                            value={searchTerm}
+                            className='search-field'
+                            onChange={handleSearch}
+                        />
+                        {!readable &&
+                            <>
+                                {isScreenSmall ? (
+                                    <IconButton
+                                        aria-label="Add item"
+                                        sx={{ backgroundColor: '#3d5afe', borderRadius: '50%', fontSize: '18px', p: 1, ml: 1 }}
+                                        onClick={() => setOpenModal(true)}
+                                    >
+                                        <AddIcon fontSize='large' sx={{ color: 'white', fontSize: '30px' }} />
+                                    </IconButton>
+                                ) : (
+                                    <Button
+                                        component="label"
+                                        sx={{ width: "200px", border: '2px solid', borderRadius: '20px', fontSize: '18px', p: 1, ml: 2 }}
+                                        variant="outlined"
+                                        endIcon={<AddIcon />}
+                                        onClick={() => setOpenModal(true)}
+                                    >
+                                        Add item
+                                    </Button>
+                                )}
+                            </>
+                        }
+                    </Stack>
                 </Stack>
-                {/* <TableContainer>
-                    <Table size="small" >
-                        <TableHead>
-                            <TableRow>
-                                {tableHeadings?.map((item, i) => (
-                                    <TableCell key={item.id} sx={{ fontWeight: '600', fontSize: '13px', backgroundColor: 'lightgray', minWidth: item.id !== 'id' ? '150px' : '50px' }}>
-                                        <TableSortLabel
-                                            active={orderBy === `${item.id}`}
-                                            direction={orderBy === `${item.id}` ? order : 'asc'}
-                                            onClick={() => handleSort(item.id)}
-                                        >
-                                            {item.label}
-                                        </TableSortLabel>
-                                    </TableCell>
-                                ))}
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {sortedData?.length ?
-                                <>
-                                    {sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, rowIndex) => (
-                                        <TableRow key={row.id}>
-                                            {tableHeadings?.map((item, i) => (
-                                                <>
-                                                    {item.id === 'actions' ?
-                                                        <TableCell  key={i}>
-                                                            <IconButton  onClick={() => detailView(row)}>
-                                                                <VisibilityIcon />
-                                                            </IconButton>
-                                                            <IconButton aria-label="edit" onClick={() => editData(row)}>
-                                                                <EditIcon />
-                                                            </IconButton>
-                                                            <IconButton onClick={() => confirmDelete(row.id)} aria-label="delete">
-                                                                <DeleteIcon sx={{ color: 'red' }} />
-                                                            </IconButton>
-                                                        </TableCell> :
-                                                        item.id === 'isActive' ?
-                                                            <TableCell key={i} sx={{ paddingY: '5px', fontWeight: 600, color: row.isActive ? 'green' : 'red' }}>{row.isActive ? 'Active' : 'In Active'}</TableCell> :
-                                                            item.id === 'id' ?
-                                                                <TableCell key={i} sx={{ paddingY: '5px' }}>{(page * rowsPerPage) + rowIndex + 1}</TableCell> :
-                                                                <TableCell key={i} sx={{ paddingY: '5px' }}>{row[item.id] || '-'}</TableCell>
-                                                    }
-                                                </>
-                                            ))}
-                                        </TableRow>
-                                    ))}
-                                </> :
-                                <TableRow >
-                                    <TableCell colSpan={tableHeadings?.length} sx={{ paddingY: '10px', textAlign: 'center', fontSize: '13px', fontWeight: '600' }}>No Data Found</TableCell>
-                                </TableRow>
-                            }
-                        </TableBody>
-                    </Table>
-                </TableContainer> */}
 
                 <TableContainer>
                     <Table size="small">
                         <TableHead>
                             <TableRow>
                                 {tableHeadings?.map((item, i) => (
-                                    <TableCell key={item.id} sx={{ fontWeight: '600', fontSize: '13px', backgroundColor: 'lightgray', maxWidth: item.id !== 'id' ? '150px' : '50px' }}>
-                                        <TableSortLabel
-                                            active={orderBy === `${item.id}`}
-                                            direction={orderBy === `${item.id}` ? order : 'asc'}
-                                            onClick={() => handleSort(item.id)}
-                                        >
-                                            {item.label}
-                                        </TableSortLabel>
-                                    </TableCell>
+                                    <React.Fragment key={item + i}>
+                                        <TableCell key={item.id} sx={{ fontWeight: '600', fontSize: '13px', backgroundColor: 'lightgray', maxWidth: item.id !== 'id' ? '150px' : '50px' }}>
+                                            <TableSortLabel
+                                                active={orderBy === `${item.id}`}
+                                                direction={orderBy === `${item.id}` ? order : 'asc'}
+                                                onClick={() => handleSort(item.id)}
+                                            >
+                                                {item.label}
+                                            </TableSortLabel>
+                                        </TableCell>
+                                    </React.Fragment>
                                 ))}
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {loading ? (
                                 <TableRow>
-                                    <TableCell colSpan={tableHeadings?.length} sx={{ paddingY: '10px', textAlign: 'center', fontSize: '13px', fontWeight: '600' }}>
+                                    <TableCell colSpan={tableHeadings?.length + (!readable ? 1 : 0)} sx={{ paddingY: '10px', textAlign: 'center', fontSize: '13px', fontWeight: '600' }}>
                                         <CircularProgress color="primary" />
                                     </TableCell>
                                 </TableRow>
@@ -217,38 +181,39 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                                     {sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, rowIndex) => (
                                         <TableRow key={row.id}>
                                             {tableHeadings?.map((item, i) => (
-                                                <>
-                                                    {item.id === 'actions' ? (
-                                                        <TableCell key={i} sx={{ display: 'flex' }}>
-                                                            <IconButton onClick={() => detailView(row)}>
-                                                                <VisibilityIcon />
-                                                            </IconButton>
-                                                            { !readable && 
-                                                            <>
-                                                            <IconButton aria-label="edit" onClick={() => editData(row)}>
-                                                                <EditIcon />
-                                                            </IconButton>
-                                                            <IconButton onClick={() => confirmDelete(row.id)} aria-label="delete">
-                                                                <DeleteIcon sx={{ color: 'red' }} />
-                                                            </IconButton>
-                                                            </>
-                                                            }
-                                                        </TableCell>
-                                                    ) : item.id === 'isActive' ? (
-                                                        <TableCell key={i} sx={{ paddingY: '5px', fontWeight: 600, color: row.isActive ? 'green' : 'red' }}>{row.isActive ? 'Active' : 'In Active'}</TableCell>
-                                                    ) : item.id === 'id' ? (
-                                                        <TableCell key={i} sx={{ paddingY: '10px' }}>{(page * rowsPerPage) + rowIndex + 1}</TableCell>
-                                                    ) : (
-                                                        <TableCell key={i} sx={{ paddingY: '5px' }}>{row[item.id] || '-'}</TableCell>
-                                                    )}
-                                                </>
+                                                <React.Fragment key={i}>
+                                                    {item.id == 'actions' ?
+                                                        <>
+                                                            <TableCell sx={{display:"flex"}}>
+                                                                <IconButton onClick={() => detailView(row)}>
+                                                                    <VisibilityIcon />
+                                                                </IconButton>
+                                                                {!readable && (
+                                                                    <>
+                                                                        <IconButton aria-label="edit" onClick={() => editData(row)}>
+                                                                            <EditIcon />
+                                                                        </IconButton>
+                                                                        <IconButton onClick={() => confirmDelete(row.id)} aria-label="delete">
+                                                                            <DeleteIcon sx={{ color: 'red' }} />
+                                                                        </IconButton>
+                                                                    </>
+                                                                )}
+                                                            </TableCell>
+                                                        </>
+                                                        : item.id === 'isActive' ? (
+                                                            <TableCell sx={{ paddingY: '5px', fontWeight: 600, color: row.isActive ? 'green' : 'red' }}>{row.isActive ? 'Active' : 'In Active'}</TableCell>
+                                                        ) : item.id === 'id' ? (
+                                                            <TableCell sx={{ paddingY: '10px' }}>{(page * rowsPerPage) + rowIndex + 1}</TableCell>
+                                                        ) :
+                                                            <TableCell sx={{ paddingY: '5px' }}>{row[item.id] || '-'}</TableCell>}
+                                                </React.Fragment>
                                             ))}
                                         </TableRow>
                                     ))}
                                 </>
                             ) : (
                                 <TableRow>
-                                    <TableCell colSpan={tableHeadings?.length} sx={{ paddingY: '10px', textAlign: 'center', fontSize: '13px', fontWeight: '600' }}>No Data Found</TableCell>
+                                    <TableCell colSpan={tableHeadings?.length + (!readable ? 1 : 0)} sx={{ paddingY: '10px', textAlign: 'center', fontSize: '13px', fontWeight: '600' }}>No Data Found</TableCell>
                                 </TableRow>
                             )}
                         </TableBody>
