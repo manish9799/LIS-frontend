@@ -6,6 +6,7 @@ import './Navbar.css'
 import MenuIcon from '@mui/icons-material/Menu';
 import MainContainer from '../MainContainer'
 import NavDrawer from './NavDrawer'
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 const Navbar = () => {
 
@@ -34,13 +35,12 @@ const Navbar = () => {
             />
             <MainContainer>
                 <div style={{ backgroundColor: 'black' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px', position: 'relative' }}>
-                        <Typography className='logo' sx={{ minWidth: '300px' }}> Tremendous LIS</Typography>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', padding: '3px',paddingBottom:'15px', position: 'relative' }}>
+                        <Typography className='logo'> Tremendous LIS</Typography>
                         <Stack className='nav-menu' direction='row'>
-                            <List sx={{ display: 'flex', width: '100%' }}>
+                            <List sx={{ display: 'flex', width: '100%',padding:'0px' }}>
                                 {navConfig?.map((item, i) => (
-                                    <ListItem key={i} sx={{ justifyContent: 'center' }} >
-
+                                    <ListItem key={i} sx={{ justifyContent: 'center',padding:'0px' }} >
                                         {item?.children?.length ?
                                             <div>
                                                 <Button
@@ -50,7 +50,10 @@ const Navbar = () => {
                                                     aria-expanded={Boolean(subMenuAnchorEl)}
                                                     onClick={handleMainMenuClick}
                                                 >
-                                                    {item.title}
+                                                  <Typography className='menu-item'>
+                                                     {item.title}
+                                                    </Typography> 
+                                                    <KeyboardArrowDownIcon style={{color:'white'}}/>
                                                 </Button>
                                                 <Menu
                                                     id={`sub-menu-${i}`} 
