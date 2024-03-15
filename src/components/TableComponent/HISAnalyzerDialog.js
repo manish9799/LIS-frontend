@@ -1,4 +1,4 @@
-import { Button, Card, Grid, Stack, Typography, Box, Modal, Paper } from '@mui/material'
+import { Button, Card, Grid, Stack, Typography, Box, Modal, Paper, IconButton } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import TextFieldComponent from '../TextFieldComponent'
 import * as yup from 'yup';
@@ -9,6 +9,7 @@ import SelectFieldComponent from '../SelectFieldComponent';
 import { schemaData } from '../../schemaData';
 import { useDispatch } from 'react-redux';
 import { addDataAction, updateDataAction } from '../../redux/actions/servicesActions';
+import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet';
 
 const HISAnalyzerDialog = ({ modalValue, editDataValue, url, LisCodesList, analyzersList, hisList, rerender }) => {
 
@@ -209,9 +210,21 @@ const HISAnalyzerDialog = ({ modalValue, editDataValue, url, LisCodesList, analy
                                         </Grid>
                                     </Box>
                                 </Grid>
-                                <hr />
-
-                                {/* <Divider sx={{ color:'red', }} orientation="vertical" flexItem /> */}
+                                <Grid container lg={1} md={1} sm={1} sx={{mt:4}} >
+                                        <Paper sx={{ p: 2 }}>
+                                            {[1, 2, 3, 4, 5]?.map((item, i) => (
+                                                <Stack spacing={2} sx={{mt:4.5}} direction={'coloumn'} key={item + i}>
+                                                    <IconButton sx={{
+                                                        backgroundColor:'#1976d2',
+                                                        '&:hover': {
+                                                            backgroundColor: '#1565c0', 
+                                                          }}} >
+                                                        <SettingsEthernetIcon sx={{color:'white'}} />
+                                                    </IconButton>
+                                                </Stack>
+                                            ))}
+                                        </Paper>
+                                </Grid>
                                 <Grid container spacing={2} lg={6} md={6} sm={12} sx={{ mx: 1, marginTop: '0px !important' }}>
                                     <Box sx={{ backgroundColor: '#d2d1d1', margin: '0 auto', width: '100%', borderRadius: '20px', p: 2 }}>
                                         <Grid item xs={12}>
