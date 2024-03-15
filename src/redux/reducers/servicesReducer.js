@@ -1,4 +1,4 @@
-import { DATA_LOADER, FETCH_FAIL, GET_ANALYZERS, GET_ANALYZERS_PARAMETER, GET_CPT, GET_LISCODE } from "../ActionTypes";
+import { DATA_LOADER, FETCH_FAIL, GET_ANALYZERS, GET_ANALYZERS_PARAMETER, GET_CPT, GET_HIS, GET_HIS_ANALYZER, GET_LISCODE } from "../ActionTypes";
 
 const initialState = {
     loading: false,
@@ -6,6 +6,8 @@ const initialState = {
     analyzerParameterList:[],
     cptList:[],
     lisCodesList:[],
+    hisList:[],
+    hisAnalyzerList:[],
 };
 
 const servicesReducer = (state = initialState, action) => {
@@ -42,6 +44,20 @@ const servicesReducer = (state = initialState, action) => {
           ...state,
           loading: false,
           lisCodesList: action.payload,
+        };
+      }
+      case GET_HIS: {
+        return {
+          ...state,
+          loading: false,
+          hisList: action.payload,
+        };
+      }
+      case GET_HIS_ANALYZER: {
+        return {
+          ...state,
+          loading: false,
+          hisAnalyzerList: action.payload,
         };
       }
       case FETCH_FAIL:

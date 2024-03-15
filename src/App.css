@@ -15,6 +15,8 @@
 
 ::-webkit-scrollbar{
   display: none;
+  height: 0px;
+  width: 0px;
 }
 
 .css-flntgr-MuiGrid-root  {

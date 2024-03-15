@@ -189,4 +189,31 @@ export const schemaData = {
         // createdBy: yup.string().required('required'),
         // updatedBy: yup.string().required('required'),
     },
+    'His' : {
+        name: yup.string().required('required'),
+        // type: yup.boolean().required('required'),
+        desc: yup.string().required('required'),
+        // createdOn: yup.string().required('required'),
+        // updatedOn: yup.string().required('required'),
+        // createdBy: yup.string().required('required'),
+        // updatedBy: yup.string().required('required'),
+    },
+    'HISAnalyzer' : {
+        'Analyzer' : {
+            analyzerId: yup.number().required('required'),
+            analyzerCode: yup.string().required('required'),
+            aparamName: yup.string().required('required'),
+            aunit: yup.string().required('required'),
+            arange: yup.string().required('required'),
+
+        },
+        'HIS' : {
+            hisId: yup.number().required('required'),
+            hisCode: yup.string().required('required'),
+            hparamName: yup.string().required('required'),
+            hunit: yup.string().required('required'),
+            hrange: yup.string().required('required'),
+
+        }
+    },
 }
