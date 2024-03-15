@@ -12,9 +12,10 @@ import ConfirmDialog from '../ConfirmDialog';
 import DetailViewPopup from './DetailViewPopup';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import CircularProgress from '@mui/material/CircularProgress';
+import HISAnalyzerDialog from './HISAnalyzerDialog';
 
 
-const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesList, analyzersList, cptList, rerender, readable }) => {
+const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesList, analyzersList, cptList,hisList, rerender, readable }) => {
     const dispatch = useDispatch()
     const [tableData, setTableData] = useState([])
     const [orderBy, setOrderBy] = useState(null);
@@ -23,6 +24,7 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [openModal, setOpenModal] = useState(false);
+    const [openHisModal, setOpenHisModal] = useState(false);
     const [editValue, setEditValue] = useState({})
     const [deleteDialog, setDeleteDialog] = useState(false);
     const [openDetailsModal, setOpenDetailsModal] = useState(false);
@@ -84,7 +86,11 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
 
     const editData = (data) => {
         setEditValue(data)
-        setOpenModal(true)
+        if(url == 'HisAnalyzers'){
+            setOpenHisModal(true)
+        }else{
+            setOpenModal(true)
+        }
     }
     const detailView = (data) => {
         setEditValue(data)
@@ -109,6 +115,17 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                 analyzersList={analyzersList}
                 LisCodesList={LisCodesList}
             />
+            <HISAnalyzerDialog
+                rerender={rerender}
+                modalValue={[openHisModal, setOpenHisModal]}
+                editDataValue={[editValue, setEditValue]}
+                url={url}
+                fetchData={fetchData}
+                tableHeadings={tableHeadings}
+                analyzersList={analyzersList}
+                hisList={hisList}
+            />
+            
             <Paper sx={{ borderRadius: '20px', marginX: '30px', mt: 1, height: '80vh', overflow: 'auto' }}>
                 <Stack direction={'row'} className='table-header'>
                     <Typography variant="h6" className='table-headingName'>
@@ -130,7 +147,7 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                                     <IconButton
                                         aria-label="Add item"
                                         sx={{ backgroundColor: '#3d5afe', borderRadius: '50%', fontSize: '18px', p: 1, ml: 1 }}
-                                        onClick={() => setOpenModal(true)}
+                                        onClick={() => url == 'HisAnalyzers' ? setOpenHisModal(true) : setOpenModal(true)}
                                     >
                                         <AddIcon fontSize='large' sx={{ color: 'white', fontSize: '30px' }} />
                                     </IconButton>
@@ -140,7 +157,7 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                                         sx={{ width: "200px", border: '2px solid', borderRadius: '20px', fontSize: '18px', p: 1, ml: 2 }}
                                         variant="outlined"
                                         endIcon={<AddIcon />}
-                                        onClick={() => setOpenModal(true)}
+                                        onClick={() => url == 'HisAnalyzers' ? setOpenHisModal(true) : setOpenModal(true)}
                                     >
                                         Add item
                                     </Button>

@@ -9,6 +9,8 @@ export const navConfig = [
       { title: 'Analyzer Parameter', path: '/analyzerParameter' },
       { title: 'CPT', path: '/CPT' },
       { title: 'LIS Code', path: '/LISCode' },
+      { title: 'HIS', path: '/His' },
+      { title: 'HIS Analyzer', path: '/HISAnalyzer' },
     ]
   },
   {
@@ -346,6 +348,32 @@ export const usersTableHeadings  = [
   { id: 'password', label: 'Password' },
   { id: 'desc', label: 'Description' },
   { id: 'isActive', label: 'IsActive' },
+  // { id: 'createdOn', label: 'CreatedOn' },
+  // { id: 'updatedOn', label: 'UpdatedOn' },
+  // { id: 'createdBy', label: 'CreatedBy' },
+  // { id: 'updatedBy', label: 'UpdatedBy' },
+  { id: 'actions', label: 'Actions' },
+];
+
+export const HisTableHeadings  = [
+  { id: 'id', label: 'Sr.No' },
+  { id: 'name', label: 'Name' },
+  { id: 'desc', label: 'Description' },
+  { id: 'isActive', label: 'IsActive' },
+  // { id: 'createdOn', label: 'CreatedOn' },
+  // { id: 'updatedOn', label: 'UpdatedOn' },
+  // { id: 'createdBy', label: 'CreatedBy' },
+  // { id: 'updatedBy', label: 'UpdatedBy' },
+  { id: 'actions', label: 'Actions' },
+];
+
+export const HisAnalyzerTableHeadings  = [
+  { id: 'id', label: 'Sr.No' },
+  { id: 'analyzerName', label: 'Analyzer Name' },
+  { id: 'hisName', label: 'HIS Name' },
+  { id: 'hparamName', label: 'H Param Name' },
+  { id: 'aparamName', label: 'A Param Name' },
+  // { id: 'isActive', label: 'IsActive' },
   // { id: 'createdOn', label: 'CreatedOn' },
   // { id: 'updatedOn', label: 'UpdatedOn' },
   // { id: 'createdBy', label: 'CreatedBy' },

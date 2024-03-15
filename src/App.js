@@ -26,6 +26,8 @@ import PathologyResultDetails from './pages/PathologyResultDetails';
 import AlertDialog from './components/AlertDialog';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
+import HISAnalyzer from './pages/HISAnalyzer';
+import His from './pages/His';
 
 function App() {
   const dispatch = useDispatch();
@@ -55,6 +57,8 @@ function App() {
           <Route path='/analyzerParameter' Component={AnalyzerParameter} />
           <Route path='/CPT' Component={CPT} />
           <Route path='/LISCode' Component={LISCode} />
+          <Route path='/His' Component={His} />
+          <Route path='/HISAnalyzer' Component={HISAnalyzer} />
           <Route path='/GenLookups' Component={GenLookups} />
           <Route path='/InvoiceDetails' Component={InvoiceDetails} />
           <Route path='/InvoiceMasters' Component={InvoiceMasters} />

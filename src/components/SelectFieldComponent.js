@@ -30,7 +30,7 @@ const SelectFieldComponent = ({ menuOptions, name, label, register, watch, setVa
                 disablePortal
                 id="combo-box-demo"
                 options={menuOptions}
-                sx={{ width: 300 }}
+                // sx={{ width: 300 }}
                 defaultValue={watch(`${name}`)}
                 {...register(`${name}`)}
                 onChange={(event, value) => {
