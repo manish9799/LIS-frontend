@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import TableData from '../components/TableComponent/TableData'
 import { pathologyResultMastersTableHeadings } from '../configData';
-import { getPathologyResultMasters } from '../redux/actions/pathologyActions';
+import { getPathologyResultDetails, getPathologyResultMasters } from '../redux/actions/pathologyActions';
 import { useDispatch, useSelector } from 'react-redux';
 
 const PathologyResultMasters = () => {
@@ -12,6 +12,7 @@ const PathologyResultMasters = () => {
 
   useEffect(()=>{
     dispatch(getPathologyResultMasters(URL));
+    dispatch(getPathologyResultDetails('PathologyResultDetails'));
   },[])
   
   useEffect(()=>{

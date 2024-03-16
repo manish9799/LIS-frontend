@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TableSortLabel, TextField, Typography, TablePagination, IconButton, Stack, Button, useMediaQuery } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TableSortLabel, TextField, Typography, TablePagination, IconButton, Stack, Button, useMediaQuery, Tooltip } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
@@ -13,6 +13,8 @@ import DetailViewPopup from './DetailViewPopup';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import CircularProgress from '@mui/material/CircularProgress';
 import HISAnalyzerDialog from './HISAnalyzerDialog';
+import HISDetailViewPopup from './HISDetailViewPopup';
+import SampleIdDetailPopup from './SampleIdDetailPopup';
 
 
 const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesList, analyzersList, cptList,hisList, rerender, readable }) => {
@@ -28,6 +30,8 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
     const [editValue, setEditValue] = useState({})
     const [deleteDialog, setDeleteDialog] = useState(false);
     const [openDetailsModal, setOpenDetailsModal] = useState(false);
+    const [hisOpenDetailsModal, setHisOpenDetailsModal] = useState(false);
+    const [sampleDetailsModal, setSampleOpenDetailsModal] = useState(false);
     const [deleteId, setDeleteId] = useState(0)
     const [loading, setLoading] = useState(true)
     const isScreenSmall = useMediaQuery('(max-width:945px)');
@@ -94,7 +98,17 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
     }
     const detailView = (data) => {
         setEditValue(data)
-        setOpenDetailsModal(true)
+        if(url == 'HisAnalyzers'){
+            setHisOpenDetailsModal(true)
+        }else{
+            setOpenDetailsModal(true)
+        }
+    }
+
+    const sampleDetailView = (data) => {
+        setEditValue(data)
+        setSampleOpenDetailsModal(true)
+       
     }
 
     return (
@@ -102,6 +116,14 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
             <ConfirmDialog remove={deleteData} openDialog={[deleteDialog, setDeleteDialog]} />
             <DetailViewPopup
                 detailsModalValue={[openDetailsModal, setOpenDetailsModal]}
+                editDataValue={[editValue, setEditValue]}
+            />
+            <SampleIdDetailPopup
+                detailsModalValue={[sampleDetailsModal, setSampleOpenDetailsModal]}
+                editDataValue={[editValue, setEditValue]}
+            />
+            <HISDetailViewPopup
+                detailsModalValue={[hisOpenDetailsModal, setHisOpenDetailsModal]}
                 editDataValue={[editValue, setEditValue]}
             />
             <AddEditPopup
@@ -126,7 +148,7 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                 hisList={hisList}
             />
             
-            <Paper sx={{ borderRadius: '20px', marginX: '30px', mt: 1, height: '80vh', overflow: 'auto' }}>
+            <Paper sx={{ borderRadius: '20px', marginX: '30px', mt: 1, height: '80vh',overflow:'auto'  }}>
                 <Stack direction={'row'} className='table-header'>
                     <Typography variant="h6" className='table-headingName'>
                         {headingName}
@@ -168,8 +190,8 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                 </Stack>
 
                 <TableContainer>
-                    <Table size="small">
-                        <TableHead>
+                    <Table  size="small">
+                        <TableHead >
                             <TableRow>
                                 {tableHeadings?.map((item, i) => (
                                     <React.Fragment key={item + i}>
@@ -196,12 +218,15 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                             ) : sortedData?.length ? (
                                 <>
                                     {sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, rowIndex) => (
-                                        <TableRow key={row.id}>
+                                        <TableRow key={row.id} sx={{ 
+                                            '&:hover': {
+                                            backgroundColor: '#cbd3dc', 
+                                          }}}>
                                             {tableHeadings?.map((item, i) => (
                                                 <React.Fragment key={i}>
                                                     {item.id == 'actions' ?
                                                         <>
-                                                            <TableCell sx={{display:"flex"}}>
+                                                            <TableCell sx={{display:"flex",paddingBottom:'5px'}}>
                                                                 <IconButton onClick={() => detailView(row)}>
                                                                     <VisibilityIcon />
                                                                 </IconButton>
@@ -222,7 +247,16 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                                                         ) : item.id === 'id' ? (
                                                             <TableCell sx={{ paddingY: '10px' }}>{(page * rowsPerPage) + rowIndex + 1}</TableCell>
                                                         ) :
-                                                            <TableCell sx={{ paddingY: '5px' }}>{row[item.id] || '-'}</TableCell>}
+                                                         item.id === 'sampleId' ? (
+                                                            <>
+                                                            <TableCell onClick={() => sampleDetailView(row)} sx={{ paddingY: '10px',color:'#27A3B9',fontWeight:'600',cursor:'pointer' }}>
+                                                               <Tooltip arrow title="Click for Details" placement="bottom">
+                                                                {row[item.id] || '-'}
+                                                               </Tooltip>
+                                                                </TableCell>
+                                                            </>
+                                                        ) :
+                                                            <TableCell sx={{ paddingY: '5px',boxSizing:'border-box' }}>{row[item.id] || '-'}</TableCell>}
                                                 </React.Fragment>
                                             ))}
                                         </TableRow>
