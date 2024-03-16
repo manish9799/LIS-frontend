@@ -126,7 +126,7 @@ const HISAnalyzerDialog = ({ modalValue, editDataValue, url, LisCodesList, analy
             data.id = editValue.id
             if (data.analyzerId) {
                 delete data.analyzerName;
-                
+
                 if (data.analyzerId?.label) {
                     data.analyzerId = data.analyzerId.value
                 }
@@ -153,17 +153,17 @@ const HISAnalyzerDialog = ({ modalValue, editDataValue, url, LisCodesList, analy
                 onClose={Close}
                 sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
             >
-                <Box sx={{ display: 'flex', justifyContent: 'center', width: '99%', height: '90%', border: 'none !important' }}>
+                <Box sx={{ display: 'flex', justifyContent: 'center', width: '80%', height: '90%', border: 'none !important' }}>
                     <Card sx={{ backgroundColor: '#ffff', pb: '20px', minWidth: '90%', borderRadius: '20px', overflowY: 'scroll', }}>
                         {/* <Typography sx={{ fontSize: '24px', textAlign: 'center', padding: '10px', pb: 0, fontWeight: '600' }}> {editValue.id ? 'Edit Data' : 'Add Data'}</Typography> */}
-                        <Typography sx={{ fontSize: '24px', padding: '10px', ml: 4, fontWeight: '600' }}> HISAnalyzer</Typography>
+                        <Typography sx={{ fontSize: '24px', padding: '10px', ml: 4, fontWeight: '600' }}> HIS-Analyzer Mapping</Typography>
                         <hr />
                         <form onSubmit={onSubmit}>
                             <Stack spacing={2} gap={2} sx={{ mt: 3, mx: 3, display: 'flex', flexDirection: ['column', 'row', 'row'] }}>
                                 <Grid container spacing={2} lg={6} md={6} sm={12} sx={{ mx: 1, }}>
-                                    <Box sx={{ backgroundColor: '#d2d1d1', margin: '0 auto', width: '100%', borderRadius: '20px', p: 2 }}>
-                                        <Grid item xs={12}>
-                                            <Typography variant="h6">HIS</Typography>
+                                    <Box sx={{ backgroundColor: '#f2c6ff', margin: '0 auto', width: '100%', borderRadius: '20px', p: 2,boxShadow:'3px 3px 10px'  }}>
+                                        <Grid item xs={12} sx={{ px: 3, pb: 2 }}>
+                                            <Typography variant="h5" sx={{ textAlign: 'center', mb: 1 }}>HIS</Typography>
                                             <Paper sx={{ p: 2 }}>
                                                 {dataKeys.HIS?.map((item, i) => (
                                                     <Stack spacing={2} sx={{ mt: i == 0 ? 0 : 2.5 }} key={item + i}>
@@ -210,25 +210,26 @@ const HISAnalyzerDialog = ({ modalValue, editDataValue, url, LisCodesList, analy
                                         </Grid>
                                     </Box>
                                 </Grid>
-                                <Grid container lg={1} md={1} sm={1} sx={{mt:4}} >
-                                        <Paper sx={{ p: 2 }}>
-                                            {[1, 2, 3, 4, 5]?.map((item, i) => (
-                                                <Stack spacing={2} sx={{mt:4.5}} direction={'coloumn'} key={item + i}>
-                                                    <IconButton sx={{
-                                                        backgroundColor:'#1976d2',
-                                                        '&:hover': {
-                                                            backgroundColor: '#1565c0', 
-                                                          }}} >
-                                                        <SettingsEthernetIcon sx={{color:'white'}} />
-                                                    </IconButton>
-                                                </Stack>
-                                            ))}
-                                        </Paper>
+                                <Grid container lg={1} md={1} sm={1} sx={{ mt: 4 }} >
+                                    <Paper sx={{ p: 2 }}>
+                                        {[1, 2, 3, 4, 5]?.map((item, i) => (
+                                            <Stack spacing={2} sx={{ mt: 4.5 }} direction={'coloumn'} key={item + i}>
+                                                <IconButton sx={{
+                                                    backgroundColor: '#1976d2',
+                                                    '&:hover': {
+                                                        backgroundColor: '#1565c0',
+                                                    }
+                                                }} >
+                                                    <SettingsEthernetIcon sx={{ color: 'white' }} />
+                                                </IconButton>
+                                            </Stack>
+                                        ))}
+                                    </Paper>
                                 </Grid>
                                 <Grid container spacing={2} lg={6} md={6} sm={12} sx={{ mx: 1, marginTop: '0px !important' }}>
-                                    <Box sx={{ backgroundColor: '#d2d1d1', margin: '0 auto', width: '100%', borderRadius: '20px', p: 2 }}>
-                                        <Grid item xs={12}>
-                                            <Typography variant="h6">Analyzer</Typography>
+                                    <Box sx={{ backgroundColor: '#94dde8', margin: '0 auto', width: '100%', borderRadius: '20px', p: 2 ,boxShadow:'3px 3px 10px' }}>
+                                        <Grid item xs={12} sx={{ px: 3, pb: 2 }}>
+                                            <Typography variant="h5" sx={{ textAlign: 'center', mb: 1 }}>Analyzer</Typography>
                                             <Paper sx={{ p: 2 }}>
                                                 {dataKeys.Analyzer?.map((item, i) => (
                                                     <Stack spacing={2} sx={{ mt: i == 0 ? 0 : 2.5 }} key={item + i}>
@@ -255,17 +256,17 @@ const HISAnalyzerDialog = ({ modalValue, editDataValue, url, LisCodesList, analy
                                                                     :
                                                                     (
                                                                         <TextFieldComponent
-                                                                        name={item}
-                                                                        label={upperCase(
-                                                                            item == 'hunit' ? 'Unit Of Measure' :
-                                                                                item == 'aunit' ? 'Unit Of Measure' :
-                                                                                    item == 'hparamName' ? 'Parameter Name' :
-                                                                                        item == 'aparamName' ? 'Parameter Name' :
-                                                                                            item == 'hrange' ? 'Range' :
-                                                                                                item == 'arange' ? 'Range' :
-                                                                                                    item)}
-                                                                        register={register}
-                                                                    />
+                                                                            name={item}
+                                                                            label={upperCase(
+                                                                                item == 'hunit' ? 'Unit Of Measure' :
+                                                                                    item == 'aunit' ? 'Unit Of Measure' :
+                                                                                        item == 'hparamName' ? 'Parameter Name' :
+                                                                                            item == 'aparamName' ? 'Parameter Name' :
+                                                                                                item == 'hrange' ? 'Range' :
+                                                                                                    item == 'arange' ? 'Range' :
+                                                                                                        item)}
+                                                                            register={register}
+                                                                        />
                                                                     )}
                                                             </>
                                                         )}
@@ -277,13 +278,13 @@ const HISAnalyzerDialog = ({ modalValue, editDataValue, url, LisCodesList, analy
                                 </Grid>
                             </Stack>
 
-                            <Box sx={{ width: '50%', mx: 3, mt: 2 }}>
+                            <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', mt: 2 }}>
                                 <Grid item xs={12} md={9}>
-                                    <Stack direction={'row'} gap={3} sx={{ width: '80%' }}>
-                                        <Button fullWidth variant="contained" type="submit">
+                                    <Stack direction={'row'} gap={3} sx={{ width: '100%' }}>
+                                        <Button sx={{ width: '200px' }} fullWidth variant="contained" type="submit">
                                             {editValue.id ? 'Update' : 'Add'}
                                         </Button>
-                                        <Button fullWidth variant="contained" color="error" onClick={Close}>
+                                        <Button sx={{ width: '200px' }} fullWidth variant="contained" color="error" onClick={Close}>
                                             Cancel
                                         </Button>
                                     </Stack>

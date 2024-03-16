@@ -216,6 +216,7 @@ export const pathologyResultMastersTableHeadings  = [
   { id: 'cptName', label: 'CPT Name' },
   { id: 'orderdetailId', label: 'Order Deatil ID' },
   { id: 'patientId', label: 'Patient Id' },
+  { id: 'sampleId', label: 'Sample Id' },
   { id: 'labId', label: 'Lab Id' },
   { id: 'status', label: 'Status' },
   { id: 'desc', label: 'Description' },
@@ -379,6 +380,20 @@ export const HisAnalyzerTableHeadings  = [
   // { id: 'createdBy', label: 'CreatedBy' },
   // { id: 'updatedBy', label: 'UpdatedBy' },
   { id: 'actions', label: 'Actions' },
+];
+
+export const SampleDetailsTableHeadings  = [
+  { id: 'id', label: 'Sr.No' },
+  { id: 'liscodeName', label: 'LIS Code Name' },
+  { id: 'result', label: 'Result' },
+  { id: 'orderDetailId', label: 'Oreder ID' },
+  { id: 'pathologyResultMasterId', label: 'Master ID' },
+  // { id: 'isActive', label: 'IsActive' },
+  // { id: 'createdOn', label: 'CreatedOn' },
+  // { id: 'updatedOn', label: 'UpdatedOn' },
+  // { id: 'createdBy', label: 'CreatedBy' },
+  // { id: 'updatedBy', label: 'UpdatedBy' },
+  // { id: 'actions', label: 'Actions' },
 ];
 
 
