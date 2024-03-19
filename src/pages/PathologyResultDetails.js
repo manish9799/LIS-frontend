@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getPathologyResultDetails } from '../redux/actions/pathologyActions';
 
 const PathologyResultDetails = () => {
-  const URL = 'PathologyResultDetails';
+  const URL = 'PathologyResultDetail';
   const [data,setData] = useState([]);
   const dispatch = useDispatch()
   const pathologyResultDetailsList =  useSelector((state) => state.pathologyReducer.pathologyResultDetailsList);

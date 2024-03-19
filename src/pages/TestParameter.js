@@ -7,7 +7,7 @@ import { getCpt, getLisCodes } from '../redux/actions/servicesActions'
 
 const TestParameter = () => {
 
-  const URL = 'TestParameters';
+  const URL = 'TestParameter';
   const [data,setData] = useState([]);
   const dispatch = useDispatch()
   const testParameterList =  useSelector((state) => state.testsReducer.testParameterList);
@@ -15,8 +15,8 @@ const TestParameter = () => {
 
   useEffect(()=>{
     dispatch(getTestParameter(URL));
-    dispatch(getCpt('Cpts'));
-    dispatch(getLisCodes('LisCodes'));
+    dispatch(getCpt('Cpt'));
+    dispatch(getLisCodes('LisCode'));
   },[])
   
   useEffect(()=>{

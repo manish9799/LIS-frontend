@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 const CPT = () => {
   const dispatch = useDispatch();
-  const URL = 'Cpts';
+  const URL = 'Cpt';
   const [data,setData] = useState([]);
   const cptList =  useSelector((state) => state.servicesReducer.cptList);
 

@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAnalyzers } from '../redux/actions/servicesActions';
 
 const Analyzer = () => {
-  const URL = 'Analyzers';
+  const URL = 'Analyzer';
   const [data,setData] = useState([]);
   const dispatch = useDispatch()
   const analyzerLists =  useSelector((state) => state.servicesReducer.analyzerLists);

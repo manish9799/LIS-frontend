@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getTestUnits } from '../redux/actions/testsActions';
 
 const TestUnits = () => {
-  const URL = 'TestUnits';
+  const URL = 'TestUnit';
   const [data,setData] = useState([]);
   const dispatch = useDispatch()
   const testUnitsList =  useSelector((state) => state.testsReducer.testUnitsList);

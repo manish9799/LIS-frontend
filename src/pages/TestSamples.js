@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getTestSamples } from '../redux/actions/testsActions';
 
 const TestSamples = () => {
-  const URL = 'TestSamples';
+  const URL = 'TestSample';
   const [data,setData] = useState([]);
   const dispatch = useDispatch()
   const testSamplesList =  useSelector((state) => state.testsReducer.testSamplesList);

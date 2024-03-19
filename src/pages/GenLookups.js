@@ -5,7 +5,7 @@ import { getGenLookups } from '../redux/actions/othersActions';
 import { useDispatch, useSelector } from 'react-redux';
 
 const GenLookups = () => {
-  const URL = 'GenLookups';
+  const URL = 'GenLookup';
   const [data,setData] = useState([]);
   const dispatch = useDispatch()
   const genLookupsList =  useSelector((state) => state.othersReducer.genLookupsList);

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getInvoiceMasters } from '../redux/actions/invoiceOrderActions';
 
 const InvoiceMasters = () => {
-  const URL = 'InvoiceMasters';
+  const URL = 'InvoiceMaster';
   const [data,setData] = useState([]);
   const dispatch = useDispatch()
   const invoiceMastersList =  useSelector((state) => state.invoiceOrderReducer.invoiceMastersList);

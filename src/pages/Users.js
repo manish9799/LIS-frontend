@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUsers } from '../redux/actions/othersActions';
 
 const Users = () => {
-  const URL = 'Users';
+  const URL = 'User';
   const [data,setData] = useState([]);
   const dispatch = useDispatch()
   const usersList =  useSelector((state) => state.othersReducer.usersList);

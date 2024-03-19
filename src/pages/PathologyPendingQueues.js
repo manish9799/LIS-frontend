@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getPathologyPendingQueues } from '../redux/actions/pathologyActions';
 
 const PathologyPendingQueues = () => {
-  const URL = 'PathologyPendingQueues';
+  const URL = 'PathologyPendingQueue';
   const [data,setData] = useState([]);
   const dispatch = useDispatch()
   const pathologyPendingQueuesList =  useSelector((state) => state.pathologyReducer.pathologyPendingQueuesList);

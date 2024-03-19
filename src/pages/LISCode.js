@@ -6,7 +6,7 @@ import { getLisCodes } from '../redux/actions/servicesActions'
 
 const LISCode = () => {
   const dispatch = useDispatch();
-  const URL = 'LisCodes';
+  const URL = 'LisCode';
   const [data,setData] = useState([]);
   const lisCodesList =  useSelector((state) => state.servicesReducer.lisCodesList);
 

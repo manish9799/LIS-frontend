@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getModules } from '../redux/actions/othersActions';
 
 const Modules = () => {
-  const URL = 'Modules';
+  const URL = 'Module';
   const [data,setData] = useState([]);
   const dispatch = useDispatch()
   const modulesList =  useSelector((state) => state.othersReducer.modulesList);

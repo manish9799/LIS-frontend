@@ -45,8 +45,10 @@ const AddEditPopup = ({ modalValue, editDataValue,url,fetchData,LisCodesList,ana
     }
     
     useEffect(()=>{
-        if(url !== 'HisAnalyzers'){
-            setDataKeys(Object.keys(schemaData[url]))
+        if(editValue){
+            if(url !== 'HisAnalyzer'){
+                setDataKeys(Object.keys(schemaData[url]))
+            }
         }
     },[url])
 
@@ -75,20 +77,20 @@ const AddEditPopup = ({ modalValue, editDataValue,url,fetchData,LisCodesList,ana
     },[analyzersList,LisCodesList,cptList])
 
     useEffect(() => {
-        if (editValue?.id) {
+        if (editValue?.ID) {
             Object.keys(editValue).forEach(key => {
                 const name = editValue[key];
-                if(key == 'cptName'){
+                if(key == 'CptName'){
                     const defaultValue = cptMenuOptions.find(option => option.label === name);
-                    if (defaultValue) setValue('cptid', defaultValue);
+                    if (defaultValue) setValue('CPTID', defaultValue);
                 }
-                if(key == 'liscodeName'){
+                if(key == 'LiscodeName'){
                     const defaultValue = liscodeMenuOptions.find(option => option.label === name);
-                    if (defaultValue)  setValue('liscodeId', defaultValue);
+                    if (defaultValue)  setValue('LISCodeId', defaultValue);
                 }
-                if(key == 'analyzerName'){
+                if(key == 'AnalyzerName'){
                     const defaultValue = analyzerMenuOptions.find(option => option.label === name);
-                    if (defaultValue) setValue('analyzerId', defaultValue);
+                    if (defaultValue) setValue('AnalyzerId', defaultValue);
                 }
                 else{
                     setValue(key, editValue[key]); 
@@ -109,19 +111,19 @@ const AddEditPopup = ({ modalValue, editDataValue,url,fetchData,LisCodesList,ana
         e.preventDefault()
         let data = watch()
         let addData = data;
-        addData.createdBy = 1;
-        addData.updatedBy = 1;
-        addData.createdOn = currentDateTime;
-        addData.updatedOn = currentDateTime;
-        addData.isActive = true
-        addData.id = 0;
+        addData.CreatedBy = 1;
+        addData.UpdatedBy = 1;
+        addData.CreatedOn = currentDateTime;
+        addData.UpdatedOn = currentDateTime;
+        addData.IsActive = true
+        addData.ID = 0;
         
         if(url === 'Cpts'){
             addData.unitId = 0;
             addData.categoryId = 0;
         }
-        if(editValue?.id){
-            data.id = editValue.id
+        if(editValue?.ID){
+            data.ID = editValue.ID
             if(data.liscodeId){
                 delete data.liscodeName;
                 if(data.liscodeId?.label){
@@ -140,13 +142,16 @@ const AddEditPopup = ({ modalValue, editDataValue,url,fetchData,LisCodesList,ana
                     data.analyzerId = data.analyzerId.value
                 }
             }
-            dispatch(updateDataAction(url,editValue.id,data,rerender))
+            dispatch(updateDataAction(url,editValue.ID,data,rerender))
             Close()
         }else{
             dispatch(addDataAction(url,addData,rerender))
             Close()
         }
     }
+
+    console.log("editValue",editValue);
+    console.log("watch",watch());
 
     return (
         <> 
@@ -162,7 +167,7 @@ const AddEditPopup = ({ modalValue, editDataValue,url,fetchData,LisCodesList,ana
                             <Grid container spacing={2} sx={{mx:3}}  >
                                 {dataKeys?.map((item,i)=>(
                                     <Grid key={item+i} item xs={10.5} sm={5.5} md={3.7} lg={3.7}>
-                                        {item === "analyzerId" || item === "liscodeId" || item === "cptid"|| item === "type"? 
+                                        {item === "AnalyzerId" || item === "LiscodeId" || item === "CPTID"|| item === "Type"? 
                                         <SelectFieldComponent
                                             name={item}
                                             label={ item === "analyzerId" ? 'Analyzers' : item === "liscodeId" ? 'Liscodes' : item === "cptid" ? 'CptId': 'Type' }

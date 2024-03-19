@@ -17,7 +17,7 @@ import HISDetailViewPopup from './HISDetailViewPopup';
 import SampleIdDetailPopup from './SampleIdDetailPopup';
 
 
-const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesList, analyzersList, cptList, hisList, rerender, readable, showColor }) => {
+const  TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesList, analyzersList, cptList, hisList, rerender, readable, showColor }) => {
     const dispatch = useDispatch()
     const [tableData, setTableData] = useState([])
     const [orderBy, setOrderBy] = useState(null);
@@ -45,6 +45,10 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
         }
     }, [data])
 
+    console.log("data",data);
+
+
+
     const handleSort = (property) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrderBy(property);
@@ -56,8 +60,9 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
     };
 
     const filteredData = tableData && tableData?.filter((row) =>
-        row?.name?.toLowerCase().includes(searchTerm?.toLowerCase())
-        || row?.id?.toString().includes(searchTerm)
+        row?.Name?.toLowerCase().includes(searchTerm?.toLowerCase())
+        || row?.ID?.toString().includes(searchTerm)
+        || row?.Id?.toString().includes(searchTerm)
         // || row?.analyzerName?.toString().includes(searchTerm)
         // || row?.cptName?.toString().includes(searchTerm)
         // || row?.liscodeName?.toString().includes(searchTerm)
@@ -92,7 +97,7 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
 
     const editData = (data) => {
         setEditValue(data)
-        if (url == 'HisAnalyzers') {
+        if (url == 'HisAnalyzer') {
             setOpenHisModal(true)
         } else {
             setOpenModal(true)
@@ -100,7 +105,7 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
     }
     const detailView = (data) => {
         setEditValue(data)
-        if (url == 'HisAnalyzers') {
+        if (url == 'HisAnalyzer') {
             setHisOpenDetailsModal(true)
         } else {
             setOpenDetailsModal(true)
@@ -171,7 +176,7 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                                     <IconButton
                                         aria-label="Add item"
                                         sx={{ backgroundColor: '#3d5afe', borderRadius: '50%', fontSize: '18px', p: 1, ml: 1 }}
-                                        onClick={() => url == 'HisAnalyzers' ? setOpenHisModal(true) : setOpenModal(true)}
+                                        onClick={() => url == 'HisAnalyzer' ? setOpenHisModal(true) : setOpenModal(true)}
                                     >
                                         <AddIcon fontSize='large' sx={{ color: 'white', fontSize: '30px' }} />
                                     </IconButton>
@@ -181,7 +186,7 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                                         sx={{ width: "200px", border: '2px solid', borderRadius: '20px', fontSize: '18px', p: 1, ml: 2 }}
                                         variant="outlined"
                                         endIcon={<AddIcon />}
-                                        onClick={() => url == 'HisAnalyzers' ? setOpenHisModal(true) : setOpenModal(true)}
+                                        onClick={() => url == 'HisAnalyzer' ? setOpenHisModal(true) : setOpenModal(true)}
                                     >
                                         Add item
                                     </Button>
@@ -200,7 +205,7 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                                         <TableCell key={item.id} sx={{
                                             fontWeight: '600', fontSize: '13px', backgroundColor: 'lightgray',
                                             maxWidth: item.id !== 'id' ? '150px' :
-                                                item.id == 'isActive' ? '100px' : '50px',
+                                                item.id == 'IsActive' ? '100px' : '50px',
                                         }}>
                                             <TableSortLabel
                                                 active={orderBy === `${item.id}`}
@@ -224,10 +229,10 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                             ) : sortedData?.length ? (
                                 <>
                                     {sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, rowIndex) => (
-                                        <TableRow key={row.id} sx={{
+                                        <TableRow key={row.ID} sx={{
                                             '&:hover': {
                                                 // scale: '1.03'
-                                                border: '1.5px solid black',
+                                                // border: '1.5px solid black',
                                                 boxSizing: 'border-box'
                                             }
                                         }}>
@@ -244,15 +249,15 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                                                                         <IconButton aria-label="edit" onClick={() => editData(row)}>
                                                                             <EditIcon />
                                                                         </IconButton>
-                                                                        <IconButton onClick={() => confirmDelete(row.id)} aria-label="delete">
+                                                                        <IconButton onClick={() => confirmDelete(row.ID)} aria-label="delete">
                                                                             <DeleteIcon sx={{ color: 'red' }} />
                                                                         </IconButton>
                                                                     </>
                                                                 )}
                                                             </TableCell>
                                                         </>
-                                                        : item.id === 'isActive' ? (
-                                                            <TableCell sx={{ paddingY: '5px', fontWeight: 600, color: row.isActive ? 'green' : 'red' }}>{row.isActive ? 'Active' : 'In Active'}</TableCell>
+                                                        : item.id === 'IsActive' ? (
+                                                            <TableCell sx={{ paddingY: '5px', fontWeight: 600, color: row.IsActive ? 'green' : 'red' }}>{row.IsActive ? 'Active' : 'In Active'}</TableCell>
                                                         ) : item.id === 'id' ? (
                                                             <TableCell sx={{ paddingY: '10px' }}>{(page * rowsPerPage) + rowIndex + 1}</TableCell>
                                                         ) :

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getRoleModules } from '../redux/actions/othersActions';
 
 const RoleModules = () => {
-  const URL = 'RoleModules';
+  const URL = 'RoleModule';
   const [data,setData] = useState([]);
   const dispatch = useDispatch()
   const roleModuleList =  useSelector((state) => state.othersReducer.roleModuleList);

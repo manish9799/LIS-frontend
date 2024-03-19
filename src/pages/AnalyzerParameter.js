@@ -6,14 +6,14 @@ import { useDispatch, useSelector } from 'react-redux'
 
 const AnalyzerParameter = () => {
   const dispatch = useDispatch();
-  const URL = 'AnalyzerParameters';
+  const URL = 'AnalyzerParameter';
   const [data,setData] = useState([]);
   const {analyzerLists,analyzerParameterList,lisCodesList,} =  useSelector((state) => state.servicesReducer);
 
   useEffect(()=>{
     dispatch(getAnalyzersParameter(URL));
-    dispatch(getAnalyzers('Analyzers'));
-    dispatch(getLisCodes('LisCodes'));
+    dispatch(getAnalyzers('Analyzer'));
+    dispatch(getLisCodes('LisCode'));
   },[])
 
   useEffect(()=>{
