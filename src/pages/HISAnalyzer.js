@@ -28,10 +28,11 @@ const HISAnalyzer = () => {
         url={URL}
         data={data}
         rerender = {getHisAnalyzer}
-        headingName={'HIS Analyzer'}
+        headingName={'HIS-Analyzer Mapping'}
         tableHeadings={HisAnalyzerTableHeadings}
         analyzersList={analyzerLists}
         hisList={hisList}
+        showColor={true}
       />
     </>
   )

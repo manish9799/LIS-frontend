@@ -26,7 +26,7 @@ export const navConfig = [
     title: 'Pathology',
     children: [
       { title: 'Pathology Pending Queues', path: '/PathologyPendingQueues' },
-    { title: 'Pathology Result Details', path: '/PathologyResultDetails' },
+    // { title: 'Pathology Result Details', path: '/PathologyResultDetails' },
     { title: 'Pathology Result Masters', path: '/PathologyResultMasters' },
     ]
   },
@@ -213,13 +213,14 @@ export const pathologyResultDetailsTableHeadings  = [
 
 export const pathologyResultMastersTableHeadings  = [
   { id: 'id', label: 'Sr.No' },
+  { id: 'orderDetailId', label: 'Order Deatil ID' },
   { id: 'cptName', label: 'CPT Name' },
-  { id: 'orderdetailId', label: 'Order Deatil ID' },
-  { id: 'patientId', label: 'Patient Id' },
   { id: 'sampleId', label: 'Sample Id' },
-  { id: 'labId', label: 'Lab Id' },
+  { id: 'mrn', label: 'MRN' },
+  { id: 'patientId', label: 'Patient Name' },
+  // { id: 'labId', label: 'Lab Id' },
   { id: 'status', label: 'Status' },
-  { id: 'desc', label: 'Description' },
+  // { id: 'desc', label: 'Description' },
   { id: 'isActive', label: 'IsActive' },
   // { id: 'createdOn', label: 'CreatedOn' },
   // { id: 'updatedOn', label: 'UpdatedOn' },
@@ -370,10 +371,16 @@ export const HisTableHeadings  = [
 
 export const HisAnalyzerTableHeadings  = [
   { id: 'id', label: 'Sr.No' },
-  { id: 'analyzerName', label: 'Analyzer Name' },
-  { id: 'hisName', label: 'HIS Name' },
-  { id: 'hparamName', label: 'H Param Name' },
-  { id: 'aparamName', label: 'A Param Name' },
+  { id: 'hisName', label: 'HIS' },
+  { id: 'hisCode', label: 'Test ID' },
+  { id: 'hparamName', label: 'Test Name' },
+  { id: 'hunit', label: 'Test Unit' },
+  { id: 'hrange', label: 'Test Range' },
+  { id: 'analyzerName', label: 'Analyzer' },
+  { id: 'analyzerCode', label: 'Host Code' },
+  { id: 'aparamName', label: 'Parameter Name' },
+  { id: 'aunit', label: 'Analyzer Unit' },
+  { id: 'arange', label: 'Analyzer Range' },
   // { id: 'isActive', label: 'IsActive' },
   // { id: 'createdOn', label: 'CreatedOn' },
   // { id: 'updatedOn', label: 'UpdatedOn' },
@@ -383,11 +390,13 @@ export const HisAnalyzerTableHeadings  = [
 ];
 
 export const SampleDetailsTableHeadings  = [
-  { id: 'id', label: 'Sr.No' },
-  { id: 'liscodeName', label: 'LIS Code Name' },
+  // { id: 'id', label: 'Sr.No' },
+  { id: 'id', label: 'Test ID' },
+  { id: 'hostCode', label: 'Host Code' },
   { id: 'result', label: 'Result' },
-  { id: 'orderDetailId', label: 'Oreder ID' },
-  { id: 'pathologyResultMasterId', label: 'Master ID' },
+  { id: 'history', label: 'History' },
+  { id: 'abnormalFlag', label: 'Abnormal' },
+  // { id: 'pathologyResultMasterId', label: 'Master ID' },
   // { id: 'isActive', label: 'IsActive' },
   // { id: 'createdOn', label: 'CreatedOn' },
   // { id: 'updatedOn', label: 'UpdatedOn' },

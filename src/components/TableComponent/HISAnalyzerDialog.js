@@ -145,7 +145,6 @@ const HISAnalyzerDialog = ({ modalValue, editDataValue, url, LisCodesList, analy
         }
     }
 
-
     return (
         <>
             <Modal
@@ -170,7 +169,7 @@ const HISAnalyzerDialog = ({ modalValue, editDataValue, url, LisCodesList, analy
                                                         {item === "hisId" ? (
                                                             <SelectFieldComponent
                                                                 name={item}
-                                                                label={'HIS'}
+                                                                label={'HIS ID'}
                                                                 menuOptions={hisMenuOptions}
                                                                 register={register}
                                                                 watch={watch}
@@ -193,11 +192,9 @@ const HISAnalyzerDialog = ({ modalValue, editDataValue, url, LisCodesList, analy
                                                                             name={item}
                                                                             label={upperCase(
                                                                                 item == 'hunit' ? 'Unit Of Measure' :
-                                                                                    item == 'aunit' ? 'Unit Of Measure' :
-                                                                                        item == 'hparamName' ? 'Parameter Name' :
-                                                                                            item == 'aparamName' ? 'Parameter Name' :
+                                                                                        item == 'hparamName' ? 'Test Name' :
                                                                                                 item == 'hrange' ? 'Range' :
-                                                                                                    item == 'arange' ? 'Range' :
+                                                                                                    item == 'hisCode' ? 'Test ID' :
                                                                                                         item)}
                                                                             register={register}
                                                                         />
@@ -236,7 +233,7 @@ const HISAnalyzerDialog = ({ modalValue, editDataValue, url, LisCodesList, analy
                                                         {item === "analyzerId" ? (
                                                             <SelectFieldComponent
                                                                 name={item}
-                                                                label={'AnalyzerID'}
+                                                                label={'Analyzer ID'}
                                                                 menuOptions={analyzerMenuOptions}
                                                                 register={register}
                                                                 watch={watch}
@@ -258,12 +255,10 @@ const HISAnalyzerDialog = ({ modalValue, editDataValue, url, LisCodesList, analy
                                                                         <TextFieldComponent
                                                                             name={item}
                                                                             label={upperCase(
-                                                                                item == 'hunit' ? 'Unit Of Measure' :
                                                                                     item == 'aunit' ? 'Unit Of Measure' :
-                                                                                        item == 'hparamName' ? 'Parameter Name' :
                                                                                             item == 'aparamName' ? 'Parameter Name' :
-                                                                                                item == 'hrange' ? 'Range' :
                                                                                                     item == 'arange' ? 'Range' :
+                                                                                                    item == 'analyzerCode' ? 'Host Code' :
                                                                                                         item)}
                                                                             register={register}
                                                                         />
