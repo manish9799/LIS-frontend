@@ -17,7 +17,7 @@ import HISDetailViewPopup from './HISDetailViewPopup';
 import SampleIdDetailPopup from './SampleIdDetailPopup';
 
 
-const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesList, analyzersList, cptList,hisList, rerender, readable }) => {
+const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesList, analyzersList, cptList, hisList, rerender, readable, showColor }) => {
     const dispatch = useDispatch()
     const [tableData, setTableData] = useState([])
     const [orderBy, setOrderBy] = useState(null);
@@ -35,6 +35,8 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
     const [deleteId, setDeleteId] = useState(0)
     const [loading, setLoading] = useState(true)
     const isScreenSmall = useMediaQuery('(max-width:945px)');
+    const forHIS = ['hisName', 'hisCode', 'hparamName', 'hunit', 'hrange'];
+    const forAnalyzer = ['analyzerName', 'analyzerCode', 'aparamName', 'aunit', 'arange'];
 
     useEffect(() => {
         setTableData(data)
@@ -90,17 +92,17 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
 
     const editData = (data) => {
         setEditValue(data)
-        if(url == 'HisAnalyzers'){
+        if (url == 'HisAnalyzers') {
             setOpenHisModal(true)
-        }else{
+        } else {
             setOpenModal(true)
         }
     }
     const detailView = (data) => {
         setEditValue(data)
-        if(url == 'HisAnalyzers'){
+        if (url == 'HisAnalyzers') {
             setHisOpenDetailsModal(true)
-        }else{
+        } else {
             setOpenDetailsModal(true)
         }
     }
@@ -108,7 +110,7 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
     const sampleDetailView = (data) => {
         setEditValue(data)
         setSampleOpenDetailsModal(true)
-       
+
     }
 
     return (
@@ -147,8 +149,8 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                 analyzersList={analyzersList}
                 hisList={hisList}
             />
-            
-            <Paper sx={{ borderRadius: '20px', marginX: '30px', mt: 1, height: '80vh',overflow:'auto'  }}>
+
+            <Paper sx={{ borderRadius: '20px', marginX: '30px', mt: 1, height: '80vh', overflow: 'auto' }}>
                 <Stack direction={'row'} className='table-header'>
                     <Typography variant="h6" className='table-headingName'>
                         {headingName}
@@ -190,12 +192,16 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                 </Stack>
 
                 <TableContainer>
-                    <Table  size="small">
+                    <Table size="small">
                         <TableHead >
                             <TableRow>
                                 {tableHeadings?.map((item, i) => (
                                     <React.Fragment key={item + i}>
-                                        <TableCell key={item.id} sx={{ fontWeight: '600', fontSize: '13px', backgroundColor: 'lightgray', maxWidth: item.id !== 'id' ? '150px' : '50px' }}>
+                                        <TableCell key={item.id} sx={{
+                                            fontWeight: '600', fontSize: '13px', backgroundColor: 'lightgray',
+                                            maxWidth: item.id !== 'id' ? '150px' :
+                                                item.id == 'isActive' ? '100px' : '50px',
+                                        }}>
                                             <TableSortLabel
                                                 active={orderBy === `${item.id}`}
                                                 direction={orderBy === `${item.id}` ? order : 'asc'}
@@ -218,15 +224,18 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                             ) : sortedData?.length ? (
                                 <>
                                     {sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, rowIndex) => (
-                                        <TableRow key={row.id} sx={{ 
+                                        <TableRow key={row.id} sx={{
                                             '&:hover': {
-                                            backgroundColor: '#cbd3dc', 
-                                          }}}>
+                                                // scale: '1.03'
+                                                border: '1.5px solid black',
+                                                boxSizing: 'border-box'
+                                            }
+                                        }}>
                                             {tableHeadings?.map((item, i) => (
                                                 <React.Fragment key={i}>
                                                     {item.id == 'actions' ?
                                                         <>
-                                                            <TableCell sx={{display:"flex",paddingBottom:'5px'}}>
+                                                            <TableCell sx={{ display: "flex", paddingBottom: '5px' }}>
                                                                 <IconButton onClick={() => detailView(row)}>
                                                                     <VisibilityIcon />
                                                                 </IconButton>
@@ -247,16 +256,25 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                                                         ) : item.id === 'id' ? (
                                                             <TableCell sx={{ paddingY: '10px' }}>{(page * rowsPerPage) + rowIndex + 1}</TableCell>
                                                         ) :
-                                                         item.id === 'sampleId' ? (
-                                                            <>
-                                                            <TableCell onClick={() => sampleDetailView(row)} sx={{ paddingY: '10px',color:'#27A3B9',fontWeight:'600',cursor:'pointer' }}>
-                                                               <Tooltip arrow title="Click for Details" placement="bottom">
-                                                                {row[item.id] || '-'}
-                                                               </Tooltip>
-                                                                </TableCell>
-                                                            </>
-                                                        ) :
-                                                            <TableCell sx={{ paddingY: '5px',boxSizing:'border-box' }}>{row[item.id] || '-'}</TableCell>}
+                                                            item.id === 'sampleId' ? (
+                                                                <Tooltip arrow title="Click for Details" placement="bottom">
+                                                                    <TableCell onClick={() => sampleDetailView(row)} sx={{ paddingY: '10px', color: '#27A3B9', fontWeight: '600', cursor: 'pointer' }}>
+                                                                        {row[item.id] || '-'}
+                                                                    </TableCell>
+                                                                </Tooltip>
+                                                            ) :
+                                                                forHIS.includes(item.id) && showColor ? (
+                                                                    <TableCell sx={{ paddingY: '5px', boxSizing: 'border-box', backgroundColor: '#f2c6ff !important' }}>{row[item.id] || '-'}</TableCell>
+                                                                ) : forAnalyzer.includes(item.id) && showColor ? (
+                                                                    <TableCell sx={{ paddingY: '5px', boxSizing: 'border-box', backgroundColor: '#94dde8' }}>{row[item.id] || '-'}</TableCell>
+                                                                )
+                                                                    : (
+
+                                                                        <TableCell sx={{ paddingY: '5px', boxSizing: 'border-box', }}>{row[item.id] || '-'}</TableCell>
+                                                                    )
+                                                    }
+
+
                                                 </React.Fragment>
                                             ))}
                                         </TableRow>
