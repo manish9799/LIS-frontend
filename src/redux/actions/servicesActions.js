@@ -145,7 +145,7 @@ export const addDataAction= (url,data,rerender) => async (dispatch) => {
       }else if(response.response.status === 409){
         dispatch({
           type: ERROR_ALERT,
-          payload: response.response.data,
+          payload:response.response.data.Message || response.response.data,
         });
       }
     } catch (error) {
@@ -165,7 +165,7 @@ export const updateDataAction= (url,id,data,rerender) => async (dispatch) => {
       }else if(response.response.status === 409){
         dispatch({
           type: ERROR_ALERT,
-          payload: response.response.data,
+          payload: response.response.data.Message || response.response.data,
         });
       }
     } catch (error) {

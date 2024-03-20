@@ -63,7 +63,6 @@ const HISAnalyzerDialog = ({ modalValue, editDataValue, url, LisCodesList, analy
         resolver: yupResolver(hisAddSchema ),
     });
     // console.log("errors", errors);
-    console.log("watch",watch());
 
     const upperCase = (data) => {
         if (data?.length) {
@@ -96,29 +95,34 @@ const HISAnalyzerDialog = ({ modalValue, editDataValue, url, LisCodesList, analy
         }
     }, [analyzersList, LisCodesList, hisList])
 
-    
-
     useEffect(() => {
         if (editValue?.Id) {
             Object.keys(editValue).forEach(key => {
                 const name = editValue[key];
-                // console.log("name",name);
-                // console.log("key",key);
                 if (key == 'HisName') {
                     const defaultValue = hisMenuOptions.find(option => option.label === name);
-                    if (defaultValue) setValue('HisName', defaultValue);
+                    if (defaultValue) setValue('HISID', defaultValue);
+                    setValue('HISCode', editValue['HisCode']);
+                    // setValue('HisName', defaultValue);
+                    setValue('HParamName', editValue['HparamName']);
+                    setValue('HRange', editValue['Hrange']);
+                    setValue('HUnit', editValue['Hunit']);
+                    
                 }
                 if (key == 'AnalyzerName') {
                     const defaultValue = analyzerMenuOptions.find(option => option.label === name);
-                    // if (defaultValue) setValue('AnalyzerID', defaultValue);
-                    if (defaultValue) setValue('AnalyzerName', defaultValue);
+                    if (defaultValue) setValue('AnalyzerID', defaultValue);
+                    setValue('AnalyzerName', defaultValue);
+                    setValue('AParamName', editValue['AparamName']);
+                    setValue('ARange', editValue['Arange']);
+                    setValue('AUnit', editValue['Aunit']);
                 }
                 else {
-                    // setValue(key, editValue[key]);
-                    console.log("key",key,"--value",editValue[key]);
+                    setValue(key, editValue[key]);
                 }
             });
         }
+        
     }, [editValue]);
 
     const Close = () => {
@@ -131,45 +135,48 @@ const HISAnalyzerDialog = ({ modalValue, editDataValue, url, LisCodesList, analy
         e.preventDefault()
         let data = watch()
         let addData = data;
-        addData.createdBy = 1;
-        addData.updatedBy = 1;
-        addData.createdOn = currentDateTime;
-        addData.updatedOn = currentDateTime;
+        addData.CreatedBy = 1;
+        addData.UpdatedBy = 1;
+        addData.CreatedOn = currentDateTime;
+        addData.UpdatedOn = currentDateTime;
         addData.IsActive = true
-        addData.id = 0;
+        // addData.ID = 0;
         addData.AUnt = data.AUnit;
-
+        addData.AnalyzerID = data.AnalyzerName;
         delete data.AUnit
+        delete data.AparamName
+        delete data.Arange
+        delete data.Aunit
+        delete data.HparamName
+        delete data.Hrange
+        delete data.Hunit
+        if(!editValue?.Id){
+            delete data.HisName
+            delete data.AnalyzerName
+        }
 
         if (editValue?.Id) {
             data.Id = editValue.Id
+            delete data.HisCode
             if (data.AnalyzerName) {
                 delete data.AnalyzerName;
-
                 if (data.AnalyzerID?.label) {
                     data.AnalyzerID = data.AnalyzerID.value
                 }
             }
             if (data.HISID) {
-                delete data.analyzerName;
+                delete data.HisName;
                 if (data.HISID?.label) {
                     data.HISID = data.HISID.value
                 }
             }
-            // dispatch(updateDataAction(url, editValue.id, data, rerender))
-            console.log("editValue",data);
-
-            // Close()
+            dispatch(updateDataAction(url, editValue.Id, data, rerender))
+            Close()
         } else {
-            console.log("submit",addData);
-            // dispatch(addDataAction(url, addData, rerender))
-            // Close()
+            dispatch(addDataAction(url, addData, rerender))
+            Close()
         }
     }
-
-    console.log("editValue",editValue);
-
-   
 
     return (
         <>
@@ -194,7 +201,7 @@ const HISAnalyzerDialog = ({ modalValue, editDataValue, url, LisCodesList, analy
                                                     <Stack spacing={2} sx={{ mt: i == 0 ? 0 : 2.5 }} key={item + i}>
                                                         {item === "HISID" ? (
                                                             <SelectFieldComponent
-                                                                name={'HisName'}
+                                                                name={'HISID'}
                                                                 label={'HIS'}
                                                                 menuOptions={hisMenuOptions}
                                                                 register={register}
