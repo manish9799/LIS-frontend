@@ -12,7 +12,7 @@ const PathologyResultMasters = () => {
 
   useEffect(()=>{
     dispatch(getPathologyResultMasters(URL));
-    dispatch(getPathologyResultDetails('PathologyResultDetails'));
+    dispatch(getPathologyResultDetails('PathologyResultDetail'));
   },[])
   
   useEffect(()=>{

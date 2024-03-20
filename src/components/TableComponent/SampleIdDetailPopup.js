@@ -14,12 +14,12 @@ const SampleIdDetailPopup = ({ detailsModalValue, editDataValue }) => {
   const [detailsList, setDetailsList] = useState([]);
   const [loading, setLoading] = useState(true)
   const detailsData = [
-    {label:'OrderDetail ID',value:'orderDetailId'},
-    {label:'Sent',value:'sent'},
-    {label:'Sample ID',value:'sampleId'},
-    {label:'CPT Name',value:'cptName'},
-    {label:'Name',value:'name'},
-    {label:'MRN',value:'mrn'},
+    {label:'OrderDetail ID',value:'OrderDetailId'},
+    {label:'Sent',value:'Sent'},
+    {label:'Sample ID',value:'SampleId'},
+    {label:'CPT Name',value:'CPTName'},
+    {label:'Name',value:'Patient'},
+    {label:'MRN',value:'MRN'},
   ]
 
   const upperCase = (data) => {
@@ -29,9 +29,8 @@ const SampleIdDetailPopup = ({ detailsModalValue, editDataValue }) => {
   }
 
   useEffect(() => {
-    // setDataKeys(Object.keys(editValue))
     if (pathologyResultDetailsList?.length) {
-      let data = pathologyResultDetailsList.filter((item, i) => item.sampleId == editValue.sampleId)
+      let data = pathologyResultDetailsList.filter((item, i) => item.SampleID == editValue.SampleId)
       setDetailsList(data)
       setLoading(false)
     }

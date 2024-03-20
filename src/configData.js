@@ -25,7 +25,7 @@ export const navConfig = [
   {
     title: 'Pathology',
     children: [
-      { title: 'Pathology Pending Queues', path: '/PathologyPendingQueues' },
+      // { title: 'Pathology Pending Queues', path: '/PathologyPendingQueues' },
     // { title: 'Pathology Result Details', path: '/PathologyResultDetails' },
     { title: 'Pathology Result Masters', path: '/PathologyResultMasters' },
     ]
@@ -160,7 +160,7 @@ export const testParameterTableHeadings = [
 export const testSampleTableHeadings = [
   { id: 'id', label: 'Sr.No' },
   { id: 'SampleName', label: 'Sample Name' },
-  { id: 'Cptid', label: 'CPT Name' },
+  { id: 'CPTID', label: 'CPT Name' },
   { id: 'Desc', label: 'Description' },
   { id: 'IsActive', label: 'IsActive' },
   // { id: 'createdOn', label: 'CreatedOn' },
@@ -184,8 +184,8 @@ export const testUnitTableHeadings = [
 
 export const pathologyPendingQueuesTableHeadings  = [
   { id: 'id', label: 'Sr.No' },
-  { id: 'CptName', label: 'CPT Name' },
-  { id: 'oOrderdetailId', label: 'Order Deatil ID' },
+  { id: 'CPTID', label: 'CPT Name' },
+  { id: 'OrderDetailID', label: 'Order Deatil ID' },
   { id: 'Status', label: 'Status' },
   { id: 'Desc', label: 'Description' },
   { id: 'IsActive', label: 'IsActive' },
@@ -217,7 +217,7 @@ export const pathologyResultMastersTableHeadings  = [
   { id: 'CptName', label: 'CPT Name' },
   { id: 'SampleId', label: 'Sample Id' },
   { id: 'MRN', label: 'MRN' },
-  { id: 'PatientId', label: 'Patient Name' },
+  { id: 'Patient', label: 'Patient Name' },
   // { id: 'labId', label: 'Lab Id' },
   { id: 'Status', label: 'Status' },
   // { id: 'Desc', label: 'Description' },
@@ -262,9 +262,9 @@ export const invoiceMastersTableHeadings  = [
 
 export const orderDetailsTableHeadings  = [
   { id: 'id', label: 'Sr.No' },
-  { id: 'OrderId', label: 'Order Id' },
-  { id: 'Cptid', label: 'CPT Id' },
-  { id: 'Pptprice', label: 'CPT Price' },
+  { id: 'OrderID', label: 'Order Id' },
+  { id: 'CPTID', label: 'CPT Id' },
+  { id: 'CPTPrice', label: 'CPT Price' },
   { id: 'Quantity', label: 'Quantity' },
   { id: 'Desc', label: 'Description' },
   { id: 'IsActive', label: 'IsActive' },
@@ -277,9 +277,9 @@ export const orderDetailsTableHeadings  = [
 
 export const orderMastersTableHeadings  = [
   { id: 'id', label: 'Sr.No' },
-  { id: 'UserId', label: 'User Id' },
+  { id: 'UserID', label: 'User Id' },
   { id: 'Physician', label: 'Physician' },
-  { id: 'MRBN', label: 'MRN' },
+  { id: 'MRN', label: 'MRN' },
   { id: 'Desc', label: 'Description' },
   { id: 'IsActive', label: 'IsActive' },
   // { id: 'createdOn', label: 'CreatedOn' },
@@ -392,10 +392,10 @@ export const HisAnalyzerTableHeadings  = [
 export const SampleDetailsTableHeadings  = [
   // { id: 'id', label: 'Sr.No' },
   { id: 'id', label: 'Test ID' },
-  { id: 'hostCode', label: 'Host Code' },
-  { id: 'result', label: 'Result' },
-  { id: 'history', label: 'History' },
-  { id: 'abnormalFlag', label: 'Abnormal' },
+  { id: 'HostCode', label: 'Host Code' },
+  { id: 'Result', label: 'Result' },
+  { id: 'History', label: 'History' },
+  { id: 'AbnormalFlag', label: 'Abnormal' },
   // { id: 'pathologyResultMasterId', label: 'Master ID' },
   // { id: 'IsActive', label: 'IsActive' },
   // { id: 'createdOn', label: 'CreatedOn' },

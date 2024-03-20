@@ -8,22 +8,20 @@ const HISDetailViewPopup = ({ detailsModalValue, editDataValue }) => {
     const [editValue, setEditValue] = editDataValue;
     const [hisOpenDetailsModal, setHisOpenDetailsModal] = detailsModalValue;
     const [dataKeys, setDataKeys] = useState({
-        'Details': ['isActive', 'updatedBy', 'updatedOn', 'createdBy', 'createdOn'],
-        // 'HIS': ['hisName', 'hisCode', 'hparamName', 'hrange', 'hunit'],
+        'Details': ['IsActive', 'UpdatedBy', 'UpdatedOn', 'CreatedBy', 'CreatedOn'],
         'HIS': [
-            {label:'HIS Name',value:'hisName'},
-            {label:'Test ID',value:'hisCode'},
-            {label:'Test Name',value:'hparamName'},
-            {label:'Range',value:'hrange'},
-            {label:'Unit',value:'hunit'},
+            {label:'HIS Name',value:'HisName'},
+            {label:'Test ID',value:'HisCode'},
+            {label:'Test Name',value:'HparamName'},
+            {label:'Range',value:'Hrange'},
+            {label:'Unit',value:'Hunit'},
          ],
-        // 'Analyzer': ['analyzerName', 'analyzerCode', 'aparamName', 'arange', 'aunit'],
         'Analyzer': [
-            {label:'Analyzer Name',value:'analyzerName'},
-            {label:'Host Code',value:'analyzerCode'},
-            {label:'Parameter Name',value:'aparamName'},
-            {label:'Range',value:'arange'},
-            {label:'Unit',value:'aunit'},
+            {label:'Analyzer Name',value:'AnalyzerName'},
+            {label:'Host Code',value:'AnalyzerCode'},
+            {label:'Parameter Name',value:'AparamName'},
+            {label:'Range',value:'Arange'},
+            {label:'Unit',value:'Aunit'},
         ],
     })
 
@@ -48,7 +46,7 @@ const HISDetailViewPopup = ({ detailsModalValue, editDataValue }) => {
                 onClose={Close}
                 sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
             >
-                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '85%' }}>
+                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '90%', height: '85%' }}>
                     <Card sx={{ position: 'relative', backgroundColor: '#f5f5f5', pb: '5px', minHeight: '100%', minWidth: '55%', maxHeight: '80vh', borderRadius: '20px', overflowY: 'scroll', textAlign: 'center', border: '1px solid black', boxShadow: '1px 2px 15px black' }}>
                         <Typography sx={{ fontSize: '28px', textAlign: 'center', padding: '10px', fontWeight: 'bold', color: 'white', backgroundColor: 'gray' }}>Details</Typography>
                         <Box sx={{ position: 'absolute', top: '10px', right: '10px' }}>

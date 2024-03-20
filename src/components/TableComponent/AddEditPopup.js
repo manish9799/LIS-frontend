@@ -32,6 +32,7 @@ const AddEditPopup = ({ modalValue, editDataValue,url,fetchData,LisCodesList,ana
         reset,
         watch,
         setValue,
+        getValues,
         formState: { errors },
     } = useForm({
         resolver: yupResolver(schema),
@@ -56,28 +57,28 @@ const AddEditPopup = ({ modalValue, editDataValue,url,fetchData,LisCodesList,ana
         if(analyzersList?.length){
             let data = []
             analyzersList && analyzersList?.map((item,i)=>{
-                data.push({label: item?.name, value: item.id})
+                data.push({label: item?.Name, value: item.ID})
             })  
             setAnalyzerMenuOptions(data)
         }
         if(LisCodesList?.length){
             let data = []
             LisCodesList.map((item,i)=>{
-                data.push({label: item?.name, value: item.id})
+                data.push({label: item?.Name, value: item.ID})
             })  
             setLiscodeMenuOptions(data)
         }
         if(cptList?.length){
             let data = []
             cptList.map((item,i)=>{
-                data.push({label: item?.name, value: item.id})
+                data.push({label: item?.Name, value: item.ID})
             })  
             setCptMenuOptions(data)
         }
     },[analyzersList,LisCodesList,cptList])
 
     useEffect(() => {
-        if (editValue?.ID) {
+        if (editValue?.ID || editValue?.Id) {
             Object.keys(editValue).forEach(key => {
                 const name = editValue[key];
                 if(key == 'CptName'){
@@ -86,11 +87,11 @@ const AddEditPopup = ({ modalValue, editDataValue,url,fetchData,LisCodesList,ana
                 }
                 if(key == 'LiscodeName'){
                     const defaultValue = liscodeMenuOptions.find(option => option.label === name);
-                    if (defaultValue)  setValue('LISCodeId', defaultValue);
+                    if (defaultValue)  setValue('LISCodeID', defaultValue);
                 }
                 if(key == 'AnalyzerName'){
                     const defaultValue = analyzerMenuOptions.find(option => option.label === name);
-                    if (defaultValue) setValue('AnalyzerId', defaultValue);
+                    if (defaultValue) setValue('AnalyzerID', defaultValue);
                 }
                 else{
                     setValue(key, editValue[key]); 
@@ -98,8 +99,6 @@ const AddEditPopup = ({ modalValue, editDataValue,url,fetchData,LisCodesList,ana
             });
         }
     }, [editValue]);
-
-    // console.log("getValue",watch());
 
     const Close =()=>{
         setEditValue({})
@@ -117,41 +116,41 @@ const AddEditPopup = ({ modalValue, editDataValue,url,fetchData,LisCodesList,ana
         addData.UpdatedOn = currentDateTime;
         addData.IsActive = true
         addData.ID = 0;
+        if(url == 'AnalyzerParameter'){
+            delete addData.Id
+        }
         
-        if(url === 'Cpts'){
+        if(url === 'Cpt'){
             addData.unitId = 0;
             addData.categoryId = 0;
         }
-        if(editValue?.ID){
-            data.ID = editValue.ID
-            if(data.liscodeId){
-                delete data.liscodeName;
-                if(data.liscodeId?.label){
-                    data.liscodeId = data.liscodeId.value
+        if(editValue?.ID || editValue?.Id){
+            data.ID = editValue.ID || editValue?.Id
+            if(data.LISCodeID){
+                delete data.LiscodeName;
+                if(data.LISCodeID?.label){
+                    data.LISCodeID = data.LISCodeID.value
                 }
             }
-            if(data.cptid){
-                delete data.cptName;
-                if(data.cptid?.label){
-                    data.cptid = data.cptid.value
+            if(data.CPTID){
+                delete data.CptName;
+                if(data.CPTID?.label){
+                    data.CPTID = data.CPTID.value
                 }
             }
-            if(data.analyzerId){
-                delete data.analyzerName;
-                if(data.analyzerId?.label){
-                    data.analyzerId = data.analyzerId.value
+            if(data.AnalyzerID){
+                delete data.AnalyzerName;
+                if(data.AnalyzerID?.label){
+                    data.AnalyzerID = data.AnalyzerID.value
                 }
             }
-            dispatch(updateDataAction(url,editValue.ID,data,rerender))
+            dispatch(updateDataAction(url,data.ID,data,rerender))
             Close()
         }else{
             dispatch(addDataAction(url,addData,rerender))
             Close()
         }
     }
-
-    console.log("editValue",editValue);
-    console.log("watch",watch());
 
     return (
         <> 
@@ -164,16 +163,16 @@ const AddEditPopup = ({ modalValue, editDataValue,url,fetchData,LisCodesList,ana
                     <Card sx={{ backgroundColor: '#ffff', pb: '10px', maxWidth:'80%', borderRadius: '20px' }}>
                         <Typography sx={{ fontSize: '24px', textAlign: 'center', padding: '10px', fontWeight: '600' }}> {editValue.id ? 'Edit Data' : 'Add Data'}</Typography>
                         <form onSubmit={onSubmit} >
-                            <Grid container spacing={2} sx={{mx:3}}  >
+                            <Grid container spacing={2} sx={{mx:3}}>
                                 {dataKeys?.map((item,i)=>(
                                     <Grid key={item+i} item xs={10.5} sm={5.5} md={3.7} lg={3.7}>
-                                        {item === "AnalyzerId" || item === "LiscodeId" || item === "CPTID"|| item === "Type"? 
+                                        {item === "AnalyzerID" || item === "LISCodeID" || item === "CPTID"|| item === "Type"? 
                                         <SelectFieldComponent
                                             name={item}
-                                            label={ item === "analyzerId" ? 'Analyzers' : item === "liscodeId" ? 'Liscodes' : item === "cptid" ? 'CptId': 'Type' }
-                                            menuOptions={item === "analyzerId" ? analyzerMenuOptions :
-                                                         item === "liscodeId" ? liscodeMenuOptions :
-                                                         item === "cptid" ? cptMenuOptions :
+                                            label={ item === "AnalyzerID" ? 'Analyzers' : item === "LISCodeID" ? 'LIS ID' : item === "CPTID" ? 'CPT ID': 'Type' }
+                                            menuOptions={item === "AnalyzerID" ? analyzerMenuOptions :
+                                                         item === "LISCodeID" ? liscodeMenuOptions :
+                                                         item === "CPTID" ? cptMenuOptions :
                                                          typeMenuOptions
                                                         }
                                             register={register}
@@ -203,7 +202,7 @@ const AddEditPopup = ({ modalValue, editDataValue,url,fetchData,LisCodesList,ana
                                     <Grid item xs={12}
                                         md={9}>
                                         <Stack direction={'row'} gap={3} sx={{ width: '50%' }}>
-                                            <Button fullWidth variant="contained" type='submit'> {editValue.id ? 'Update':'Add'}</Button>
+                                            <Button fullWidth variant="contained" type='submit'> {editValue.ID || editValue.Id ? 'Update':'Add'}</Button>
                                             <Button fullWidth variant="contained" color='error' onClick={Close} > Cancel</Button>
                                         </Stack>
                                     </Grid>
