@@ -78,7 +78,7 @@ export const navConfig = [
 
 export const analyzerTableHeadings = [
   { id: 'id', label: 'Sr.No' },
-  { id: 'Name', label: 'Name' },
+  { id: 'Name', label: 'Analyzer Name' },
   { id: 'Vendor', label: 'Vendor' },
   { id: 'Desc', label: 'Description' },
   { id: 'IsActive', label: 'IsActive' },
@@ -92,8 +92,8 @@ export const analyzerTableHeadings = [
 export const analyzerParameterTableHeadings = [
   { id: 'id', label: 'Sr.No' },
   { id: 'AnalyzerName', label: 'Analyzer Name' },
-  { id: 'LiscodeName', label: 'Liscode Name' },
-  { id: 'LASCodeID', label: 'Lascode Id' },
+  { id: 'LiscodeName', label: 'LISCode Name' },
+  { id: 'LASCodeID', label: 'LASCodeID' },
   { id: 'Desc', label: 'Description' },
   { id: 'IsActive', label: 'IsActive' },
   // { id: 'createdOn', label: 'CreatedOn' },
@@ -344,10 +344,10 @@ export const rolesTableHeadings  = [
 export const usersTableHeadings  = [
   { id: 'id', label: 'Sr.No' },
   { id: 'Name', label: 'Name' },
-  { id: 'mobile', label: 'Mobile' },
-  { id: 'email', label: 'Email' },
-  { id: 'username', label: 'Username' },
-  { id: 'password', label: 'Password' },
+  { id: 'Mobile', label: 'Mobile' },
+  { id: 'Email', label: 'Email' },
+  { id: 'Username', label: 'Username' },
+  { id: 'Password', label: 'Password' },
   { id: 'Desc', label: 'Description' },
   { id: 'IsActive', label: 'IsActive' },
   // { id: 'createdOn', label: 'CreatedOn' },
@@ -391,10 +391,13 @@ export const HisAnalyzerTableHeadings  = [
 
 export const SampleDetailsTableHeadings  = [
   // { id: 'id', label: 'Sr.No' },
-  { id: 'id', label: 'Test ID' },
+  { id: 'TestId', label: 'Test ID' },
+  { id: 'TestName', label: 'Test Name' },
   { id: 'HostCode', label: 'Host Code' },
   { id: 'Result', label: 'Result' },
-  { id: 'History', label: 'History' },
+  { id: 'Result', label: 'History' },
+  { id: 'Unit', label: 'Unit' },
+  { id: 'Range', label: 'Range' },
   { id: 'AbnormalFlag', label: 'Abnormal' },
   // { id: 'pathologyResultMasterId', label: 'Master ID' },
   // { id: 'IsActive', label: 'IsActive' },
