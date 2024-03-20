@@ -1,5 +1,5 @@
 // export const baseURL = 'http://localhost:50486/api/'
-export const baseURL = 'http://13.233.159.252//api/'
+export const baseURL = 'http://13.233.159.252/api/'
 
 export const navConfig = [
   { title: 'Home', path: '/' },
