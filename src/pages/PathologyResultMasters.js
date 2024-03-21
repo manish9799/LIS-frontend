@@ -26,7 +26,7 @@ const PathologyResultMasters = () => {
         url={URL}
         data={data}
         rerender = {getPathologyResultMasters}
-        headingName={'PathologyResultMasters'}
+        headingName={'Samples'}
         tableHeadings={pathologyResultMastersTableHeadings}
         readable={true}
       />

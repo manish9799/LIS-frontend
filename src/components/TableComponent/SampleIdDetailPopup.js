@@ -56,15 +56,7 @@ const SampleIdDetailPopup = ({ detailsModalValue, editDataValue }) => {
               </IconButton>
             </Box>
             <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'justify', padding: '0 20px', mt: 2 }}>
-              {/* <Box >
-                                {dataKeys?.map((item, i) => (
-                                    <Stack key={i} direction={'row'} gap={1} sx={{ textAlign: 'justify', paddingBottom: '8px' }}>
-                                        <Typography sx={{ fontSize: '17px', fontWeight: 'bold', color: '#666' }}>{upperCase(item)}</Typography> : <Typography sx={{ fontSize: '17px', color: '#444' }}>{editValue[item] || '-'}</Typography>
-                                    </Stack>
-                                ))}
-                            </Box> */}
                             <Card sx={{ width: '100%', margin: '0 auto', my: 0,mb:2, p: 2 }}>
-
                             {detailsData.map((item, i) => (
                                 <Stack  direction={'row'} gap={1} sx={{ 
                                   textAlign: 'justify',
@@ -85,7 +77,7 @@ const SampleIdDetailPopup = ({ detailsModalValue, editDataValue }) => {
                 <TableContainer sx={{ maxHeight: 440 }}>
                   <Table stickyHeader aria-label="sticky table">
                     <TableHead>
-                      <TableRow sx={{ backgroundColor: 'black !important' }}>
+                      <TableRow>
                         {SampleDetailsTableHeadings.map((column) => (
                           <TableCell
                             key={column.id}

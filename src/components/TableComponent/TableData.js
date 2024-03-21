@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TableSortLabel, TextField, Typography, TablePagination, IconButton, Stack, Button, useMediaQuery, Tooltip, Popover, InputAdornment } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TableSortLabel, TextField, Typography, TablePagination, IconButton, Stack, Button, useMediaQuery, Tooltip, Popover, InputAdornment, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
@@ -17,6 +17,7 @@ import HISDetailViewPopup from './HISDetailViewPopup';
 import SampleIdDetailPopup from './SampleIdDetailPopup';
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
+import SelectFieldComponent from '../SelectFieldComponent';
 
 
 const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesList, analyzersList, cptList, hisList, rerender, readable, showColor }) => {
@@ -41,17 +42,27 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
     const forAnalyzer = ['AnalyzerCode', 'AnalyzerName', 'AparamName', 'Aunit', 'Arange'];
     const [anchorEl, setAnchorEl] = useState(null);
     const [sampleSearch, setSampleSearch] = useState('');
+    const [searchBy, setSearchBy] = useState('');
+    const [searchBySelect, setSearchBySelect] = useState('');
+    const [open, setOpen] = useState(false);
+    const [openSelectField, setOpenSelectField] = useState(false);
 
-
-    const handleClick = (event) => {
-      setAnchorEl(event.currentTarget);
+    const handleClick = (event,item) => {
+        setAnchorEl(event.currentTarget);
+        setSearchBy(item.id)
+        if(item.id == 'IsActive'){
+            setOpenSelectField(true)
+        }else{
+            setOpen(true);
+        }
     };
-  
+
     const handleClose = () => {
-      setAnchorEl(null);
+        setAnchorEl(null);
+        setOpen(false);
+        setOpenSelectField(false);
     };
-  
-    const open = Boolean(anchorEl);
+
 
     useEffect(() => {
         setTableData(data)
@@ -59,10 +70,6 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
             setLoading(false)
         }
     }, [data])
-
-    // console.log("data", data);
-
-
 
     const handleSort = (property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -91,15 +98,19 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
         ? [...filteredData].sort((a, b) => (order === 'asc' ? a[orderBy] - b[orderBy] : b[orderBy] - a[orderBy]))
         : filteredData;
 
-    useEffect(()=>{
-        if(sampleSearch.length){
+    useEffect(() => {
+        if (sampleSearch.length) {
             const filteredData = data && data?.filter((row) =>
-            row?.SampleId?.toLowerCase().startsWith(sampleSearch?.toLowerCase())) 
+                row?.[searchBy]?.toString().toLowerCase().startsWith(sampleSearch?.toLowerCase()))
             setTableData(filteredData)
-        }else{
+        } else if(searchBySelect.length){
+            const filteredData = data && data?.filter((row) =>
+            row?.IsActive?.toString().toLowerCase().startsWith(searchBySelect?.toLowerCase()))
+        setTableData(filteredData)
+        }else {
             setTableData(data)
         }
-    },[sampleSearch])
+    }, [sampleSearch,searchBySelect])
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -141,9 +152,6 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
         setEditValue(data)
         setSampleOpenDetailsModal(true)
 
-    }
-    const openSearchField = () => {
-        console.log("samplee");
     }
 
     return (
@@ -232,53 +240,86 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                                     <React.Fragment key={item + i}>
                                         <TableCell key={item.id} sx={{
                                             fontWeight: '600', fontSize: '13px', backgroundColor: 'lightgray',
-                                            maxWidth: item.id !== 'id' ? '150px' :
-                                                item.id == 'IsActive' ? '100px' : '50px',
-                                        }}>
-                                            <TableSortLabel
+                                            minWidth: item.id !== 'id' ? 'auto' :
+                                                item.id == 'IsActive' ? '100px' : '20px',
+                                            // minWidth: getColumnWidth(item.id)
+                                            
+                                        }} style={{width:""}}>
+                                            {/* <TableSortLabel
                                                 active={orderBy === `${item.id}`}
                                                 direction={orderBy === `${item.id}` ? order : 'asc'}
                                                 onClick={() => handleSort(item.id)}
-                                            >
+                                            > */}
                                                 {item.label}
-                                            </TableSortLabel>
-                                                {item.id == 'SampleId' &&
-                                                    <>
-                                                        <IconButton onClick={handleClick} aria-label="edit" id={'sampleSearch'} >
-                                                            <SearchIcon  sx={{ ml: 0.5 }} />
-                                                        </IconButton>
-                                                        <Popover
-                                                            id={'sampleSearch'}
-                                                            open={open}
-                                                            anchorEl={anchorEl}
-                                                            onClose={handleClose}
-                                                            anchorOrigin={{
-                                                                vertical: 'top',
-                                                                horizontal: 'right',
-                                                            }}
-                                                            transformOrigin={{
-                                                                vertical: 'top',
-                                                                horizontal: 'left',
-                                                              }}
-                                                            sx={{ml:2}}
-                                                        >
-                                                            <TextField
-                                                            value={sampleSearch}
-                                                            placeholder='Search SampleID here ...'
-                                                            onChange={(e)=>setSampleSearch(e.target.value)}
-                                                            InputProps={{
-                                                                endAdornment: <InputAdornment position="end">
-                                                                    <>
-                                                                      <IconButton aria-label="cancel"  onClick={(e)=>setSampleSearch('')}>
-                                                                    <CloseIcon color='error' />
-                                                                        </IconButton>
-                                                                    </>
-                                                                    </InputAdornment>
-                                                              }}
-                                                            />
-                                                        </Popover>
-                                                    </>
-                                                }
+                                            {/* </TableSortLabel> */}
+                                            <>
+            {item.id !== 'id' && item.id !== 'actions' &&
+                <>
+                    <IconButton sx={{p:0.2,m:0}} onClick={(e) => handleClick(e, item)} aria-label="edit">
+                        <SearchIcon sx={{ ml: 0.3 ,fontSize:'18px'}} />
+                    </IconButton>
+                    <Popover
+                        open={open}
+                        anchorEl={anchorEl}
+                        onClose={handleClose}
+                        anchorOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                        }}
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'left',
+                        }}
+                    >
+                            <TextField
+                            sx={{padding:'0px !important'}}
+                                size='small'
+                                value={sampleSearch}
+                                placeholder={`Search here ...`}
+                                onChange={(e) => setSampleSearch(e.target.value)}
+                                InputProps={{
+                                    endAdornment: <InputAdornment position="end">
+                                        <IconButton aria-label="cancel" onClick={(e) => setSampleSearch('')}>
+                                            <CloseIcon fontSize='small' color='error' />
+                                        </IconButton>
+                                    </InputAdornment>
+                                }}
+                            />
+                    </Popover>
+                    <Popover
+                        open={openSelectField}
+                        anchorEl={anchorEl}
+                        onClose={handleClose}
+                        anchorOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                        }}
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'left',
+                        }}
+                    >
+                            <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+                                <InputLabel id="demo-select-small-label">Select</InputLabel>
+                                <Select
+                                    labelId="demo-select-small-label"
+                                    id="demo-select-small"
+                                    value={searchBySelect}
+                                    label="Select"
+                                     onChange={(e)=>setSearchBySelect(e.target.value)}
+                                >
+                                    <MenuItem value="">
+                                        <em>None</em>
+                                    </MenuItem>
+                                    <MenuItem value={'true'}>Yes</MenuItem>
+                                    <MenuItem value={'false'}>No</MenuItem>
+                                </Select>
+                            </FormControl>
+                      
+                    </Popover>
+                </>
+            }
+        </>
                                         </TableCell>
                                     </React.Fragment>
                                 ))}
