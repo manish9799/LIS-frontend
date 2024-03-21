@@ -101,11 +101,11 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
     useEffect(() => {
         if (sampleSearch.length) {
             const filteredData = data && data?.filter((row) =>
-                row?.[searchBy]?.toString().toLowerCase().startsWith(sampleSearch?.toLowerCase()))
+                row?.[searchBy]?.toString().toLowerCase().includes(sampleSearch?.toLowerCase()))
             setTableData(filteredData)
         } else if(searchBySelect.length){
             const filteredData = data && data?.filter((row) =>
-            row?.IsActive?.toString().toLowerCase().startsWith(searchBySelect?.toLowerCase()))
+            row?.IsActive?.toString().toLowerCase().includes(searchBySelect?.toLowerCase()))
         setTableData(filteredData)
         }else {
             setTableData(data)
