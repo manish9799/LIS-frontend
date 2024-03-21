@@ -222,7 +222,7 @@ export const pathologyResultMastersTableHeadings  = [
   // { id: 'labId', label: 'Lab Id' },
   { id: 'Status', label: 'Status' },
   // { id: 'Desc', label: 'Description' },
-  { id: 'IsActive', label: 'IsActive' },
+  // { id: 'IsActive', label: 'IsActive' },
   // { id: 'createdOn', label: 'CreatedOn' },
   // { id: 'updatedOn', label: 'UpdatedOn' },
   // { id: 'createdBy', label: 'CreatedBy' },
@@ -392,11 +392,11 @@ export const HisAnalyzerTableHeadings  = [
 
 export const SampleDetailsTableHeadings  = [
   // { id: 'id', label: 'Sr.No' },
-  { id: 'TestId', label: 'Test ID' },
-  { id: 'TestName', label: 'Test Name' },
+  { id: 'LisId', label: 'Test ID' },
+  { id: 'LISCodeName', label: 'Test Name' },
   { id: 'HostCode', label: 'Host Code' },
   { id: 'Result', label: 'Result' },
-  { id: 'Result', label: 'History' },
+  { id: 'History', label: 'History' },
   { id: 'Unit', label: 'Unit' },
   { id: 'Range', label: 'Range' },
   { id: 'AbnormalFlag', label: 'Abnormal' },
