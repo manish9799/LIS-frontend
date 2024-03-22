@@ -5,7 +5,7 @@ import '../../App.css'
 import { useSelector } from 'react-redux';
 import { SampleDetailsTableHeadings } from '../../configData';
 
-const SampleIdDetailPopup = ({ detailsModalValue, editDataValue }) => {
+const SampleIdDetailPopup = ({ detailsModalValue, editDataValue,sampleFilterId }) => {
 
   const [editValue, setEditValue] = editDataValue;
   const [openDetailsModal, setOpenDetailsModal] = detailsModalValue;
@@ -30,7 +30,12 @@ const SampleIdDetailPopup = ({ detailsModalValue, editDataValue }) => {
 
   useEffect(() => {
     if (pathologyResultDetailsList?.length) {
-      let data = pathologyResultDetailsList.filter((item, i) => item.SampleID == editValue.SampleId)
+      let data;
+      if( sampleFilterId == 'MRN'){
+        data = pathologyResultDetailsList.filter((item, i) => item.MRN == editValue.MRN)
+      }else{
+        data = pathologyResultDetailsList.filter((item, i) => item.SampleID == editValue.SampleId)
+      }
       setDetailsList(data)
       setLoading(false)
     }

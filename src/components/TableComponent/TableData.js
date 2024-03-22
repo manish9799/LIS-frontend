@@ -46,6 +46,7 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
     const [searchBySelect, setSearchBySelect] = useState('');
     const [open, setOpen] = useState(false);
     const [openSelectField, setOpenSelectField] = useState(false);
+    const [sampleFilterId, setSampleFilterId] = useState('');
 
     const handleClick = (event,item) => {
         setAnchorEl(event.currentTarget);
@@ -148,7 +149,8 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
         }
     }
 
-    const sampleDetailView = (data) => {
+    const sampleDetailView = (data,item) => {
+        setSampleFilterId(item)
         setEditValue(data)
         setSampleOpenDetailsModal(true)
 
@@ -164,6 +166,7 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
             <SampleIdDetailPopup
                 detailsModalValue={[sampleDetailsModal, setSampleOpenDetailsModal]}
                 editDataValue={[editValue, setEditValue]}
+                sampleFilterId={sampleFilterId}
             />
             <HISDetailViewPopup
                 detailsModalValue={[hisOpenDetailsModal, setHisOpenDetailsModal]}
@@ -369,9 +372,9 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                                                         ) : item.id === 'id' ? (
                                                             <TableCell sx={{ paddingY: '10px' }}>{(page * rowsPerPage) + rowIndex + 1}</TableCell>
                                                         ) :
-                                                            item.id === 'SampleId' ? (
+                                                            item.id === 'SampleId' || item.id === 'MRN' ? (
                                                                 <Tooltip arrow title="Click for Details" placement="bottom">
-                                                                    <TableCell onClick={() => sampleDetailView(row)} sx={{ paddingY: '10px', color: '#27A3B9', fontWeight: '600', cursor: 'pointer' }}>
+                                                                    <TableCell onClick={() => sampleDetailView(row,item.id)} sx={{ paddingY: '10px', color: '#27A3B9', fontWeight: '600', cursor: 'pointer' }}>
                                                                         {row[item.id] || '-'}
                                                                     </TableCell>
                                                                 </Tooltip>
