@@ -20,7 +20,7 @@ const Analyzer = () => {
       setData(analyzerLists)
     }
   },[analyzerLists])
-  
+
   return (
     <>
       <TableData

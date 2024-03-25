@@ -1,10 +1,11 @@
-import { DATA_LOADER, FETCH_FAIL, GET_PATHOLOGY_PENDING_QUEUES, GET_PATHOLOGY_RESULT_DETAILS, GET_PATHOLOGY_RESULT_MASTERS, } from "../ActionTypes";
+import { DATA_LOADER, FETCH_FAIL, GET_HEART_BEAT, GET_PATHOLOGY_PENDING_QUEUES, GET_PATHOLOGY_RESULT_DETAILS, GET_PATHOLOGY_RESULT_MASTERS, } from "../ActionTypes";
 
 const initialState = {
     loading: false,
     pathologyPendingQueuesList:[],
     pathologyResultDetailsList:[],
     pathologyResultMastersList:[],
+    heartBeatList:[],
 };
 
 const pathologyReducer = (state = initialState, action) => {
@@ -34,6 +35,13 @@ const pathologyReducer = (state = initialState, action) => {
           ...state,
           loading: false,
           pathologyResultMastersList: action.payload,
+        };
+      }
+      case GET_HEART_BEAT: {
+        return {
+          ...state,
+          loading: false,
+          heartBeatList: action.payload,
         };
       }
       case FETCH_FAIL:
