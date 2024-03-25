@@ -29,6 +29,7 @@ export const navConfig = [
       // { title: 'Pathology Pending Queues', path: '/PathologyPendingQueues' },
     // { title: 'Pathology Result Details', path: '/PathologyResultDetails' },
     { title: 'Pathology Result Masters', path: '/PathologyResultMasters' },
+    { title: 'HearBeat Results', path: '/HeartBeatResults' },
     ]
   },
   {
@@ -83,7 +84,7 @@ export const analyzerTableHeadings = [
   { id: 'Vendor', label: 'Vendor' },
   { id: 'Desc', label: 'Description' },
   { id: 'IsActive', label: 'IsActive' },
-  // { id: 'createdOn', label: 'CreatedOn' },
+  { id: 'CreatedOn', label: 'CreatedOn' },
   // { id: 'updatedOn', label: 'UpdatedOn' },
   // { id: 'createdBy', label: 'CreatedBy' },
   // { id: 'updatedBy', label: 'UpdatedBy' },
@@ -219,6 +220,8 @@ export const pathologyResultMastersTableHeadings  = [
   { id: 'SampleId', label: 'Sample Id' },
   { id: 'MRN', label: 'MRN' },
   { id: 'Patient', label: 'Patient Name' },
+  { id: 'Received', label: 'Received' },
+  { id: 'Collected', label: 'Collected' },
   // { id: 'labId', label: 'Lab Id' },
   { id: 'Status', label: 'Status' },
   // { id: 'Desc', label: 'Description' },
@@ -408,6 +411,12 @@ export const SampleDetailsTableHeadings  = [
   // { id: 'updatedBy', label: 'UpdatedBy' },
   // { id: 'actions', label: 'Actions' },
 ];
+
+export const HeartBeatHeadings = [
+  { id: 'MachineName', label: 'MachineName' },
+  { id: 'Heartbeat', label: 'Heartbeat' },
+  { id: 'IsActive', label: 'IsActive' },
+]
 
 
 

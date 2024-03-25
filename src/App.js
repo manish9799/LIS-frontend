@@ -28,6 +28,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import HISAnalyzer from './pages/HISAnalyzer';
 import His from './pages/His';
+import HeartBeat from './pages/HeartBeat';
 
 function App() {
   const dispatch = useDispatch();
@@ -70,6 +71,7 @@ function App() {
           <Route path='/PathologyPendingQueues' Component={PathologyPendingQueues} />
           <Route path='/PathologyResultDetails' Component={PathologyResultDetails} />
           <Route path='/PathologyResultMasters' Component={PathologyResultMasters} />
+          <Route path='/HeartBeatResults' Component={HeartBeat} />
           <Route path='/TestCategories' Component={Testcategories} />
           <Route path='/TestParameters' Component={TestParameter} />
           <Route path='/TestSamples' Component={TestSamples} />
