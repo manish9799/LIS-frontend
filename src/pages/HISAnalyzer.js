@@ -33,6 +33,7 @@ const HISAnalyzer = () => {
         analyzersList={analyzerLists}
         hisList={hisList}
         showColor={true}
+        analyzerDropDown={true}
       />
     </>
   )

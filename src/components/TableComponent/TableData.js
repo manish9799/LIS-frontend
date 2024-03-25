@@ -20,7 +20,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import SelectFieldComponent from '../SelectFieldComponent';
 
 
-const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesList, analyzersList, cptList, hisList, rerender, readable, showColor }) => {
+const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesList, analyzersList, cptList, hisList, rerender, readable, showColor, analyzerDropDown }) => {
     const dispatch = useDispatch()
     const [tableData, setTableData] = useState([])
     const [orderBy, setOrderBy] = useState(null);
@@ -47,8 +47,10 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
     const [open, setOpen] = useState(false);
     const [openSelectField, setOpenSelectField] = useState(false);
     const [sampleFilterId, setSampleFilterId] = useState('');
-    const [searchMenuOptions,setSearchMenuOptions]= useState([])
-    const dateArray = ['Received','Collected','CreatedOn','UpdatedOn','Order']
+    const [searchMenuOptions, setSearchMenuOptions] = useState([])
+    const dateArray = ['Received', 'Collected', 'CreatedOn', 'UpdatedOn', 'Order'];
+    const [analyzerMenuOptions, setAnalyzerMenuOptions] = useState([]);
+    const [selectedAnalyzer,setSelectedAnalyzer] = useState('')
 
     const handleClick = (event, selectedId) => {
         setAnchorEl(event.currentTarget);
@@ -57,8 +59,8 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
             setOpenSelectField(true)
         } else {
             let options = []
-            sortedData?.map((item,i)=>{
-                options.push({label:item[selectedId?.id],value:item[selectedId?.id]})
+            sortedData?.map((item, i) => {
+                options.push({ label: item[selectedId?.id], value: item[selectedId?.id] })
             })
             setSearchMenuOptions(options)
             setOpen(true);
@@ -81,7 +83,9 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
 
 
     useEffect(() => {
-        setTableData(data)
+        if(!analyzerDropDown){
+            setTableData(data)
+        }
         if (data?.length) {
             setLoading(false)
         }
@@ -179,6 +183,30 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
 
     }
 
+    useEffect(() => {
+        if (analyzersList?.length) {
+            let data = []
+            analyzersList && analyzersList?.map((item, i) => {
+                data.push({ label: item?.Name, value: item.ID })
+            })
+            setAnalyzerMenuOptions(data)
+        }
+        // if (hisList?.length) {
+        //     let data = []
+        //     hisList.map((item, i) => {
+        //         data.push({ label: item?.Name, value: item.ID })
+        //     })
+        //     setHisMenuOptions(data)
+        // }
+    }, [analyzersList, LisCodesList, hisList])
+
+    useEffect(()=>{
+        if(selectedAnalyzer?.length){
+            let filterData = data?.filter((item,i)=> item?.AnalyzerName == selectedAnalyzer)
+            setTableData(filterData) 
+        }
+    },[selectedAnalyzer])
+
     return (
         <>
             <ConfirmDialog remove={deleteData} openDialog={[deleteDialog, setDeleteDialog]} />
@@ -222,6 +250,18 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                     <Typography variant="h6" className='table-headingName'>
                         {headingName}
                     </Typography>
+                    { url == 'HisAnalyzer' && 
+                    <FormControl sx={{ m: 1, minWidth: 200 }} size="small">
+                        <Autocomplete
+                            value={selectedAnalyzer}
+                            onChange={(event, value) => {
+                                setSelectedAnalyzer(value?.label)
+                            }}
+                            options={analyzerMenuOptions}
+                            renderInput={(params) => <TextField {...params} label="Analyzer" />}
+                        />
+                    </FormControl>
+                    }
                     <Stack direction={'row'} sx={{ width: isScreenSmall ? '100%' : '50%' }} className='table-header-func'>
                         <TextField
                             placeholder='Search here...'
@@ -245,12 +285,12 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                                 ) : (
                                     <Button
                                         component="label"
-                                        sx={{ width: "200px", border: '2px solid', borderRadius: '20px', fontSize: '18px', p: 1, ml: 2 }}
+                                        sx={{ width: "300px", border: '2px solid', borderRadius: '20px', fontSize: '18px', p: 1, ml: 2 }}
                                         variant="outlined"
                                         endIcon={<AddIcon />}
                                         onClick={() => url == 'HisAnalyzer' ? setOpenHisModal(true) : setOpenModal(true)}
                                     >
-                                        Add item
+                                      { url == 'HisAnalyzer' ? 'HIS Mapping' : 'Add item' }  
                                     </Button>
                                 )}
                             </>
@@ -280,7 +320,7 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                                                 {item.label}
                                             </TableSortLabel>
                                             <>
-                                                {item.id !== 'id' && item.id !== 'actions' &&  item.id !== 'Desc' && item.id !== 'Desciption' && 
+                                                {item.id !== 'id' && item.id !== 'actions' && item.id !== 'Desc' && item.id !== 'Desciption' &&
                                                     <>
                                                         <IconButton sx={{ p: 0.2, m: 0 }} onClick={(e) => handleClick(e, item)} aria-label="edit">
                                                             <SearchIcon sx={{ ml: 0.3, fontSize: '15px' }} />
@@ -312,18 +352,18 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                                                                     </InputAdornment>
                                                                 }}
                                                             /> */}
-                                                             <FormControl sx={{ m: 1, minWidth: 150 }} size="small">
+                                                            <FormControl sx={{ m: 1, minWidth: 150 }} size="small">
 
-                                                            <Autocomplete
-                                                             value={sampleSearch}
-                                                             onChange={(event, value) => {
-                                                                setSampleSearch(value?.value)
-                                                            }}
-                                                            size='small'
-                                                                options={searchMenuOptions}
-                                                                renderInput={(params) => <TextField {...params} label="Search..." />}
-                                                            />
-                                                             </FormControl>
+                                                                <Autocomplete
+                                                                    value={sampleSearch}
+                                                                    onChange={(event, value) => {
+                                                                        setSampleSearch(value?.value)
+                                                                    }}
+                                                                    size='small'
+                                                                    options={searchMenuOptions}
+                                                                    renderInput={(params) => <TextField {...params} label="Search..." />}
+                                                                />
+                                                            </FormControl>
                                                         </Popover>
                                                         <Popover
                                                             open={openSelectField}
@@ -425,13 +465,13 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                                                                     ) : forAnalyzer.includes(item.id) && showColor ? (
                                                                         <TableCell sx={{ paddingY: '5px', boxSizing: 'border-box', backgroundColor: 'rgb(148,221,232,0.7)', pr: 0 }}>{row[item.id] || '-'}</TableCell>
                                                                     )
-                                                                    : dateArray.includes(item.id) ? (
-                                                                        <TableCell sx={{ paddingY: '5px', boxSizing: 'border-box', pr: 0 }}>{row[item.id] || DateConvertion(currentDate) }</TableCell>
-                                                                    )
-                                                                        : (
-
-                                                                            <TableCell sx={{ paddingY: '5px', boxSizing: 'border-box', pr: 0 }}>{row[item.id] || '-'}</TableCell>
+                                                                        : dateArray.includes(item.id) ? (
+                                                                            <TableCell sx={{ paddingY: '5px', boxSizing: 'border-box', pr: 0 }}>{row[item.id] || DateConvertion(currentDate)}</TableCell>
                                                                         )
+                                                                            : (
+
+                                                                                <TableCell sx={{ paddingY: '5px', boxSizing: 'border-box', pr: 0 }}>{row[item.id] || '-'}</TableCell>
+                                                                            )
                                                     }
 
 
@@ -442,7 +482,11 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                                 </>
                             ) : (
                                 <TableRow>
-                                    <TableCell colSpan={tableHeadings?.length + (!readable ? 1 : 0)} sx={{ paddingY: '10px', textAlign: 'center', fontSize: '13px', fontWeight: '600' }}>No Data Found</TableCell>
+                                    <TableCell colSpan={tableHeadings?.length + (!readable ? 1 : 0)} sx={{ paddingY: '10px', textAlign: 'center', fontSize: '13px', fontWeight: '600' }}>
+                                         {
+                                             selectedAnalyzer && !sortedData.length ? 'No Data Found' :
+                                         analyzerDropDown  ?'Please Select Analyzer':
+                                         'No Data Found' }</TableCell>
                                 </TableRow>
                             )}
                         </TableBody>
