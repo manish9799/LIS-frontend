@@ -1,5 +1,6 @@
 // export const baseURL = 'http://localhost:50486/api/'
-export const baseURL = 'http://13.233.159.252/api/'
+// export const baseURL = 'http://13.233.159.252/api/'
+export const baseURL = 'https://hitechways.info/api/'
 
 export const navConfig = [
   { title: 'Home', path: '/' },
@@ -30,6 +31,7 @@ export const navConfig = [
     // { title: 'Pathology Result Details', path: '/PathologyResultDetails' },
     { title: 'Pathology Result Masters', path: '/PathologyResultMasters' },
     { title: 'HearBeat Results', path: '/HeartBeatResults' },
+    { title: 'Analyzers-Machine', path: '/Analyzer-Machine' },
     ]
   },
   {

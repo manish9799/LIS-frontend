@@ -49,7 +49,7 @@ const HeartBeat = () => {
                     {data?.length ?
                         <React.Fragment>
                             {data?.map((item, i) =>
-                            (<Card sx={{ width: '400px', borderRadius: '15px', p: 2, backgroundColor: 'lightgray' }}>
+                            (<Card sx={{ width: '400px', borderRadius: '15px', p: 2, backgroundColor: 'lightgray',mx:2 }}>
                                     {HeartBeatHeadings?.map((heading, id) => {
                                         return (
                                             <Stack direction={'row'} sx={{ textAlign: 'justify' }}>
