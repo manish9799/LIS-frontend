@@ -50,7 +50,7 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
     const [searchMenuOptions, setSearchMenuOptions] = useState([])
     const dateArray = ['Received', 'Collected', 'CreatedOn', 'UpdatedOn', 'Order'];
     const [analyzerMenuOptions, setAnalyzerMenuOptions] = useState([]);
-    const [selectedAnalyzer,setSelectedAnalyzer] = useState('')
+    const [selectedAnalyzer, setSelectedAnalyzer] = useState('')
 
     const handleClick = (event, selectedId) => {
         setAnchorEl(event.currentTarget);
@@ -83,7 +83,7 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
 
 
     useEffect(() => {
-        if(!analyzerDropDown){
+        if (!analyzerDropDown) {
             setTableData(data)
         }
         if (data?.length) {
@@ -200,12 +200,12 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
         // }
     }, [analyzersList, LisCodesList, hisList])
 
-    useEffect(()=>{
-        if(selectedAnalyzer?.length){
-            let filterData = data?.filter((item,i)=> item?.AnalyzerName == selectedAnalyzer)
-            setTableData(filterData) 
+    useEffect(() => {
+        if (selectedAnalyzer?.length) {
+            let filterData = data?.filter((item, i) => item?.AnalyzerName == selectedAnalyzer)
+            setTableData(filterData)
         }
-    },[selectedAnalyzer])
+    }, [selectedAnalyzer])
 
     return (
         <>
@@ -250,17 +250,17 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                     <Typography variant="h6" className='table-headingName'>
                         {headingName}
                     </Typography>
-                    { url == 'HisAnalyzer' && 
-                    <FormControl sx={{ m: 1, minWidth: 200 }} size="small">
-                        <Autocomplete
-                            value={selectedAnalyzer}
-                            onChange={(event, value) => {
-                                setSelectedAnalyzer(value?.label)
-                            }}
-                            options={analyzerMenuOptions}
-                            renderInput={(params) => <TextField {...params} label="Analyzer" />}
-                        />
-                    </FormControl>
+                    {url == 'HisAnalyzer' &&
+                        <FormControl sx={{ m: 1, minWidth: 200 }} size="small">
+                            <Autocomplete
+                                value={selectedAnalyzer}
+                                onChange={(event, value) => {
+                                    setSelectedAnalyzer(value?.label)
+                                }}
+                                options={analyzerMenuOptions}
+                                renderInput={(params) => <TextField {...params} label="Analyzer" />}
+                            />
+                        </FormControl>
                     }
                     <Stack direction={'row'} sx={{ width: isScreenSmall ? '100%' : '50%' }} className='table-header-func'>
                         <TextField
@@ -290,7 +290,7 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                                         endIcon={<AddIcon />}
                                         onClick={() => url == 'HisAnalyzer' ? setOpenHisModal(true) : setOpenModal(true)}
                                     >
-                                      { url == 'HisAnalyzer' ? 'HIS Mapping' : 'Add item' }  
+                                        {url == 'HisAnalyzer' ? 'HIS Mapping' : 'Add item'}
                                     </Button>
                                 )}
                             </>
@@ -473,8 +473,6 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                                                                                 <TableCell sx={{ paddingY: '5px', boxSizing: 'border-box', pr: 0 }}>{row[item.id] || '-'}</TableCell>
                                                                             )
                                                     }
-
-
                                                 </React.Fragment>
                                             ))}
                                         </TableRow>
@@ -483,10 +481,10 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                             ) : (
                                 <TableRow>
                                     <TableCell colSpan={tableHeadings?.length + (!readable ? 1 : 0)} sx={{ paddingY: '10px', textAlign: 'center', fontSize: '13px', fontWeight: '600' }}>
-                                         {
-                                             selectedAnalyzer && !sortedData.length ? 'No Data Found' :
-                                         analyzerDropDown  ?'Please Select Analyzer':
-                                         'No Data Found' }</TableCell>
+                                        {
+                                            selectedAnalyzer && !sortedData.length ? 'No Data Found' :
+                                                analyzerDropDown ? 'Please Select Analyzer' :
+                                                    'No Data Found'}</TableCell>
                                 </TableRow>
                             )}
                         </TableBody>
