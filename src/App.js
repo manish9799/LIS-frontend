@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import Home from './pages/Home';
 import Analyzer from './pages/Analyzer';
 import AnalyzerParameter from './pages/AnalyzerParameter';
@@ -25,64 +25,76 @@ import Users from './pages/Users';
 import PathologyResultDetails from './pages/PathologyResultDetails';
 import AlertDialog from './components/AlertDialog';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import HISAnalyzer from './pages/HISAnalyzer';
 import His from './pages/His';
 import HeartBeat from './pages/HeartBeat';
 import AnalyzerMachine from './pages/AnalyzerMachine';
+import LoginPage from './components/Login/LoginPage';
+import TestOrder from './pages/TestOrder';
 
 function App() {
   const dispatch = useDispatch();
   const [showAlert, setShowAlert] = useState(false);
   const alert = useSelector((state) => state.alertReducer);
-  const {type, message, progress} = alert;
+  const { type, message, progress } = alert;
 
   useEffect(() => {
-    if(type) setShowAlert(true);
+    if (type) setShowAlert(true);
     setTimeout(() => {
       dispatch({
-        type :'SET_INITIALSTATE'
+        type: 'SET_INITIALSTATE'
       })
     }, 5000);
   }, [alert]);
 
+  // const ProtectedRoute = ({ component: Component, ...rest }) => {
+  //   const isAuthenticated = () => {
+  //     let token = localStorage.getItem('token');
+  //     return token ;
+  //   };
+
+  //   return (
+  //     isAuthenticated() ? <Component /> : <Navigate to="/login" replace />
+  //   );
+  // };
+
   return (
     <div className="App">
-      <BrowserRouter // basename={config.basename} 
-      >
+      <BrowserRouter>
         <Navbar />
         {type && <AlertDialog type={type} message={message} openAlert={[showAlert, setShowAlert]} />}
-        {/* <NavDrawer/> */}
         <Routes>
-          <Route path='/' exact Component={Home} />
-          <Route path='/analyzer' exact Component={Analyzer} />
-          <Route path='/analyzerParameter' Component={AnalyzerParameter} />
-          <Route path='/CPT' Component={CPT} />
-          <Route path='/LISCode' Component={LISCode} />
-          <Route path='/His' Component={His} />
-          <Route path='/HISAnalyzer' Component={HISAnalyzer} />
-          <Route path='/GenLookups' Component={GenLookups} />
-          <Route path='/InvoiceDetails' Component={InvoiceDetails} />
-          <Route path='/InvoiceMasters' Component={InvoiceMasters} />
-          <Route path='/Modules' Component={Modules} />
-          <Route path='/RoleModules' Component={RoleModules} />
-          <Route path='/Roles' Component={Roles} />
-          <Route path='/OrderDetails' Component={OrderDetails} />
-          <Route path='/OrderMasters' Component={OrderMasters} />
-          <Route path='/PathologyPendingQueues' Component={PathologyPendingQueues} />
-          <Route path='/PathologyResultDetails' Component={PathologyResultDetails} />
-          <Route path='/PathologyResultMasters' Component={PathologyResultMasters} />
-          <Route path='/Analyzer-Machine' Component={AnalyzerMachine} />
-          <Route path='/HeartBeatResults' Component={HeartBeat} />
-          <Route path='/TestCategories' Component={Testcategories} />
-          <Route path='/TestParameters' Component={TestParameter} />
-          <Route path='/TestSamples' Component={TestSamples} />
-          <Route path='/TestUnits' Component={TestUnits} />
-          <Route path='/Users' Component={Users} />
-          {/* <Route path='/*'  Component={NotFoundPage}/> */}
+          <Route path='*' element={<Home />} />
+          <Route path='/login' element={<LoginPage />} />
+          <Route path='/analyzer' element={<Analyzer/>} />
+          <Route path='/analyzerParameter' element={<AnalyzerParameter />} />
+          <Route path='/CPT' element={<CPT />} />
+          <Route path='/LISCode' element={<LISCode />} />
+          <Route path='/His' element={<His />} />
+          <Route path='/HISAnalyzer' element={<HISAnalyzer />} />
+          <Route path='/GenLookups' element={<GenLookups />} />
+          <Route path='/InvoiceDetails' element={<InvoiceDetails />} />
+          <Route path='/InvoiceMasters' element={<InvoiceMasters />} />
+          <Route path='/Modules' element={<Modules />} />
+          <Route path='/RoleModules' element={<RoleModules />} />
+          <Route path='/Roles' element={<Roles />} />
+          <Route path='/OrderDetails' element={<OrderDetails />} />
+          <Route path='/OrderMasters' element={<OrderMasters />} />
+          <Route path='/PathologyPendingQueues' element={<PathologyPendingQueues />} />
+          <Route path='/PathologyResultDetails' element={<PathologyResultDetails />} />
+          <Route path='/PathologyResultMasters' element={<PathologyResultMasters />} />
+          <Route path='/Analyzer-Machine' element={<AnalyzerMachine />} />
+          <Route path='/HeartBeatResults' element={<HeartBeat />} />
+          <Route path='/TestCategories' element={<Testcategories />} />
+          <Route path='/TestParameters' element={<TestParameter />} />
+          <Route path='/TestSamples' element={<TestSamples />} />
+          <Route path='/TestUnits' element={<TestUnits />} />
+          <Route path='/Users' element={<Users />} />
+          <Route path='/TestOrder' element={<TestOrder />} />
+          {/* <Route path='/*' element={<NotFoundPage />} /> */}
         </Routes>
       </BrowserRouter>
-
     </div>
   );
 }

@@ -3,15 +3,17 @@ import React, { useEffect, useState } from 'react'
 import CloseIcon from '@mui/icons-material/Close';
 import '../../App.css'
 import { useSelector } from 'react-redux';
-import { SampleDetailsTableHeadings } from '../../configData';
+import { SampleDetailsTableHeadings, orderDetailsTableHeadings } from '../../configData';
 
-const SampleIdDetailPopup = ({ detailsModalValue, editDataValue,sampleFilterId }) => {
+const SampleIdDetailPopup = ({ detailsModalValue, editDataValue,sampleFilterId,url }) => {
 
   const [editValue, setEditValue] = editDataValue;
   const [openDetailsModal, setOpenDetailsModal] = detailsModalValue;
   const [dataKeys, setDataKeys] = useState([])
   const pathologyResultDetailsList = useSelector((state) => state.pathologyReducer.pathologyResultDetailsList);
+  const orderDetailsList =  useSelector((state) => state.invoiceOrderReducer.orderDetailsList);
   const [detailsList, setDetailsList] = useState([]);
+  const [detailsTableHeading, setDetailsTableHeading] = useState([]);
   const [loading, setLoading] = useState(true)
   const detailsData = [
     {label:'Name',value:'Patient'},
@@ -40,23 +42,39 @@ const SampleIdDetailPopup = ({ detailsModalValue, editDataValue,sampleFilterId }
     }
   }
 
+
   const checkAbnormalValue =(val)=>{
-    let check = val.split('').includes('A')
+    let check = val?.split('').includes('A')
     return check
   }
 
+  useEffect(()=>{
+    if(url == 'OrderMaster'){
+      setDetailsTableHeading(orderDetailsTableHeadings)
+    }else{
+      setDetailsTableHeading(SampleDetailsTableHeadings)
+    }
+
+  },[url])
+
   useEffect(() => {
-    if (pathologyResultDetailsList?.length) {
+    if (pathologyResultDetailsList?.length || orderDetailsList?.length ) {
+      let filterby ;
+      if(url == 'OrderMaster'){
+        filterby = orderDetailsList;
+      }else{
+        filterby = pathologyResultDetailsList;
+      }
       let data;
       if( sampleFilterId == 'MRN'){
-        data = pathologyResultDetailsList.filter((item, i) => item.MRN == editValue.MRN)
+        data = filterby.filter((item, i) => item.MRN == editValue.MRN)
       }else{
-        data = pathologyResultDetailsList.filter((item, i) => item.SampleID == editValue.SampleId)
+        data = filterby.filter((item, i) => item.SampleID == editValue.SampleId)
       }
       setDetailsList(data)
       setLoading(false)
     }
-  }, [pathologyResultDetailsList,editValue,sampleFilterId])
+  }, [pathologyResultDetailsList,editValue,sampleFilterId,orderDetailsList])
 
   const Close = () => {
     setOpenDetailsModal(false)
@@ -93,6 +111,11 @@ const SampleIdDetailPopup = ({ detailsModalValue, editDataValue,sampleFilterId }
                                     <Typography sx={{ fontSize: '14px', fontWeight: '600', ml: 1,color:'#444' }}>
                                        { `${editValue[item.value] || DateConvertion(currentDate)}`}
                                     </Typography> :
+                                    item.label == "Sample ID" ?
+                                    <Typography sx={{ fontSize: '14px', fontWeight: '600', ml: 1,color:'#444' }}>
+                                       { `${editValue[item.value] || editValue['SampleID'] || '-'}`}
+                                    </Typography>
+                                    :
                                     <Typography sx={{ fontSize: '14px', fontWeight: '600', ml: 1,color:'#444' }}>
                                        { `${editValue[item.value] || '-'}`}
                                     </Typography>
@@ -106,7 +129,7 @@ const SampleIdDetailPopup = ({ detailsModalValue, editDataValue,sampleFilterId }
                   <Table stickyHeader aria-label="sticky table">
                     <TableHead>
                       <TableRow>
-                        {SampleDetailsTableHeadings.map((column) => (
+                        {detailsTableHeading.map((column) => (
                           <TableCell
                             key={column.id}
                             sx={{ color: 'black',fontWeight:'bold',backgroundColor:'lightgray' }}
@@ -119,7 +142,7 @@ const SampleIdDetailPopup = ({ detailsModalValue, editDataValue,sampleFilterId }
                     <TableBody>
                       {loading ? (
                         <TableRow>
-                          <TableCell colSpan={SampleDetailsTableHeadings?.length} sx={{ paddingY: '10px', textAlign: 'center', fontSize: '13px', fontWeight: '600' }}>
+                          <TableCell colSpan={detailsTableHeading?.length} sx={{ paddingY: '10px', textAlign: 'center', fontSize: '13px', fontWeight: '600' }}>
                             <CircularProgress color="primary" />
                           </TableCell>
                         </TableRow>
@@ -129,7 +152,7 @@ const SampleIdDetailPopup = ({ detailsModalValue, editDataValue,sampleFilterId }
                           return (
                             <TableRow hover
                               key={row.id}>
-                              {SampleDetailsTableHeadings?.map((column) => {
+                              {detailsTableHeading?.map((column) => {
                                 const value = row[column.id];
                                 if (column == 'id') {
                                   return (

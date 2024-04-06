@@ -2,6 +2,9 @@
 // export const baseURL = 'http://13.233.159.252/api/'
 export const baseURL = 'https://hitechways.info/api/'
 
+export const navConfigPublic = [
+  { title: 'Home', path: '/' },
+]
 export const navConfig = [
   { title: 'Home', path: '/' },
   {
@@ -22,6 +25,8 @@ export const navConfig = [
       { title: 'Test Parameters', path: '/TestParameters' },
       { title: 'Test Samples', path: '/TestSamples' },
       { title: 'Test Units', path: '/TestUnits' },
+  { title: 'Test Order', path: '/TestOrder' },
+
     ]
   },
   {
@@ -39,7 +44,7 @@ export const navConfig = [
     children: [
       { title: 'Invoice Details', path: '/InvoiceDetails' },
   { title: 'Invoice Masters', path: '/InvoiceMasters' },
-  { title: 'Order Details', path: '/OrderDetails' },
+  // { title: 'Order Details', path: '/OrderDetails' },
   { title: 'Order Masters', path: '/OrderMasters' },
     ]
   },
@@ -267,24 +272,25 @@ export const invoiceMastersTableHeadings  = [
 ];
 
 export const orderDetailsTableHeadings  = [
-  { id: 'id', label: 'Sr.No' },
-  { id: 'OrderID', label: 'Order Id' },
-  { id: 'CPTID', label: 'CPT Id' },
+  { id: 'OrderID', label: 'Order ID' },
+  { id: 'CPTNAME', label: 'CPT Name' },
   { id: 'CPTPrice', label: 'CPT Price' },
   { id: 'Quantity', label: 'Quantity' },
-  { id: 'Desc', label: 'Description' },
-  { id: 'IsActive', label: 'IsActive' },
+  { id: 'TestID', label: 'Test ID' },
+  { id: 'TestName', label: 'Test Name' },
+  { id: 'Status', label: 'Status' },
   // { id: 'createdOn', label: 'CreatedOn' },
   // { id: 'updatedOn', label: 'UpdatedOn' },
   // { id: 'createdBy', label: 'CreatedBy' },
   // { id: 'updatedBy', label: 'UpdatedBy' },
-  { id: 'actions', label: 'Actions' },
+  // { id: 'actions', label: 'Actions' },
 ];
 
 export const orderMastersTableHeadings  = [
   { id: 'id', label: 'Sr.No' },
   { id: 'UserID', label: 'User Id' },
   { id: 'Physician', label: 'Physician' },
+  { id: 'SampleID', label: 'SampleID' },
   { id: 'MRN', label: 'MRN' },
   { id: 'Desc', label: 'Description' },
   { id: 'IsActive', label: 'IsActive' },
@@ -418,6 +424,21 @@ export const HeartBeatHeadings = [
   { id: 'MachineName', label: 'MachineName' },
   { id: 'Heartbeat', label: 'Heartbeat' },
   { id: 'IsActive', label: 'IsActive' },
+]
+export const TestOrderHeadings = [
+  { id: 'OrderID', label: 'OrderID' },
+  { id: 'MRN', label: 'MRN' },
+  { id: 'SampleID', label: 'Sample ID' },
+  { id: 'Physician', label: 'Physician' },
+  { id: 'UserID', label: 'UserID' },
+  { id: 'CPTID', label: 'CPT Name' },
+  { id: 'CPTPrice', label: 'CPTPrice' },
+  { id: 'Quantity', label: 'Quantity' },
+  { id: 'BranchID', label: 'BranchID' },
+  { id: 'OrderNumber', label: 'OrderNumber' },
+  // { id: 'SampleID', label: 'SampleID' },
+  { id: 'IsActive', label: 'IsActive' },
+  { id: 'actions', label: 'Actions' },
 ]
 
 

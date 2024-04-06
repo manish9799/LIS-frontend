@@ -18,6 +18,7 @@ import SampleIdDetailPopup from './SampleIdDetailPopup';
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
 import SelectFieldComponent from '../SelectFieldComponent';
+import TestOrderDialog from './TestOrderDialog';
 
 
 const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesList, analyzersList, cptList, hisList, rerender, readable, showColor, analyzerDropDown }) => {
@@ -51,6 +52,7 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
     const dateArray = ['Received', 'Collected', 'CreatedOn', 'UpdatedOn', 'Order'];
     const [analyzerMenuOptions, setAnalyzerMenuOptions] = useState([]);
     const [selectedAnalyzer, setSelectedAnalyzer] = useState('')
+    const [openTestOrderModal, setOpenTestOrderModal] = useState(false)
 
     const handleClick = (event, selectedId) => {
         setAnchorEl(event.currentTarget);
@@ -105,6 +107,7 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
         row?.Name?.toLowerCase().includes(searchTerm?.toLowerCase())
         || row?.ID?.toString().includes(searchTerm)
         || row?.Id?.toString().includes(searchTerm)
+        || row?.OrderID?.toString().includes(searchTerm)
         // || row?.analyzerName?.toString().includes(searchTerm)
         // || row?.cptName?.toString().includes(searchTerm)
         // || row?.liscodeName?.toString().includes(searchTerm)
@@ -113,6 +116,7 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
         // || row?.unit?.toString().includes(searchTerm)
         // || row?.orderId?.toString().includes(searchTerm)
     );
+
 
     const sortedData = orderBy
         ? [...filteredData].sort((a, b) => {
@@ -180,7 +184,6 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
         setSampleFilterId(item)
         setEditValue(data)
         setSampleOpenDetailsModal(true)
-
     }
 
     useEffect(() => {
@@ -191,19 +194,14 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
             })
             setAnalyzerMenuOptions(data)
         }
-        // if (hisList?.length) {
-        //     let data = []
-        //     hisList.map((item, i) => {
-        //         data.push({ label: item?.Name, value: item.ID })
-        //     })
-        //     setHisMenuOptions(data)
-        // }
     }, [analyzersList, LisCodesList, hisList])
 
     useEffect(() => {
         if (selectedAnalyzer?.length) {
             let filterData = data?.filter((item, i) => item?.AnalyzerName == selectedAnalyzer)
             setTableData(filterData)
+        }else{
+            setTableData([])
         }
     }, [selectedAnalyzer])
 
@@ -218,11 +216,21 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                 detailsModalValue={[sampleDetailsModal, setSampleOpenDetailsModal]}
                 editDataValue={[editValue, setEditValue]}
                 sampleFilterId={sampleFilterId}
+                url = {url}
             />
             <HISDetailViewPopup
                 detailsModalValue={[hisOpenDetailsModal, setHisOpenDetailsModal]}
                 editDataValue={[editValue, setEditValue]}
             />
+            <TestOrderDialog
+              rerender={rerender}
+              modalValue={[openTestOrderModal, setOpenTestOrderModal]}
+              editDataValue={[editValue, setEditValue]}
+              url={url}
+              fetchData={fetchData}
+              tableHeadings={tableHeadings}
+            />
+
             <AddEditPopup
                 rerender={rerender}
                 modalValue={[openModal, setOpenModal]}
@@ -278,7 +286,7 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                                     <IconButton
                                         aria-label="Add item"
                                         sx={{ backgroundColor: '#3d5afe', borderRadius: '50%', fontSize: '18px', p: 1, ml: 1 }}
-                                        onClick={() => url == 'HisAnalyzer' ? setOpenHisModal(true) : setOpenModal(true)}
+                                        onClick={() => url == 'HisAnalyzer' ? setOpenHisModal(true) : url == 'TestOrder'? setOpenTestOrderModal(true): setOpenModal(true)}
                                     >
                                         <AddIcon fontSize='large' sx={{ color: 'white', fontSize: '30px' }} />
                                     </IconButton>
@@ -288,9 +296,9 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                                         sx={{ width: "300px", border: '2px solid', borderRadius: '20px', fontSize: '18px', p: 1, ml: 2 }}
                                         variant="outlined"
                                         endIcon={<AddIcon />}
-                                        onClick={() => url == 'HisAnalyzer' ? setOpenHisModal(true) : setOpenModal(true)}
+                                        onClick={() => url == 'HisAnalyzer' ? setOpenHisModal(true) :url == 'TestOrder'? setOpenTestOrderModal(true): setOpenModal(true)}
                                     >
-                                        {url == 'HisAnalyzer' ? 'HIS Mapping' : 'Add item'}
+                                        {url == 'HisAnalyzer' ? 'ADD Mapping' : 'Add item'}
                                     </Button>
                                 )}
                             </>
@@ -453,7 +461,7 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                                                                     {DateConvertion(row[item.id]) || '-'}
                                                                 </TableCell>
                                                             ) :
-                                                                item.id === 'SampleId' || item.id === 'MRN' ? (
+                                                                item.id === 'SampleId' || item.id === 'MRN' || item.id === 'SampleID'  ? (
                                                                     <Tooltip arrow title="Click for Details" placement="bottom">
                                                                         <TableCell onClick={() => sampleDetailView(row, item.id)} sx={{ paddingY: '10px', color: '#27A3B9', fontWeight: '600', cursor: 'pointer', pr: 0 }}>
                                                                             {row[item.id] || '-'}
@@ -484,6 +492,7 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                                         {
                                             selectedAnalyzer && !sortedData.length ? 'No Data Found' :
                                                 analyzerDropDown ? 'Please Select Analyzer' :
+                                                // !selectedAnalyzer ? 'Please Select Analyzer' :
                                                     'No Data Found'}</TableCell>
                                 </TableRow>
                             )}

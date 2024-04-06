@@ -39,18 +39,6 @@ const HISAnalyzerDialog = ({ modalValue, editDataValue, url, LisCodesList, analy
         HRange: yup.string().required('required'),
         ARange: yup.string().required('required'),
     }
-    // const hisEditSchema = {
-    //     HisName: yup.number().required('required'),
-    //     HisCode: yup.string().required('required'),
-    //     AnalyzerCode: yup.number().required('required'),
-    //     AnalyzerName: yup.string().required('required'),
-    //     HparamName: yup.string().required('required'),
-    //     AparamName: yup.string().required('required'),
-    //     Hunit: yup.string().required('required'),
-    //     Aunt: yup.string().required('required'),
-    //     Hrange: yup.string().required('required'),
-    //     Arange: yup.string().required('required'),
-    // }
 
     const {
         register,

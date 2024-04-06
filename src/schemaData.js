@@ -202,6 +202,15 @@ export const schemaData = {
         // createdBy: yup.string().required('required'),
         // updatedBy: yup.string().required('required'),
     },
+    'TestOrder' : {
+        Name: yup.string().required('required'),
+        // type: yup.boolean().required('required'),
+        Desc: yup.string().required('required'),
+        // createdOn: yup.string().required('required'),
+        // updatedOn: yup.string().required('required'),
+        // createdBy: yup.string().required('required'),
+        // updatedBy: yup.string().required('required'),
+    },
     'HISAnalyzer' : {
         'Analyzer' : {
             AnalyzerID: yup.number().required('required'),
@@ -209,7 +218,6 @@ export const schemaData = {
             AParamName: yup.string().required('required'),
             AUnit: yup.string().required('required'),
             ARange: yup.string().required('required'),
-
         },
         'HIS' : {
             HISID: yup.number().required('required'),
@@ -217,7 +225,40 @@ export const schemaData = {
             HParamName: yup.string().required('required'),
             HUnit: yup.string().required('required'),
             HRange: yup.string().required('required'),
-
         }
+    },
+    'TestOrder' : {
+            // CPTID: yup.string().required('required'),
+            // CPTPrice: yup.string().required('required'),
+            // Quantity: yup.string().required('required'),
+            // MRN: yup.number().required('required'),
+            // UserID: yup.string().required('required'),
+            // TestName: yup.string().required('required'),
+            'OrderDetails' : {
+                SampleIdDetails: yup.number().required('required'),
+                CPTID: yup.number().required('required'),
+                CPTPrice: yup.number().required('required'),
+                DescDetails: yup.string().required('required'),
+                OrderId: yup.string().required('required'),
+                Quantity: yup.string().required('required'),
+                StatusDetails: yup.string().required('required'),
+                TestID: yup.string().required('required'),
+                TestName: yup.string().required('required'),
+            },
+            'OrderMaster' : {
+                SampleIdMaster: yup.number().required('required'),
+                MRN: yup.number().required('required'),
+                UserID: yup.number().required('required'),
+                DescMaster: yup.string().required('required'),
+                BranchID: yup.number().required('required'),
+                HospitalId: yup.string().required('required'),
+                PatientName: yup.string().required('required'),
+                // PatientType: yup.string().required('required'),
+                OrderNumber: yup.string().required('required'),
+                Gender: yup.string().required('required'),
+                // StatusMaster: yup.string().required('required'),
+                // Physician: yup.string().required('required'),
+                // Type: yup.string().required('required'),
+            }
     },
 }
