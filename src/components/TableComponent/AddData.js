@@ -7,7 +7,6 @@ const AddData = () => {
             <Card sx={{ width: '30%' }}>
                 <Box sx={{ width: '100%',padding:'20px',display:'flex',flexDirection:'column',justifyContent:'center' }}>
                     <Typography variant='h5' fontWeight={'600'}>Add Data</Typography>
-
                     <TextField
                         label="Name"
                         variant="outlined"

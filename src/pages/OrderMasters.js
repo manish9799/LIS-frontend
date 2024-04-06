@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import TableData from '../components/TableComponent/TableData'
 import { orderMastersTableHeadings } from '../configData';
 import { useDispatch, useSelector } from 'react-redux';
-import { getOrderMasters } from '../redux/actions/invoiceOrderActions';
+import { getOrderDetails, getOrderMasters } from '../redux/actions/invoiceOrderActions';
 
 const OrderMasters = () => {
   const URL = 'OrderMaster';
@@ -12,6 +12,7 @@ const OrderMasters = () => {
 
   useEffect(()=>{
     dispatch(getOrderMasters(URL));
+    dispatch(getOrderDetails('OrderDetail'));
   },[])
   
   useEffect(()=>{

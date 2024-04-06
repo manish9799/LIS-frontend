@@ -108,6 +108,7 @@ const AddEditPopup = ({ modalValue, editDataValue,url,fetchData,LisCodesList,ana
 
     const onSubmit = (e) => {
         e.preventDefault()
+        let testOrderData = {}
         let data = watch()
         let addData = data;
         addData.CreatedBy = 1;
@@ -118,6 +119,42 @@ const AddEditPopup = ({ modalValue, editDataValue,url,fetchData,LisCodesList,ana
         addData.ID = 0;
         if(url == 'AnalyzerParameter'){
             delete addData.Id
+        }
+        if(url == 'TestOrder'){
+            testOrderData = {
+                "MRN": data.MRN,
+                "Physician": 0,
+                "UserID": data.UserID,
+                "Desc": "string",
+                "IsActive": true,
+                "CreatedOn": "2024-03-30T10:58:07.896Z",
+                "UpdatedOn": "2024-03-30T10:58:07.896Z",
+                "HospitalId": 0,
+                "BranchID": 0,
+                "SampleId": 0,
+                "OrderDateTime": "2024-03-30T10:58:07.896Z",
+                "Status": "string",
+                "Type": true,
+                "PatientType": true,
+                "OrderNumber": 0,
+                "OrderDetails": [
+                  {
+                    "CPTID": data.CPTID,
+                    "CPTPrice": data.CPTPrice,
+                    "Quantity": data.Quantity,
+                    "Desc": "string",
+                    "SampleID": 0,
+                    "TestID": 0,
+                    "CreatedBy": "2024-03-30T10:58:07.897Z",
+                    "TestName": data.TestName,
+                    "UpdatedBy": "2024-03-30T10:58:07.897Z",
+                    "Status": 0,
+                    "IsActive": true,
+                    "CreatedOn": "2024-03-30T10:58:07.897Z",
+                    "UpdaetedOn": "2024-03-30T10:58:07.897Z"
+                  }
+                ]
+              }
         }
         
         if(url === 'Cpt'){
@@ -147,7 +184,11 @@ const AddEditPopup = ({ modalValue, editDataValue,url,fetchData,LisCodesList,ana
             dispatch(updateDataAction(url,data.ID,data,rerender))
             Close()
         }else{
-            dispatch(addDataAction(url,addData,rerender))
+            if(url == 'TestOrder'){
+                dispatch(addDataAction(url,testOrderData,rerender))
+            }else{
+                dispatch(addDataAction(url,addData,rerender))
+            }
             Close()
         }
     }

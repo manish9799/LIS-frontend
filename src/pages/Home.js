@@ -27,7 +27,7 @@ const Home = () => {
         }}
       >
         <Box sx={{
-          width: '60%',
+          width: '70%',
           textAlign: 'left',
           padding: '25px'
         }}>
