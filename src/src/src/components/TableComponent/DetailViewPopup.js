@@ -42,11 +42,7 @@ const DetailViewPopup = ({ detailsModalValue, editDataValue }) => {
                             <Box >
                                 {dataKeys?.map((item, i) => (
                                     <Stack key={i} direction={'row'} gap={1} sx={{ textAlign: 'justify', paddingBottom: '8px' }}>
-                                        {item == "IsSent" ?
-                                        <><Typography sx={{ fontSize: '17px', fontWeight: 'bold', color: '#666' }}>{upperCase(item)}</Typography> : <Typography sx={{ fontSize: '17px', color: '#444' }}>{editValue[item] == true ? "true":"false" || '-'}</Typography>
-                                        </> : item == "Id" ? null :
-                                        <><Typography sx={{ fontSize: '17px', fontWeight: 'bold', color: '#666' }}>{upperCase(item)}</Typography> : <Typography sx={{ fontSize: '17px', color: '#444' }}>{editValue[item] || '-'}</Typography></>
-                                    }
+                                        <Typography sx={{ fontSize: '17px', fontWeight: 'bold', color: '#666' }}>{upperCase(item)}</Typography> : <Typography sx={{ fontSize: '17px', color: '#444' }}>{editValue[item] || '-'}</Typography>
                                     </Stack>
                                 ))}
                             </Box>
