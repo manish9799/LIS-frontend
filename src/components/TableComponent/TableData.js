@@ -16,13 +16,14 @@ import HISAnalyzerDialog from './HISAnalyzerDialog';
 import HISDetailViewPopup from './HISDetailViewPopup';
 import SampleIdDetailPopup from './SampleIdDetailPopup';
 import SearchIcon from '@mui/icons-material/Search';
+import CachedIcon from '@mui/icons-material/Cached';
 import CloseIcon from '@mui/icons-material/Close';
 import SelectFieldComponent from '../SelectFieldComponent';
 import TestOrderDialog from './TestOrderDialog';
 import { ERROR_ALERT } from '../../redux/ActionTypes';
 
 
-const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesList, analyzersList, cptList, hisList, rerender, readable, showColor, analyzerDropDown }) => {
+const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesList, analyzersList, cptList, hospitalList, rerender, readable, showColor, analyzerDropDown,handleRefresh,refresh }) => {
     const dispatch = useDispatch()
     const [tableData, setTableData] = useState([])
     const [orderBy, setOrderBy] = useState(null);
@@ -56,6 +57,7 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
     const [selectedAnalyzer, setSelectedAnalyzer] = useState('')
     const [selectedHis, setSelectedHis] = useState('')
     const [openTestOrderModal, setOpenTestOrderModal] = useState(false)
+    const [hisRefresh,setHisRefresh] = useState(false)
 
     const handleClick = (event, selectedId) => {
         setAnchorEl(event.currentTarget);
@@ -111,15 +113,10 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
         || row?.Id?.toString().includes(searchTerm)
         || row?.OrderID?.toString().includes(searchTerm)
         || row?.UserID?.toString().includes(searchTerm)
+        || row?.SampleID?.toString().includes(searchTerm)
         // || row?.analyzerName?.toString().includes(searchTerm)
-        // || row?.cptName?.toString().includes(searchTerm)
-        // || row?.liscodeName?.toString().includes(searchTerm)
-        // || row?.categoryName?.toString().includes(searchTerm)
-        // || row?.sampleName?.toString().includes(searchTerm)
-        // || row?.unit?.toString().includes(searchTerm)
         // || row?.orderId?.toString().includes(searchTerm)
     );
-
 
     const sortedData = orderBy
         ? [...filteredData].sort((a, b) => {
@@ -164,6 +161,9 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
     const deleteData = () => {
         dispatch(deleteAnalyzers(url, deleteId, rerender))
         setDeleteDialog(false)
+        if (url == "HisAnalyzer"){
+            refreshMapping()
+        }
     }
 
     const editData = (data) => {
@@ -193,25 +193,27 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
         if (analyzersList?.length) {
             let data = []
             analyzersList && analyzersList?.map((item, i) => {
-                data.push({ label: item?.Name, value: item.ID })
+                if(item?.Name){
+                    data.push({ label: item?.Name, value: item.ID })
+                }
             })
             setAnalyzerMenuOptions(data)
         }
-        if (hisList?.length) {
+        if (hospitalList?.length) {
             let data = []
-            hisList && hisList?.map((item, i) => {
+            hospitalList && hospitalList?.map((item, i) => {
                 data.push({ label: item?.Name, value: item.ID })
             })
             setHisMenuOptions(data)
         }
-    }, [analyzersList, LisCodesList, hisList])
+    }, [analyzersList, LisCodesList, hospitalList])
 
     useEffect(() => {
         if (selectedHis?.length && selectedAnalyzer?.length) {
-            let filterData = data?.filter((item, i) => item?.HisName === selectedHis && item?.AnalyzerName === selectedAnalyzer);
+            let filterData = data?.filter((item, i) => item?.Hospital === selectedHis && item?.AnalyzerName === selectedAnalyzer);
             setTableData(filterData);
         } else if (selectedHis?.length) {
-            let filterData = data?.filter((item, i) => item?.HisName === selectedHis);
+            let filterData = data?.filter((item, i) => item?.Hospital === selectedHis);
             let newMenuOptions = [];
             analyzersList && analyzersList?.forEach((item, i) => {
                 filterData.forEach((filteredItem) => {
@@ -230,13 +232,15 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
         } else {
             let data = [];
             analyzersList && analyzersList?.map((item, i) => {
-                data.push({ label: item?.Name, value: item.ID });
+                if(item?.Name){
+                    data.push({ label: item?.Name, value: item.ID });
+                }
             });
             setAnalyzerMenuOptions(data);
             setTableData([]);
         }
         
-    }, [selectedAnalyzer,selectedHis])
+    }, [selectedAnalyzer,selectedHis,refresh,hisRefresh])
 
     const handleAddHIS =()=>{
         if (selectedAnalyzer?.length && selectedHis?.length){
@@ -247,7 +251,12 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                 payload: "Please select His and Analyzer first. ",
               });
         }
+    }
 
+    const refreshMapping =()=>{
+        setSelectedAnalyzer('')
+        setSelectedHis('')
+        // setHisRefresh(prevRefresh => !prevRefresh);
     }
 
     return (
@@ -294,17 +303,25 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                 url={url}
                 fetchData={fetchData}
                 tableHeadings={tableHeadings}
-                analyzersList={analyzersList}
-                hisList={hisList}
+                // analyzersList={analyzersList}
+                analyzerMenuOptions={analyzerMenuOptions}
+                // hospitalList={hospitalList}
+                hisMenuOptions={hisMenuOptions}
                 selectedAnalyzer={selectedAnalyzer}
                 selectedHis={selectedHis}
+                refreshMapping={refreshMapping}
             />
 
             <Paper sx={{ borderRadius: '20px', marginX: '30px', mt: 1, height: '80vh', overflow: 'auto' }}>
                 <Stack direction={'row'} className='table-header'>
+                    <Stack direction={'row'}>
                     <Typography variant="h6" className='table-headingName'>
                         {headingName}
                     </Typography>
+                    <IconButton color="primary" size='large' sx={{ p: 0.2, m: 0, }} onClick={handleRefresh}  aria-label="edit">
+                        <CachedIcon sx={{ ml: 0.3,  }} />
+                    </IconButton>
+                    </Stack>
                     {url == 'HisAnalyzer' &&
                     <>
                         <FormControl sx={{ m: 1, minWidth: 170 }} size="small">
@@ -360,7 +377,7 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                                     >
                                         {url == 'HisAnalyzer' ? 'ADD Mapping' : 'Add item'}
                                     </Button>
-                                )}
+                                    )}
                             </>
                         }
                     </Stack>
@@ -521,7 +538,7 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
                                                                     {DateConvertion(row[item.id]) || '-'}
                                                                 </TableCell>
                                                             ) :
-                                                                item.id === 'SampleId' || item.id === 'MRN' || item.id === 'SampleID' || item.id === 'MRn'  ? (
+                                                                item.id === 'SampleId' || item.id === 'MRN' || item.id === 'SampleID' || item.id === 'MRn' || item.id == 'PatientId' ? (
                                                                     <Tooltip arrow title="Click for Details" placement="bottom">
                                                                         <TableCell onClick={() => sampleDetailView(row, item.id)} sx={{ paddingY: '10px', color: '#27A3B9', fontWeight: '600', cursor: 'pointer', pr: 0 }}>
                                                                             {row[item.id] || '-'}
