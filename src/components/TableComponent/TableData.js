@@ -161,7 +161,7 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
         dispatch(deleteAnalyzers(url, deleteId, rerender))
         setDeleteDialog(false)
     }
-
+    
     const editData = (data) => {
         setEditValue(data)
         if (url === 'HisAnalyzer') {
@@ -184,6 +184,12 @@ const TableData = ({ data, headingName, tableHeadings, url, fetchData, LisCodesL
         setEditValue(data)
         setSampleOpenDetailsModal(true)
     }
+
+    useEffect(()=>{
+        if(sortedData.length <= rowsPerPage){
+            setPage(0)
+        }
+    },[sortedData])
 
     useEffect(() => {
         if (analyzersList?.length) {
