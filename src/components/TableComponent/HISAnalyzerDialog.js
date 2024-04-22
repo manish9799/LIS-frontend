@@ -213,7 +213,7 @@ const HISAnalyzerDialog = ({ modalValue, editDataValue, url, analyzerMenuOptions
                                                                                                         
                                                                             register={register}
                                                                             errors={errors}
-                                                                            disable= {editValue.Id && item == "HISCode"}
+                                                                            // disable= {editValue.Id && item == "HISCode"}
                                                                         />
                                                                     )}
                                                             </>
